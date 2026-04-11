@@ -97,9 +97,6 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0
 .addon.a{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18);color:var(--acc3)}
 .ob{width:100%;background:linear-gradient(135deg,var(--acc),#5b21b6);color:#fff;border:none;padding:9px;border-radius:8px;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s}
 .ob:hover{opacity:.88;transform:scale(1.01)}
-.special{border-color:rgba(124,58,237,.32)!important;background:rgba(124,58,237,.04)!important}
-.special .ob{background:linear-gradient(135deg,var(--acc3),#d97706)}
-.special .bp{color:var(--acc3)!important;background:rgba(245,158,11,.08)!important;border-color:rgba(245,158,11,.22)!important}
 
 /* MODALS */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .22s;backdrop-filter:blur(8px)}
@@ -119,30 +116,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0
 .pay:hover,.pay.on{border-color:var(--acc);color:var(--txt);background:rgba(124,58,237,.1)}
 .send{width:100%;background:linear-gradient(135deg,var(--grn),#059669);color:#fff;border:none;padding:12px;border-radius:9px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;margin-top:6px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
 .send:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(16,185,129,.36)}
-.send.acc{background:linear-gradient(135deg,var(--acc),#5b21b6)}
-.send.acc:hover{box-shadow:0 5px 16px rgba(124,58,237,.36)}
-.errmsg{color:var(--red);font-size:12px;margin-top:5px;display:none;padding:8px 12px;background:rgba(239,68,68,.08);border-radius:7px;border:1px solid rgba(239,68,68,.18)}
-.errmsg.show{display:block}
-.tabs-auth{display:flex;background:var(--surf);border-radius:10px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:20px}
-.auth-tab{flex:1;padding:9px;border:none;background:transparent;color:var(--mut);font-size:13px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s}
-.auth-tab.on{background:var(--card);color:var(--txt)}
-.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--mut);font-size:11px}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
 
-/* CAPTCHA */
-.cap-box{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.cap-q{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--acc2);letter-spacing:3px}
-.cap-right{display:flex;align-items:center;gap:6px}
-.cap-in{width:70px!important;text-align:center;font-family:'Space Mono',monospace!important;font-size:16px!important}
-.cap-rf{background:none;border:none;color:var(--mut);cursor:pointer;font-size:16px;transition:all .2s;padding:0}
-.cap-rf:hover{color:var(--txt);transform:rotate(90deg)}
-
-footer{border-top:1px solid var(--bdr);padding:30px 0 18px;text-align:center}
+footer{border-top:1px solid var(--bdr);padding:30px 0 18px;text-align:center; margin-top: 50px;}
 footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--grn);color:#fff;padding:11px 18px;border-radius:9px;font-weight:700;font-size:12px;z-index:9999;transform:translateY(60px);opacity:0;transition:all .3s;box-shadow:0 4px 16px rgba(16,185,129,.36)}
-.toast.show{transform:translateY(0);opacity:1}.toast.e{background:var(--red);box-shadow:0 4px 16px rgba(239,68,68,.36)}
 @keyframes fi{from{opacity:0}to{opacity:1}}
-@media(max-width:680px){nav{flex-direction:column;gap:12px}.nav-links{justify-content:center}.owner{flex-direction:column;text-align:center}.socials{justify-content:center}.tabs{flex-direction:column}.pays{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -152,17 +129,12 @@ footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
     <span id="ll">اللغة:</span>
     <button class="lb on" onclick="setLang('ar',this)">🇸🇦 عربي</button>
     <button class="lb" onclick="setLang('en',this)">🇬🇧 EN</button>
-    <button class="lb" onclick="setLang('fr',this)">🇫🇷 FR</button>
-    <button class="lb" onclick="setLang('tr',this)">🇹🇷 TR</button>
-    <button class="lb" onclick="setLang('de',this)">🇩🇪 DE</button>
-    <button class="lb" onclick="setLang('es',this)">🇪🇸 ES</button>
-    <button class="lb" onclick="setLang('ru',this)">🇷🇺 RU</button>
-    <button class="lb" onclick="setLang('pt',this)">🇧🇷 PT</button>
-    <button class="lb" onclick="setLang('id',this)">🇮🇩 ID</button>
   </div>
   <div class="bar-right">
-    <div class="visit-b">👁 <span id="visitCount">0</span> <span data-i="visits">زيارة</span></div>
-    <div id="authArea"></div>
+    <div class="visit-b">👁 <span id="visitCount">845</span> <span>زيارة</span></div>
+    <div class="auth-btns">
+      <button class="auth-btn" onclick="openModal('authModal')">تسجيل دخول</button>
+    </div>
   </div>
 </div>
 
@@ -170,21 +142,21 @@ footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
 <nav>
   <div class="logo"><div class="logo-ico">🤖</div><div class="logo-txt">Projects <span>Bots</span></div></div>
   <div class="nav-links">
-    <button class="nl" onclick="switchTab('discord')">💬 <span data-i="nav1">ديسكورد</span></button>
-    <button class="nl" onclick="switchTab('telegram')">✈️ <span data-i="nav2">تيليجرام</span></button>
-    <button class="nl" onclick="switchTab('whatsapp')">📱 <span data-i="nav3">واتساب</span></button>
+    <button class="nl" onclick="switchTab('discord')">💬 ديسكورد</button>
+    <button class="nl" onclick="switchTab('telegram')">✈️ تيليجرام</button>
+    <button class="nl" onclick="switchTab('whatsapp')">📱 واتساب</button>
     <button class="nl" onclick="switchTab('chrome')">🌐 Chrome</button>
-    <button class="nl" onclick="switchTab('about')">ℹ️ <span data-i="nav6">عنّا</span></button>
+    <button class="nl" onclick="switchTab('about')">ℹ️ عنّا</button>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="badge"><span class="dot"></span><span data-i="h1">متاح للطلبات الآن</span></div>
-  <h1><span class="grad" data-i="h2">بوتات احترافية</span><br><span data-i="h3">لكل منصة</span></h1>
-  <p data-i="h4">تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط.</p>
+  <div class="badge"><span class="dot"></span><span>متاح للطلبات الآن</span></div>
+  <h1><span class="grad">بوتات احترافية</span><br><span>لكل منصة</span></h1>
+  <p>تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط.</p>
   <div class="hero-btns">
-    <button class="btn-p" onclick="switchTab('discord')" data-i="h5">📦 اطلب الآن</button>
-    <button class="btn-s" onclick="switchTab('about')"><span data-i="h6">تعرف علينا</span> ℹ️</button>
+    <button class="btn-p" onclick="switchTab('discord')">📦 اطلب الآن</button>
+    <button class="btn-s" onclick="switchTab('about')">تعرف علينا ℹ️</button>
   </div>
 </div>
 
@@ -192,9 +164,9 @@ footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
   <div class="ava">👑</div>
   <div>
     <h3>مروان | Wano</h3>
-    <p style="color:var(--mut);font-size:12px" data-i="od">مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل</p>
+    <p style="color:var(--mut);font-size:12px">مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل</p>
     <div class="socials">
-      <a href="https://discord.com/users/wn6b" target="_blank" class="soc">💬 @wn6b</a>
+      <a href="https://discord.com/users/123456789012345678" target="_blank" class="soc" data-rank-id="876543210987654321">💬 @wn6b</a>
       <a href="https://youtube.com/@wn5b" target="_blank" class="soc">▶️ @wn5b</a>
       <a href="https://tiktok.com/@w_n6b" target="_blank" class="soc">🎵 @w_n6b</a>
     </div>
@@ -202,19 +174,70 @@ footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
 </div>
 
 <div class="tabs">
-  <button class="tb on" id="btn-discord" onclick="switchTab('discord',this)">💬 <span data-i="t1">ديسكورد</span></button>
-  <button class="tb" id="btn-telegram" onclick="switchTab('telegram',this)">✈️ <span data-i="t2">تيليجرام</span></button>
-  <button class="tb" id="btn-whatsapp" onclick="switchTab('whatsapp',this)">📱 <span data-i="t3">واتساب</span></button>
+  <button class="tb on" id="btn-discord" onclick="switchTab('discord',this)">💬 ديسكورد</button>
+  <button class="tb" id="btn-telegram" onclick="switchTab('telegram',this)">✈️ تيليجرام</button>
+  <button class="tb" id="btn-whatsapp" onclick="switchTab('whatsapp',this)">📱 واتساب</button>
   <button class="tb" id="btn-chrome" onclick="switchTab('chrome',this)">🌐 Chrome</button>
-  <button class="tb" id="btn-about" onclick="switchTab('about',this)">ℹ️ <span data-i="t6">عنّا</span></button>
+  <button class="tb" id="btn-about" onclick="switchTab('about',this)">ℹ️ عنّا</button>
 </div>
 
 <div id="tab-discord" class="tc on sec">
-  <div class="sh"><div class="si" style="background:rgba(88,101,242,.12)">💬</div><div><h2 data-i="d1">بوتات ديسكورد</h2><p data-i="d2">جميع البوتات المسموح بها على Discord</p></div></div>
+  <div class="sh"><div class="si" style="background:rgba(88,101,242,.12)">💬</div><div><h2>بوتات ديسكورد</h2><p>جميع البوتات المسموح بها على Discord</p></div></div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="bp">$15+</span></div><h3>Moderation Bot</h3><div class="addons"><span class="addon g">✓ باند / كيك / ميوت</span><span class="addon g">✓ تحذيرات</span><span class="addon c">✓ لوق كامل</span><span class="addon p">✓ Slash Commands</span><span class="addon a">✓ Anti-Spam</span></div><button class="ob" onclick="openOrder('Moderation Bot','$15+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="bp">$15+</span></div><h3>Moderation Bot</h3><div class="addons"><span class="addon g">✓ باند / كيك / ميوت</span><span class="addon g">✓ تحذيرات</span><span class="addon c">✓ لوق كامل</span><span class="addon p">✓ Slash Commands</span></div><button class="ob" onclick="openOrder('Moderation Bot','$15+')">🛒 اطلب الآن</button></div>
     <div class="bc"><div class="bh"><div class="bi">🎉</div><span class="bp">$12+</span></div><h3>Giveaway Bot</h3><div class="addons"><span class="addon g">✓ جدولة تلقائية</span><span class="addon c">✓ شروط دخول</span><span class="addon p">✓ إعادة السحب</span><span class="addon a">✓ أدوار مخصصة</span></div><button class="ob" onclick="openOrder('Giveaway Bot','$12+')">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="bp">$18+</span></div><h3>Roles Bot</h3><div class="addons"><span class="addon g">✓ Self Roles</span><span class="addon c">✓ Reaction Roles</span><span class="addon p">✓ Auto Roles</span><span class="addon a">✓ Level Roles</span><span class="addon g">✓ Button Roles</span></div><button class="ob" onclick="openOrder('Roles Bot','$18+')">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$20+</span></div><h3>Economy Bot</h3><div class="addons"><span class="addon g">✓ عملة مخصصة</span><span class="addon c">✓ متجر</span><span class="addon p">✓ بنك</span><span class="addon a">✓ مباريات</span><span class="addon g">✓ سرقة</span><span class="addon c">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Economy Bot','$20+')">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$15+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ TicTacToe</span><span class="addon p">✓ Wordle</span><span class="addon a">✓ بلاك جاك</span><span class="addon g">✓ RPS</span></div><button class="ob" onclick="openOrder('Games Bot','$15+')">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="bp">$14+</span></div><h3>Leveling Bot</h3><div class="addons"><span class="addon g">✓ نظام XP</span><span class="addon c">✓ ليدربورد</span><span class="addon p">✓ رتب تلقائية</span><span class="addon a">✓ مكافآت</span><span class="addon g">✓ بطاقة Rank</span></div><button class="ob" onclick="openOrder('Leveli
+    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="bp">$18+</span></div><h3>Roles Bot</h3><div class="addons"><span class="addon g">✓ Self Roles</span><span class="addon c">✓ Reaction Roles</span><span class="addon p">✓ Auto Roles</span></div><button class="ob" onclick="openOrder('Roles Bot','$18+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$20+</span></div><h3>Economy Bot</h3><div class="addons"><span class="addon g">✓ عملة مخصصة</span><span class="addon c">✓ متجر</span><span class="addon p">✓ بنك</span><span class="addon a">✓ سرقة</span></div><button class="ob" onclick="openOrder('Economy Bot','$20+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$15+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ TicTacToe</span><span class="addon p">✓ Wordle</span><span class="addon a">✓ بلاك جاك</span></div><button class="ob" onclick="openOrder('Games Bot','$15+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="bp">$14+</span></div><h3>Leveling Bot</h3><div class="addons"><span class="addon g">✓ نظام XP</span><span class="addon c">✓ ليدربورد</span><span class="addon p">✓ رتب تلقائية</span><span class="addon a">✓ مكافآت</span><span class="addon g">✓ بطاقة Rank</span></div><button class="ob" onclick="openOrder('Leveling Bot','$14+')">🛒 اطلب الآن</button></div>
+  </div>
+</div>
+
+<div id="tab-telegram" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(36,161,222,.12)">✈️</div><div><h2>بوتات تيليجرام</h2><p>إدارة المجموعات والقنوات باحترافية</p></div></div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi">👮‍♂️</div><span class="bp">$10+</span></div><h3>Group Manager</h3><div class="addons"><span class="addon g">✓ حماية ضد السแปام</span><span class="addon c">✓ ترحيب تلقائي</span></div><button class="ob" onclick="openOrder('Telegram Group Manager','$10+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🏪</div><span class="bp">$25+</span></div><h3>Store Bot</h3><div class="addons"><span class="addon g">✓ سلة مشتريات</span><span class="addon c">✓ بوابات دفع</span></div><button class="ob" onclick="openOrder('Telegram Store Bot','$25+')">🛒 اطلب الآن</button></div>
+  </div>
+</div>
+
+<div id="tab-whatsapp" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(37,211,102,.12)">📱</div><div><h2>بوتات واتساب</h2><p>رد آلي وإدارة أعمال</p></div></div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi">💬</div><span class="bp">$20+</span></div><h3>Auto Responder</h3><div class="addons"><span class="addon g">✓ ردود ذكية</span><span class="addon c">✓ قوائم تفاعلية</span></div><button class="ob" onclick="openOrder('WhatsApp Responder','$20+')">🛒 اطلب الآن</button></div>
+  </div>
+</div>
+
+<div id="tab-chrome" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(255,204,0,.12)">🌐</div><div><h2>إضافات Chrome</h2><p>أدوات مساعدة للمتصفح</p></div></div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi">🛠️</div><span class="bp">$30+</span></div><h3>Custom Extension</h3><div class="addons"><span class="addon g">✓ أتمتة مهام</span><span class="addon c">✓ تصميم مخصص</span></div><button class="ob" onclick="openOrder('Chrome Extension','$30+')">🛒 اطلب الآن</button></div>
+  </div>
+</div>
+
+<div id="tab-about" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(124,58,237,.12)">ℹ️</div><div><h2>عنّا</h2><p>من نحن وماذا نقدم</p></div></div>
+  <div class="about-grid">
+    <div class="about-card"><div class="icon">🚀</div><h3>سرعة في الإنجاز</h3><p>نسلمك كود المشروع بأسرع وقت ممكن مع ضمان جودة البرمجة.</p></div>
+    <div class="about-card"><div class="icon">🔒</div><h3>أمان وموثوقية</h3><p>جميع البوتات مبرمجة بأحدث الطرق الآمنة والخالية من الثغرات.</p></div>
+    <div class="about-card"><div class="icon">💻</div><h3>كود نظيف JS</h3><p>نستخدم لغة JavaScript فقط في كافة أعمالنا لبناء بيئة متطورة.</p></div>
+  </div>
+</div>
+
+</div> <footer>
+  <p>جميع الحقوق محفوظة &copy; 2026 - <strong>Projects Bots | Wano</strong></p>
+</footer>
+
+<div class="ov" id="orderModal">
+  <div class="modal">
+    <button class="mcl" onclick="closeModal('orderModal')">✖</button>
+    <h3 id="orderTitle">طلب بوت</h3>
+    <p class="sub" id="orderPrice"></p>
+    <div class="fg">
+      <label>تفاصيل الطلب</label>
+      <textarea id="orderDetails" rows="4" placeholder="اكتب كل الميزات اللي تريدها بالبوت..."></textarea>
+    </div>
+    <div class="fg">
+      <label>طريقة الدفع</label>
+      <div class="pays">
+        <div class="pay on" onclick="selPay(this)">PayPal</di
