@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Projects Bots | مروان Wano</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--surf:#101018;--card:#14141e;--bdr:#252535;--acc:#7c3aed;--acc2:#06b6d4;--acc3:#f59e0b;--txt:#eeeeff;--mut:#7777aa;--grn:#10b981;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(124,58,237,.12) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 85% 85%,rgba(6,182,212,.07) 0%,transparent 60%);pointer-events:none;z-index:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 18px;position:relative;z-index:1}
+
+/* TOP BAR */
+#topBar{background:rgba(16,16,24,.97);border-bottom:1px solid var(--bdr);padding:7px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:300;backdrop-filter:blur(14px);flex-wrap:wrap;gap:6px}
+.bar-left{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.bar-right{display:flex;align-items:center;gap:8px}
+#ll{font-size:11px;color:var(--mut)}
+.lb{background:none;border:1px solid var(--bdr);color:var(--mut);padding:3px 8px;border-radius:20px;cursor:pointer;font-size:11px;font-family:'Cairo',sans-serif;transition:all .2s}
+.lb:hover,.lb.on{border-color:var(--acc);color:var(--txt);background:rgba(124,58,237,.14)}
+.visit-b{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);color:var(--grn);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.user-chip{display:flex;align-items:center;gap:6px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;color:#a78bfa}
+.user-chip .logout{background:none;border:none;color:var(--mut);cursor:pointer;font-size:13px;padding:0 0 0 4px;transition:color .2s}
+.user-chip .logout:hover{color:var(--red)}
+.auth-btns{display:flex;gap:6px}
+.auth-btn{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s;border:1px solid var(--bdr);background:transparent;color:var(--mut)}
+.auth-btn:hover{border-color:var(--acc);color:var(--txt)}
+.auth-btn.primary{background:linear-gradient(135deg,var(--acc),#5b21b6);color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(124,58,237,.3)}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-ico{width:40px;height:40px;background:linear-gradient(135deg,var(--acc),var(--acc2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 20px rgba(124,58,237,.38)}
+.logo-txt{font-size:18px;font-weight:900;letter-spacing:-.5px}
+.logo-txt span{color:var(--acc2)}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nl{color:var(--mut);padding:5px 11px;border-radius:8px;font-size:12px;font-weight:700;transition:all .2s;border:1px solid transparent;cursor:pointer;background:none;font-family:'Cairo',sans-serif}
+.nl:hover{color:var(--txt);background:rgba(255,255,255,.04);border-color:var(--bdr)}
+
+/* HERO */
+.hero{text-align:center;padding:65px 0 45px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.26);border-radius:20px;padding:5px 14px;font-size:12px;color:#a78bfa;margin-bottom:18px}
+.dot{width:6px;height:6px;background:var(--grn);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{box-shadow:0 0 0 5px transparent}}
+.hero h1{font-size:clamp(30px,5.5vw,65px);font-weight:900;line-height:1.1;margin-bottom:14px}
+.grad{background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:15px;color:var(--mut);max-width:560px;margin:0 auto 26px;line-height:1.8}
+.hero-btns{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:linear-gradient(135deg,var(--acc),#5b21b6);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 18px rgba(124,58,237,.38)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(124,58,237,.48)}
+.btn-s{background:transparent;color:var(--txt);border:1px solid var(--bdr);padding:12px 28px;border-radius:10px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s}
+.btn-s:hover{border-color:var(--acc);background:rgba(124,58,237,.09)}
+
+/* OWNER */
+.owner{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:24px;display:flex;align-items:center;gap:18px;margin:36px 0;position:relative;overflow:hidden}
+.owner::before{content:'';position:absolute;top:-40%;right:-10%;width:240px;height:240px;background:radial-gradient(circle,rgba(124,58,237,.11),transparent 60%);pointer-events:none}
+.ava{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;border:3px solid rgba(124,58,237,.32)}
+.owner h3{font-size:19px;font-weight:900;margin-bottom:5px}
+.socials{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.soc{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:7px;padding:4px 9px;font-size:11px;color:var(--mut);text-decoration:none;transition:all .2s;font-weight:600}
+.soc:hover{border-color:var(--acc);color:var(--txt)}
+
+/* ABOUT SECTION */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:24px}
+.about-card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:22px;transition:all .2s}
+.about-card:hover{border-color:var(--acc);transform:translateY(-2px)}
+.about-card .icon{font-size:32px;margin-bottom:12px}
+.about-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.about-card p{font-size:12px;color:var(--mut);line-height:1.8}
+
+/* TABS */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;padding:5px;background:var(--surf);border-radius:12px;border:1px solid var(--bdr)}
+.tb{flex:1;min-width:80px;padding:8px 10px;border:none;background:transparent;color:var(--mut);border-radius:8px;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.tb.on{background:var(--card);color:var(--txt);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.tc{display:none}.tc.on{display:block;animation:fi .3s ease}
+.sec{padding:38px 0}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.si{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.sh h2{font-size:22px;font-weight:900}.sh p{font-size:12px;color:var(--mut);margin-top:2px}
+
+/* BOT GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.bc{background:var(--card);border:1px solid var(--bdr);border-radius:13px;padding:18px;transition:all .2s;position:relative;overflow:hidden}
+.bc:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 6px 22px rgba(124,58,237,.15)}
+.bc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),var(--acc2));opacity:0;transition:opacity .2s}
+.bc:hover::after{opacity:1}
+.bh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.bi{font-size:24px;width:45px;height:45px;background:rgba(124,58,237,.09);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.bp{background:rgba(16,185,129,.11);border:1px solid rgba(16,185,129,.24);color:var(--grn);padding:3px 7px;border-radius:6px;font-size:11px;font-weight:700;font-family:'Space Mono',monospace}
+.bc h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.addons{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
+.addon{padding:3px 7px;border-radius:5px;font-size:10px;font-weight:600}
+.addon.p{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.18);color:#a78bfa}
+.addon.g{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.18);color:var(--grn)}
+.addon.c{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.18);color:var(--acc2)}
+.addon.a{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18);color:var(--acc3)}
+.ob{width:100%;background:linear-gradient(135deg,var(--acc),#5b21b6);color:#fff;border:none;padding:9px;border-radius:8px;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s}
+.ob:hover{opacity:.88;transform:scale(1.01)}
+.special{border-color:rgba(124,58,237,.32)!important;background:rgba(124,58,237,.04)!important}
+.special .ob{background:linear-gradient(135deg,var(--acc3),#d97706)}
+.special .bp{color:var(--acc3)!important;background:rgba(245,158,11,.08)!important;border-color:rgba(245,158,11,.22)!important}
+
+/* MODALS */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .22s;backdrop-filter:blur(8px)}
+.ov.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--bdr);border-radius:20px;padding:32px;max-width:460px;width:100%;max-height:92vh;overflow-y:auto;transform:translateY(16px);transition:transform .22s;position:relative}
+.ov.open .modal{transform:translateY(0)}
+.mcl{position:absolute;top:12px;left:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--bdr);background:transparent;color:var(--mut);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.mcl:hover{border-color:var(--red);color:var(--red)}
+.modal h3{font-size:19px;font-weight:900;margin-bottom:6px}
+.modal .sub{color:var(--mut);font-size:12px;margin-bottom:20px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--mut)}
+.fg input,.fg textarea{width:100%;background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:10px 12px;color:var(--txt);font-size:13px;font-family:'Cairo',sans-serif;outline:none;transition:border-color .2s;resize:vertical}
+.fg input:focus,.fg textarea:focus{border-color:var(--acc)}
+.pays{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:5px}
+.pay{padding:7px;border:1px solid var(--bdr);border-radius:7px;background:var(--surf);color:var(--mut);font-size:11px;font-weight:600;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s;text-align:center}
+.pay:hover,.pay.on{border-color:var(--acc);color:var(--txt);background:rgba(124,58,237,.1)}
+.send{width:100%;background:linear-gradient(135deg,var(--grn),#059669);color:#fff;border:none;padding:12px;border-radius:9px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;margin-top:6px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.send:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(16,185,129,.36)}
+.send.acc{background:linear-gradient(135deg,var(--acc),#5b21b6)}
+.send.acc:hover{box-shadow:0 5px 16px rgba(124,58,237,.36)}
+.errmsg{color:var(--red);font-size:12px;margin-top:5px;display:none;padding:8px 12px;background:rgba(239,68,68,.08);border-radius:7px;border:1px solid rgba(239,68,68,.18)}
+.errmsg.show{display:block}
+.tabs-auth{display:flex;background:var(--surf);border-radius:10px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:20px}
+.auth-tab{flex:1;padding:9px;border:none;background:transparent;color:var(--mut);font-size:13px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s}
+.auth-tab.on{background:var(--card);color:var(--txt)}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--mut);font-size:11px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--bdr)}
+
+/* CAPTCHA */
+.cap-box{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cap-q{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--acc2);letter-spacing:3px}
+.cap-right{display:flex;align-items:center;gap:6px}
+.cap-in{width:70px!important;text-align:center;font-family:'Space Mono',monospace!important;font-size:16px!important}
+.cap-rf{background:none;border:none;color:var(--mut);cursor:pointer;font-size:16px;transition:all .2s;padding:0}
+.cap-rf:hover{color:var(--txt);transform:rotate(90deg)}
+
+footer{border-top:1px solid var(--bdr);padding:30px 0 18px;text-align:center}
+footer p{color:var(--mut);font-size:11px}footer strong{color:var(--acc2)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--grn);color:#fff;padding:11px 18px;border-radius:9px;font-weight:700;font-size:12px;z-index:9999;transform:translateY(60px);opacity:0;transition:all .3s;box-shadow:0 4px 16px rgba(16,185,129,.36)}
+.toast.show{transform:translateY(0);opacity:1}.toast.e{background:var(--red);box-shadow:0 4px 16px rgba(239,68,68,.36)}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(max-width:680px){nav{flex-direction:column;gap:12px}.nav-links{justify-content:center}.owner{flex-direction:column;text-align:center}.socials{justify-content:center}.tabs{flex-direction:column}.pays{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="topBar">
+  <div class="bar-left">
+    <span id="ll">اللغة:</span>
+    <button class="lb on" onclick="setLang('ar',this)">🇸🇦 عربي</button>
+    <button class="lb" onclick="setLang('en',this)">🇬🇧 EN</button>
+    <button class="lb" onclick="setLang('fr',this)">🇫🇷 FR</button>
+    <button class="lb" onclick="setLang('tr',this)">🇹🇷 TR</button>
+    <button class="lb" onclick="setLang('de',this)">🇩🇪 DE</button>
+    <button class="lb" onclick="setLang('es',this)">🇪🇸 ES</button>
+    <button class="lb" onclick="setLang('ru',this)">🇷🇺 RU</button>
+    <button class="lb" onclick="setLang('pt',this)">🇧🇷 PT</button>
+    <button class="lb" onclick="setLang('id',this)">🇮🇩 ID</button>
+  </div>
+  <div class="bar-right">
+    <div class="visit-b">👁 <span id="visitCount">0</span> <span data-i="visits">زيارة</span></div>
+    <div id="authArea"></div>
+  </div>
+</div>
+
+<div class="wrap">
+<nav>
+  <div class="logo"><div class="logo-ico">🤖</div><div class="logo-txt">Projects <span>Bots</span></div></div>
+  <div class="nav-links">
+    <button class="nl" onclick="switchTab('discord')">💬 <span data-i="nav1">ديسكورد</span></button>
+    <button class="nl" onclick="switchTab('telegram')">✈️ <span data-i="nav2">تيليجرام</span></button>
+    <button class="nl" onclick="switchTab('whatsapp')">📱 <span data-i="nav3">واتساب</span></button>
+    <button class="nl" onclick="switchTab('chrome')">🌐 Chrome</button>
+    <button class="nl" onclick="switchTab('about')">ℹ️ <span data-i="nav6">عنّا</span></button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge"><span class="dot"></span><span data-i="h1">متاح للطلبات الآن</span></div>
+  <h1><span class="grad" data-i="h2">بوتات احترافية</span><br><span data-i="h3">لكل منصة</span></h1>
+  <p data-i="h4">تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط.</p>
+  <div class="hero-btns">
+    <button class="btn-p" onclick="switchTab('discord')" data-i="h5">📦 اطلب الآن</button>
+    <button class="btn-s" onclick="switchTab('about')"><span data-i="h6">تعرف علينا</span> ℹ️</button>
+  </div>
+</div>
+
+<div class="owner">
+  <div class="ava">👑</div>
+  <div>
+    <h3>مروان | Wano</h3>
+    <p style="color:var(--mut);font-size:12px" data-i="od">مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل</p>
+    <div class="socials">
+      <a href="https://discord.com/users/wn6b" target="_blank" class="soc">💬 @wn6b</a>
+      <a href="https://youtube.com/@wn5b" target="_blank" class="soc">▶️ @wn5b</a>
+      <a href="https://tiktok.com/@w_n6b" target="_blank" class="soc">🎵 @w_n6b</a>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tb on" id="btn-discord" onclick="switchTab('discord',this)">💬 <span data-i="t1">ديسكورد</span></button>
+  <button class="tb" id="btn-telegram" onclick="switchTab('telegram',this)">✈️ <span data-i="t2">تيليجرام</span></button>
+  <button class="tb" id="btn-whatsapp" onclick="switchTab('whatsapp',this)">📱 <span data-i="t3">واتساب</span></button>
+  <button class="tb" id="btn-chrome" onclick="switchTab('chrome',this)">🌐 Chrome</button>
+  <button class="tb" id="btn-about" onclick="switchTab('about',this)">ℹ️ <span data-i="t6">عنّا</span></button>
+</div>
+
+<!-- ======= DISCORD ======= -->
+<div id="tab-discord" class="tc on sec">
+  <div class="sh"><div class="si" style="background:rgba(88,101,242,.12)">💬</div><div><h2 data-i="d1">بوتات ديسكورد</h2><p data-i="d2">جميع البوتات المسموح بها على Discord</p></div></div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="bp">$15+</span></div><h3>Moderation Bot</h3><div class="addons"><span class="addon g">✓ باند / كيك / ميوت</span><span class="addon g">✓ تحذيرات</span><span class="addon c">✓ لوق كامل</span><span class="addon p">✓ Slash Commands</span><span class="addon a">✓ Anti-Spam</span></div><button class="ob" onclick="openOrder('Moderation Bot','$15+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎉</div><span class="bp">$12+</span></div><h3>Giveaway Bot</h3><div class="addons"><span class="addon g">✓ جدولة تلقائية</span><span class="addon c">✓ شروط دخول</span><span class="addon p">✓ إعادة السحب</span><span class="addon a">✓ أدوار مخصصة</span></div><button class="ob" onclick="openOrder('Giveaway Bot','$12+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="bp">$18+</span></div><h3>Roles Bot</h3><div class="addons"><span class="addon g">✓ Self Roles</span><span class="addon c">✓ Reaction Roles</span><span class="addon p">✓ Auto Roles</span><span class="addon a">✓ Level Roles</span><span class="addon g">✓ Button Roles</span></div><button class="ob" onclick="openOrder('Roles Bot','$18+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$20+</span></div><h3>Economy Bot</h3><div class="addons"><span class="addon g">✓ عملة مخصصة</span><span class="addon c">✓ متجر</span><span class="addon p">✓ بنك</span><span class="addon a">✓ مباريات</span><span class="addon g">✓ سرقة</span><span class="addon c">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Economy Bot','$20+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$15+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ TicTacToe</span><span class="addon p">✓ Wordle</span><span class="addon a">✓ بلاك جاك</span><span class="addon g">✓ RPS</span></div><button class="ob" onclick="openOrder('Games Bot','$15+')">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="bp">$14+</span></div><h3>Leveling Bot</h3><div class="addons"><span class="addon g">✓ نظام XP</span><span class="addon c">✓ ليدربورد</span><span class="addon p">✓ رتب تلقائية</span><span class="addon a">✓ مكافآت</span><span class="addon g">✓ بطاقة Rank</span></div><button clas
