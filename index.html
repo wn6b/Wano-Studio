@@ -683,4 +683,85 @@
         <div id="ownerPanel" style="display:none" class="owner-panel">
             <h3>👑 <span data-i="ownerPanel">لوحة المالك — مروان | Wano</span></h3>
             <div class="panel-stats">
-                <div cl
+                <div cl            <div class="panel-stats">
+                <div class="ps"><div class="num" id="pVisits">0</div><div class="lbl" data-i="visits">زيارة</div></div>
+                <div class="ps"><div class="num" id="pOrders">0</div><div class="lbl" data-i="orders">طلب</div></div>
+                <div class="ps"><div class="num" id="pUsers">0</div><div class="lbl" data-i="pUsersL">مستخدم</div></div>
+            </div>
+            <div class="panel-tabs">
+                <button class="ptab on" onclick="panelTab('orders',this)" data-i="ptOrders">📦 الطلبات</button>
+                <button class="ptab" onclick="panelTab('users',this)" data-i="ptUsers">👥 الحسابات</button>
+            </div>
+            <div id="pOrdersList"></div>
+            <div id="pUsersList" style="display:none"></div>
+        </div>
+
+    </div>
+    <div class="wrap">
+        <footer>
+            <p>🤖 <strong>Projects Bots</strong> — <span data-i="footerRights">جميع الحقوق محفوظة لـ</span> <strong>مروان | Wano</strong> © 2026</p>
+            <p style="margin-top:5px;font-size:10px" data-i="footerNote">⚠️ إنشاء ملفات ومشاريع البوتات فقط — لا يشمل التشغيل أو الاستضافة</p>
+        </footer>
+    </div>
+
+    <div class="ov" id="ovOrder">
+        <div class="modal">
+            <button class="mcl" onclick="closeModal('ovOrder')">✕</button>
+            <div style="font-size:26px;margin-bottom:9px">📦</div>
+            <h3 data-i="ord1">طلب مشروع</h3>
+            <p class="sub" data-i="ord2">📱 سيصلك رد من المطور مباشرة عبر واتساب</p>
+            <div class="fg"><label data-i="ord3">اسم البوت / المشروع</label><input id="bname" readonly></div>
+            <div class="fg"><label data-i="ord4">اسمك</label><input id="cname" placeholder="مثال: أحمد"></div>
+            <div class="fg"><label data-i="ord5">تواصل (واتساب أو ديسكورد)</label><input id="ccon" placeholder="+966XXXXXXXXX أو @username"></div>
+            <div id="descArea" class="fg" style="display:none"><label data-i="ord6">وصف ما تريده بالتفصيل</label><textarea id="cdesc" rows="4" placeholder="اشرح البوت والأوامر والميزات التي تريدها..."></textarea></div>
+            <div class="fg"><label data-i="ord7">الميزانية التقريبية</label><input id="cbudget" placeholder="مثال: $25"></div>
+            <div class="fg"><label data-i="ord8">طريقة الدفع</label>
+                <div class="pays">
+                    <button class="pay" onclick="selPay(this,'Vodafone Cash')">📱 فودافون كاش</button>
+                    <button class="pay" onclick="selPay(this,'PayPal')">💳 PayPal</button>
+                    <button class="pay" onclick="selPay(this,'Binance')">🟡 Binance</button>
+                    <button class="pay" onclick="selPay(this,'USDT')">💲 USDT</button>
+                    <button class="pay" onclick="selPay(this,'Bank')">🏦 تحويل بنكي</button>
+                    <button class="pay" onclick="selPay(this,'Other')">🔄 أخرى</button>
+                </div>
+            </div>
+            <button class="send" onclick="submitOrder()" data-i="ord9">📤 إرسال الطلب عبر واتساب</button>
+        </div>
+    </div>
+
+    <div class="ov" id="ovAuth">
+        <div class="modal" style="max-width:400px">
+            <button class="mcl" onclick="closeModal('ovAuth')">✕</button>
+            <div style="font-size:26px;margin-bottom:9px">🔐</div>
+            <div class="tabs-auth">
+                <button class="auth-tab on" id="tab-login-btn" onclick="authSwitch('login')" data-i="login">تسجيل دخول</button>
+                <button class="auth-tab" id="tab-reg-btn" onclick="authSwitch('register')" data-i="register">إنشاء حساب</button>
+            </div>
+            <div id="loginForm">
+                <div class="fg"><label data-i="lbl1">الإيميل</label><input type="email" id="lemail" placeholder="example@gmail.com"></div>
+                <div class="fg"><label data-i="lbl2">الباسورد</label><input type="password" id="lpass" placeholder="••••••••"></div>
+                <div class="errmsg" id="lerr"></div>
+                <div class="cap-box"><span class="cap-q" id="capQ"></span><div class="cap-right"><input class="cap-in" type="number" id="capAns" placeholder="؟"><button class="cap-rf" onclick="newCaptcha()">🔄</button></div></div>
+                <button class="send acc" onclick="doLogin()" data-i="lbl3">🔑 دخول</button>
+                <div class="divider" data-i="or">أو</div>
+                <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="noAcc">ما عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="authSwitch('register')" data-i="createOne">أنشئ حساب</span></p>
+            </div>
+            <div id="registerForm" style="display:none">
+                <div class="fg"><label data-i="rl1">الاسم</label><input id="rname" placeholder="مثال: أحمد"></div>
+                <div class="fg"><label data-i="rl2">الإيميل</label><input type="email" id="remail" placeholder="example@gmail.com"></div>
+                <div class="fg"><label data-i="rl3">الباسورد (6 أحرف على الأقل)</label><input type="password" id="rpass" placeholder="••••••••"></div>
+                <div class="fg"><label data-i="rl4">تأكيد الباسورد</label><input type="password" id="rpass2" placeholder="••••••••"></div>
+                <div class="errmsg" id="rerr"></div>
+                <div class="cap-box"><span class="cap-q" id="capQ2"></span><div class="cap-right"><input class="cap-in" type="number" id="capAns2" placeholder="؟"><button class="cap-rf" onclick="newCaptcha()">🔄</button></div></div>
+                <button class="send acc" onclick="doRegister()" data-i="rl5">✅ إنشاء الحساب</button>
+                <div class="divider" data-i="or">أو</div>
+                <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="haveAcc">عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="authSwitch('login')" data-i="signIn">سجّل دخول</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
