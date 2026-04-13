@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="topBar">
-  <div class="bar-left">
+  <div class="bar-l">
     <span id="ll">اللغة:</span>
     <button class="lb on" onclick="setLang('ar',this)">🇸🇦 عربي</button>
     <button class="lb" onclick="setLang('en',this)">🇬🇧 EN</button>
@@ -21,223 +21,219 @@
     <button class="lb" onclick="setLang('pt',this)">🇧🇷 PT</button>
     <button class="lb" onclick="setLang('id',this)">🇮🇩 ID</button>
   </div>
-  <div class="bar-right">
-    <div class="stat-b visits">👁 <span id="visitCount">0</span> <span data-i="visits">زيارة</span></div>
-    <div class="stat-b orders">📦 <span id="orderCount">0</span> <span data-i="orders">طلب</span></div>
+  <div class="bar-r">
+    <div class="sb v">👁 <span id="vCount">…</span> <span data-i="vis">زيارة</span></div>
+    <div class="sb o">📦 <span id="oCount">…</span> <span data-i="ords">طلب</span></div>
     <div id="authArea"></div>
   </div>
 </div>
 
 <div class="wrap">
 <nav>
-  <div class="logo"><div class="logo-ico">🤖</div><div class="logo-txt">Projects <span>Bots</span></div></div>
-  <div class="nav-links">
-    <button class="nl" onclick="switchTab('discord')">💬 <span data-i="nav1">ديسكورد</span> <span class="cnt">19</span></button>
-    <button class="nl" onclick="switchTab('telegram')">✈️ <span data-i="nav2">تيليجرام</span> <span class="cnt">15</span></button>
-    <button class="nl" onclick="switchTab('whatsapp')">📱 <span data-i="nav3">واتساب</span> <span class="cnt">10</span></button>
-    <button class="nl" onclick="switchTab('chrome')">🌐 Chrome <span class="cnt">3</span></button>
-    <button class="nl" onclick="switchTab('about')">ℹ️ <span data-i="nav6">عنّا</span></button>
+  <div class="logo"><div class="lic">🤖</div><div class="ltx">Projects <span>Bots</span></div></div>
+  <div class="nls">
+    <button class="nl" onclick="switchTab('discord')">💬 <span data-i="n1">ديسكورد</span> <span class="ct">19</span></button>
+    <button class="nl" onclick="switchTab('telegram')">✈️ <span data-i="n2">تيليجرام</span> <span class="ct">15</span></button>
+    <button class="nl" onclick="switchTab('whatsapp')">📱 <span data-i="n3">واتساب</span> <span class="ct">10</span></button>
+    <button class="nl" onclick="switchTab('chrome')">🌐 Chrome <span class="ct">3</span></button>
+    <button class="nl" onclick="switchTab('about')">ℹ️ <span data-i="n6">عنّا</span></button>
   </div>
 </nav>
-
 <div class="hero">
   <div class="badge"><span class="dot"></span><span data-i="h1">متاح للطلبات الآن</span></div>
   <h1><span class="grad" data-i="h2">بوتات احترافية</span><br><span data-i="h3">لكل منصة</span></h1>
   <p data-i="h4">تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط.</p>
-  <div class="hero-btns">
-    <button class="btn-p" onclick="switchTab('discord')" data-i="h5">📦 اطلب الآن</button>
-    <button class="btn-s" onclick="switchTab('about')"><span data-i="h6">تعرف علينا</span> ℹ️</button>
+  <div class="hbtns">
+    <button class="bp" onclick="switchTab('discord')" data-i="h5">📦 اطلب الآن</button>
+    <button class="bs" onclick="switchTab('about')"><span data-i="h6">تعرف علينا</span> ℹ️</button>
   </div>
 </div>
-
-<div class="owner">
+<div class="owc">
   <div class="ava">👑</div>
-  <div class="owner-info">
+  <div>
     <h3>مروان | Wano</h3>
-    <div class="owner-badges">
-      <span class="obadge owner">👑 Owner</span>
-      <span class="obadge dev">💻 Developer</span>
-      <span class="obadge verified">✓ Verified</span>
-      <span class="obadge founder">🚀 Founder</span>
-      <span class="obadge bot-expert">🤖 Bot Expert</span>
+    <div class="obdg">
+      <span class="bdg" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:var(--ow)">👑 Owner</span>
+      <span class="bdg" style="background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa">💻 Developer</span>
+      <span class="bdg" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:var(--grn)">✓ Verified</span>
+      <span class="bdg" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red)">🚀 Founder</span>
+      <span class="bdg" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.28);color:var(--acc2)">🤖 Bot Expert</span>
     </div>
-    <p class="owner-desc" data-i="od">مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل</p>
-    <div class="socials">
+    <p style="color:var(--mut);font-size:12px" data-i="od">مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل</p>
+    <div class="socs">
       <a href="https://discord.com/users/wn6b" target="_blank" class="soc">💬 Discord: @wn6b</a>
       <a href="https://youtube.com/@wn5b" target="_blank" class="soc">▶️ YouTube: @wn5b</a>
       <a href="https://tiktok.com/@w_n6b" target="_blank" class="soc">🎵 TikTok: @w_n6b</a>
-      <span class="soc owner-crown">👑 مروان | Wano</span>
+      <span class="soc" style="border-color:rgba(245,158,11,.3);color:var(--ow)">👑 مروان | Wano</span>
     </div>
   </div>
 </div>
-
 <div class="tabs">
-  <button class="tb on" id="btn-discord" onclick="switchTab('discord',this)">💬 <span data-i="t1">ديسكورد</span> <span class="cnt">19</span></button>
-  <button class="tb" id="btn-telegram" onclick="switchTab('telegram',this)">✈️ <span data-i="t2">تيليجرام</span> <span class="cnt">15</span></button>
-  <button class="tb" id="btn-whatsapp" onclick="switchTab('whatsapp',this)">📱 <span data-i="t3">واتساب</span> <span class="cnt">10</span></button>
-  <button class="tb" id="btn-chrome" onclick="switchTab('chrome',this)">🌐 Chrome <span class="cnt">3</span></button>
+  <button class="tb on" id="btn-discord" onclick="switchTab('discord',this)">💬 <span data-i="t1">ديسكورد</span> <span class="ct">19</span></button>
+  <button class="tb" id="btn-telegram" onclick="switchTab('telegram',this)">✈️ <span data-i="t2">تيليجرام</span> <span class="ct">15</span></button>
+  <button class="tb" id="btn-whatsapp" onclick="switchTab('whatsapp',this)">📱 <span data-i="t3">واتساب</span> <span class="ct">10</span></button>
+  <button class="tb" id="btn-chrome" onclick="switchTab('chrome',this)">🌐 Chrome <span class="ct">3</span></button>
   <button class="tb" id="btn-about" onclick="switchTab('about',this)">ℹ️ <span data-i="t6">عنّا</span></button>
 </div>
 <div id="tab-discord" class="tc on sec">
   <div class="sh"><div class="si" style="background:rgba(88,101,242,.12)">💬</div><div><h2 data-i="d1">بوتات ديسكورد</h2><p data-i="d2">جميع البوتات المسموح بها على Discord</p></div></div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="bp">$15+</span></div><h3 data-i="dc1n">Moderation Bot</h3><div class="addons"><span class="addon g" data-i="dc1a1">✓ باند / كيك / ميوت</span><span class="addon g" data-i="dc1a2">✓ تحذيرات</span><span class="addon c" data-i="dc1a3">✓ لوق كامل</span><span class="addon p">✓ Slash Commands</span><span class="addon a">✓ Anti-Spam</span></div><button class="ob" onclick="openOrder('Moderation Bot','$15+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎉</div><span class="bp">$12+</span></div><h3>Giveaway Bot</h3><div class="addons"><span class="addon g">✓ جدولة تلقائية</span><span class="addon c">✓ شروط دخول</span><span class="addon p">✓ إعادة السحب</span><span class="addon a">✓ أدوار مخصصة</span></div><button class="ob" onclick="openOrder('Giveaway Bot','$12+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="bp">$18+</span></div><h3>Roles Bot</h3><div class="addons"><span class="addon g">✓ Self Roles</span><span class="addon c">✓ Reaction Roles</span><span class="addon p">✓ Auto Roles</span><span class="addon a">✓ Level Roles</span><span class="addon g">✓ Button Roles</span></div><button class="ob" onclick="openOrder('Roles Bot','$18+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$20+</span></div><h3>Economy Bot</h3><div class="addons"><span class="addon g">✓ عملة مخصصة</span><span class="addon c">✓ متجر</span><span class="addon p">✓ بنك</span><span class="addon a">✓ مباريات</span><span class="addon g">✓ سرقة</span></div><button class="ob" onclick="openOrder('Economy Bot','$20+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$15+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ TicTacToe</span><span class="addon p">✓ Wordle</span><span class="addon a">✓ بلاك جاك</span><span class="addon g">✓ RPS</span></div><button class="ob" onclick="openOrder('Games Bot','$15+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="bp">$14+</span></div><h3>Leveling Bot</h3><div class="addons"><span class="addon g">✓ نظام XP</span><span class="addon c">✓ ليدربورد</span><span class="addon p">✓ رتب تلقائية</span><span class="addon a">✓ بطاقة Rank</span></div><button class="ob" onclick="openOrder('Leveling Bot','$14+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎫</div><span class="bp">$16+</span></div><h3>Ticket Bot</h3><div class="addons"><span class="addon g">✓ فتح / إغلاق</span><span class="addon c">✓ ترانسكريبت</span><span class="addon p">✓ أرشفة</span><span class="addon a">✓ فئات مخصصة</span></div><button class="ob" onclick="openOrder('Ticket Bot','$16+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔔</div><span class="bp">$12+</span></div><h3>Welcome Bot</h3><div class="addons"><span class="addon g">✓ رسالة ترحيب</span><span class="addon c">✓ صور مخصصة</span><span class="addon p">✓ DM تلقائي</span><span class="addon a">✓ رتبة تلقائية</span></div><button class="ob" onclick="openOrder('Welcome Bot','$12+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🤖</div><span class="bp">$25+</span></div><h3>AI Chat Bot</h3><div class="addons"><span class="addon g">✓ ChatGPT مدمج</span><span class="addon c">✓ شخصية مخصصة</span><span class="addon p">✓ ذاكرة محادثة</span><span class="addon a">✓ قنوات محددة</span></div><button class="ob" onclick="openOrder('AI Chat Bot','$25+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🛍️</div><span class="bp">$22+</span></div><h3>Store Bot</h3><div class="addons"><span class="addon g">✓ عرض منتجات</span><span class="addon c">✓ كوبونات</span><span class="addon p">✓ إشعارات</span><span class="addon a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Store Bot Discord','$22+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔒</div><span class="bp">$16+</span></div><h3>Verify Bot</h3><div class="addons"><span class="addon g">✓ Captcha</span><span class="addon c">✓ أسئلة مخصصة</span><span class="addon p">✓ رتبة تلقائية</span><span class="addon a">✓ زر تحقق</span></div><button class="ob" onclick="openOrder('Verify Bot','$16+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔗</div><span class="bp">$13+</span></div><h3>Invite Tracker</h3><div class="addons"><span class="addon g">✓ من دعا من</span><span class="addon c">✓ إحصائيات</span><span class="addon p">✓ مكافآت</span><span class="addon a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Invite Tracker','$13+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📡</div><span class="bp">$18+</span></div><h3>Status Bot</h3><div class="addons"><span class="addon g">✓ مراقبة Uptime</span><span class="addon c">✓ تنبيهات</span><span class="addon p">✓ إحصائيات</span><span class="addon a">✓ تلقائي</span></div><button class="ob" onclick="openOrder('Status Bot','$18+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📝</div><span class="bp">$11+</span></div><h3>Logger Bot</h3><div class="addons"><span class="addon g">✓ رسائل محذوفة</span><span class="addon c">✓ تعديلات</span><span class="addon p">✓ دخول / خروج</span><span class="addon a">✓ تقارير</span></div><button class="ob" onclick="openOrder('Logger Bot','$11+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📅</div><span class="bp">$13+</span></div><h3>Reminder Bot</h3><div class="addons"><span class="addon g">✓ جدولة</span><span class="addon c">✓ تكرار</span><span class="addon p">✓ DM</span><span class="addon a">✓ قناة محددة</span></div><button class="ob" onclick="openOrder('Reminder Bot','$13+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎨</div><span class="bp">$14+</span></div><h3>Image Gen Bot</h3><div class="addons"><span class="addon g">✓ بطاقات Rank</span><span class="addon c">✓ شهادات</span><span class="addon p">✓ أفاتار</span><span class="addon a">✓ ذكاء اصطناعي</span></div><button class="ob" onclick="openOrder('Image Gen Bot','$14+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$17+</span></div><h3>Dashboard Bot</h3><div class="addons"><span class="addon g">✓ لوحة ويب</span><span class="addon c">✓ إحصائيات السيرفر</span><span class="addon p">✓ تحكم كامل</span><span class="addon a">✓ تسجيل دخول</span></div><button class="ob" onclick="openOrder('Dashboard Bot','$17+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="bp">$19+</span></div><h3>AutoMod Bot</h3><div class="addons"><span class="addon g">✓ فلترة تلقائية</span><span class="addon c">✓ Anti-Raid</span><span class="addon p">✓ Anti-Nuke</span><span class="addon a">✓ حماية متقدمة</span></div><button class="ob" onclick="openOrder('AutoMod Bot','$19+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc disabled"><div class="bh"><div class="bi">🎵</div><span class="unavail-tag" data-i="unavail">غير متوفر حالياً</span></div><h3>Music Bot</h3><div class="addons"><span class="addon g">✓ YouTube</span><span class="addon c">✓ Queue</span><span class="addon p">✓ تحكم كامل</span></div><button class="ob" disabled data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc special"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="bp">$25-$35</span></div><h3 data-i="customD">بوت Discord مخصص</h3><div class="addons"><span class="addon a" data-i="custa1">✓ أي فكرة تريدها</span><span class="addon p" data-i="custa2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('بوت Discord مخصص','$25-$35',true)" data-i="customBtn">✨ اطلب بوتك المخصص</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="pr-tag">$15+</span></div><h3>Moderation Bot</h3><div class="ads"><span class="ad g">✓ باند/كيك/ميوت</span><span class="ad g">✓ تحذيرات</span><span class="ad c">✓ لوق كامل</span><span class="ad p">✓ Slash Commands</span><span class="ad a">✓ Anti-Spam</span></div><button class="ob" onclick="openOrder('Moderation Bot','$15+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎉</div><span class="pr-tag">$12+</span></div><h3>Giveaway Bot</h3><div class="ads"><span class="ad g">✓ جدولة تلقائية</span><span class="ad c">✓ شروط دخول</span><span class="ad p">✓ إعادة السحب</span><span class="ad a">✓ أدوار مخصصة</span></div><button class="ob" onclick="openOrder('Giveaway Bot','$12+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎭</div><span class="pr-tag">$18+</span></div><h3>Roles Bot</h3><div class="ads"><span class="ad g">✓ Self Roles</span><span class="ad c">✓ Reaction Roles</span><span class="ad p">✓ Auto Roles</span><span class="ad a">✓ Level Roles</span><span class="ad g">✓ Button Roles</span></div><button class="ob" onclick="openOrder('Roles Bot','$18+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="pr-tag">$20+</span></div><h3>Economy Bot</h3><div class="ads"><span class="ad g">✓ عملة مخصصة</span><span class="ad c">✓ متجر</span><span class="ad p">✓ بنك</span><span class="ad a">✓ مباريات</span><span class="ad g">✓ سرقة</span></div><button class="ob" onclick="openOrder('Economy Bot','$20+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="pr-tag">$15+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad g">✓ تريفيا</span><span class="ad c">✓ TicTacToe</span><span class="ad p">✓ Wordle</span><span class="ad a">✓ بلاك جاك</span><span class="ad g">✓ RPS</span></div><button class="ob" onclick="openOrder('Games Bot','$15+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="pr-tag">$14+</span></div><h3>Leveling Bot</h3><div class="ads"><span class="ad g">✓ نظام XP</span><span class="ad c">✓ ليدربورد</span><span class="ad p">✓ رتب تلقائية</span><span class="ad a">✓ بطاقة Rank</span></div><button class="ob" onclick="openOrder('Leveling Bot','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎫</div><span class="pr-tag">$16+</span></div><h3>Ticket Bot</h3><div class="ads"><span class="ad g">✓ فتح/إغلاق</span><span class="ad c">✓ ترانسكريبت</span><span class="ad p">✓ أرشفة</span><span class="ad a">✓ فئات مخصصة</span></div><button class="ob" onclick="openOrder('Ticket Bot','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔔</div><span class="pr-tag">$12+</span></div><h3>Welcome Bot</h3><div class="ads"><span class="ad g">✓ رسالة ترحيب</span><span class="ad c">✓ صور مخصصة</span><span class="ad p">✓ DM تلقائي</span><span class="ad a">✓ رتبة تلقائية</span></div><button class="ob" onclick="openOrder('Welcome Bot','$12+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🤖</div><span class="pr-tag">$25+</span></div><h3>AI Chat Bot</h3><div class="ads"><span class="ad g">✓ ChatGPT مدمج</span><span class="ad c">✓ شخصية مخصصة</span><span class="ad p">✓ ذاكرة محادثة</span><span class="ad a">✓ قنوات محددة</span></div><button class="ob" onclick="openOrder('AI Chat Bot','$25+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛍️</div><span class="pr-tag">$22+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad g">✓ عرض منتجات</span><span class="ad c">✓ كوبونات</span><span class="ad p">✓ إشعارات</span><span class="ad a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Store Bot Discord','$22+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔒</div><span class="pr-tag">$16+</span></div><h3>Verify Bot</h3><div class="ads"><span class="ad g">✓ Captcha</span><span class="ad c">✓ أسئلة مخصصة</span><span class="ad p">✓ رتبة تلقائية</span><span class="ad a">✓ زر تحقق</span></div><button class="ob" onclick="openOrder('Verify Bot','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔗</div><span class="pr-tag">$13+</span></div><h3>Invite Tracker</h3><div class="ads"><span class="ad g">✓ من دعا من</span><span class="ad c">✓ إحصائيات</span><span class="ad p">✓ مكافآت</span><span class="ad a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Invite Tracker','$13+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📡</div><span class="pr-tag">$18+</span></div><h3>Status Bot</h3><div class="ads"><span class="ad g">✓ مراقبة Uptime</span><span class="ad c">✓ تنبيهات</span><span class="ad p">✓ إحصائيات</span><span class="ad a">✓ تلقائي</span></div><button class="ob" onclick="openOrder('Status Bot','$18+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📝</div><span class="pr-tag">$11+</span></div><h3>Logger Bot</h3><div class="ads"><span class="ad g">✓ رسائل محذوفة</span><span class="ad c">✓ تعديلات</span><span class="ad p">✓ دخول/خروج</span><span class="ad a">✓ تقارير</span></div><button class="ob" onclick="openOrder('Logger Bot','$11+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📅</div><span class="pr-tag">$13+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad g">✓ جدولة</span><span class="ad c">✓ تكرار</span><span class="ad p">✓ DM</span><span class="ad a">✓ قناة محددة</span></div><button class="ob" onclick="openOrder('Reminder Bot','$13+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎨</div><span class="pr-tag">$14+</span></div><h3>Image Gen Bot</h3><div class="ads"><span class="ad g">✓ بطاقات Rank</span><span class="ad c">✓ شهادات</span><span class="ad p">✓ أفاتار</span><span class="ad a">✓ AI</span></div><button class="ob" onclick="openOrder('Image Gen Bot','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="pr-tag">$17+</span></div><h3>Dashboard Bot</h3><div class="ads"><span class="ad g">✓ لوحة ويب</span><span class="ad c">✓ إحصائيات السيرفر</span><span class="ad p">✓ تحكم كامل</span><span class="ad a">✓ تسجيل دخول</span></div><button class="ob" onclick="openOrder('Dashboard Bot','$17+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛡️</div><span class="pr-tag">$19+</span></div><h3>AutoMod Bot</h3><div class="ads"><span class="ad g">✓ فلترة تلقائية</span><span class="ad c">✓ Anti-Raid</span><span class="ad p">✓ Anti-Nuke</span><span class="ad a">✓ حماية متقدمة</span></div><button class="ob" onclick="openOrder('AutoMod Bot','$19+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc dis"><div class="bh"><div class="bi">🎵</div><span class="un-tag" data-i="uv">غير متوفر حالياً</span></div><h3>Music Bot</h3><div class="ads"><span class="ad g">✓ YouTube</span><span class="ad c">✓ Queue</span><span class="ad p">✓ تحكم كامل</span></div><button class="ob" disabled data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="pr-tag">$25-$35</span></div><h3 data-i="cD">بوت Discord مخصص</h3><div class="ads"><span class="ad a" data-i="ca1">✓ أي فكرة تريدها</span><span class="ad p" data-i="ca2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('بوت Discord مخصص','$25-$35',true)" data-i="cB">✨ اطلب بوتك المخصص</button></div>
   </div>
 </div>
 
 <div id="tab-telegram" class="tc sec">
   <div class="sh"><div class="si" style="background:rgba(0,136,204,.11)">✈️</div><div><h2>بوتات تيليجرام</h2><p>بوتات Telegram عبر BotFather API</p></div></div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">🛒</div><span class="bp">$18+</span></div><h3>Store Bot</h3><div class="addons"><span class="addon g">✓ عرض منتجات</span><span class="addon c">✓ سلة تسوق</span><span class="addon p">✓ كوبونات</span><span class="addon a">✓ لوحة أدمن</span></div><button class="ob" onclick="openOrder('Store Bot Telegram','$18+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📢</div><span class="bp">$14+</span></div><h3>Admin Bot</h3><div class="addons"><span class="addon g">✓ حظر / طرد</span><span class="addon c">✓ تحذيرات</span><span class="addon p">✓ رسائل مجدولة</span><span class="addon a">✓ فلتر كلمات</span></div><button class="ob" onclick="openOrder('Admin Bot Telegram','$14+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🤖</div><span class="bp">$22+</span></div><h3>AI Assistant Bot</h3><div class="addons"><span class="addon g">✓ ChatGPT</span><span class="addon c">✓ ترجمة</span><span class="addon p">✓ تلخيص</span><span class="addon a">✓ ذاكرة</span></div><button class="ob" onclick="openOrder('AI Assistant Telegram','$22+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">💳</div><span class="bp">$25+</span></div><h3>Payment Bot</h3><div class="addons"><span class="addon g">✓ دفع مدمج</span><span class="addon c">✓ فواتير</span><span class="addon p">✓ استرداد</span><span class="addon a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Payment Bot Telegram','$25+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📋</div><span class="bp">$16+</span></div><h3>Quiz Bot</h3><div class="addons"><span class="addon g">✓ أسئلة متعددة</span><span class="addon c">✓ نتائج فورية</span><span class="addon p">✓ إحصائيات</span><span class="addon a">✓ تصدير</span></div><button class="ob" onclick="openOrder('Quiz Bot Telegram','$16+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔐</div><span class="bp">$15+</span></div><h3>Channel Guard</h3><div class="addons"><span class="addon g">✓ Anti-Spam</span><span class="addon c">✓ موافقة يدوية</span><span class="addon p">✓ فلتر كلمات</span><span class="addon a">✓ Captcha</span></div><button class="ob" onclick="openOrder('Channel Guard Telegram','$15+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$19+</span></div><h3>Stats Bot</h3><div class="addons"><span class="addon g">✓ إحصائيات</span><span class="addon c">✓ نشاط الأعضاء</span><span class="addon p">✓ رسوم بيانية</span><span class="addon a">✓ تقارير</span></div><button class="ob" onclick="openOrder('Stats Bot Telegram','$19+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔗</div><span class="bp">$13+</span></div><h3>Referral Bot</h3><div class="addons"><span class="addon g">✓ رابط إحالة</span><span class="addon c">✓ مكافآت</span><span class="addon p">✓ ليدربورد</span><span class="addon a">✓ تتبع</span></div><button class="ob" onclick="openOrder('Referral Bot Telegram','$13+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📌</div><span class="bp">$12+</span></div><h3>Reminder Bot</h3><div class="addons"><span class="addon g">✓ تذكيرات</span><span class="addon c">✓ جدولة</span><span class="addon p">✓ تكرار</span><span class="addon a">✓ DM</span></div><button class="ob" onclick="openOrder('Reminder Bot Telegram','$12+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$15+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ TicTacToe</span><span class="addon p">✓ RPS</span><span class="addon a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Games Bot Telegram','$15+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📰</div><span class="bp">$17+</span></div><h3>News / RSS Bot</h3><div class="addons"><span class="addon g">✓ RSS تلقائي</span><span class="addon c">✓ مصادر متعددة</span><span class="addon p">✓ جدولة نشر</span><span class="addon a">✓ فلترة</span></div><button class="ob" onclick="openOrder('News Bot Telegram','$17+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🖼️</div><span class="bp">$14+</span></div><h3>Media Downloader</h3><div class="addons"><span class="addon g">✓ يوتيوب</span><span class="addon c">✓ انستجرام</span><span class="addon p">✓ تيك توك</span><span class="addon a">✓ تويتر/X</span></div><button class="ob" onclick="openOrder('Media Downloader Telegram','$14+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🌐</div><span class="bp">$20+</span></div><h3>Multi-Language Bot</h3><div class="addons"><span class="addon g">✓ لغات متعددة</span><span class="addon c">✓ ترجمة تلقائية</span><span class="addon p">✓ لوحة تحكم</span><span class="addon a">✓ إعدادات</span></div><button class="ob" onclick="openOrder('Multi-Language Bot Telegram','$20+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="bp">$18+</span></div><h3>Crypto Tracker Bot</h3><div class="addons"><span class="addon g">✓ أسعار العملات</span><span class="addon c">✓ تنبيهات سعر</span><span class="addon p">✓ رسوم بيانية</span><span class="addon a">✓ تحديث تلقائي</span></div><button class="ob" onclick="openOrder('Crypto Tracker Telegram','$18+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc special"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="bp">$25-$35</span></div><h3 data-i="customT">بوت Telegram مخصص</h3><div class="addons"><span class="addon a" data-i="custa1">✓ أي فكرة تريدها</span><span class="addon p" data-i="custa2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('بوت Telegram مخصص','$25-$35',true)" data-i="customBtn">✨ اطلب بوتك المخصص</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛒</div><span class="pr-tag">$18+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad g">✓ عرض منتجات</span><span class="ad c">✓ سلة تسوق</span><span class="ad p">✓ كوبونات</span><span class="ad a">✓ لوحة أدمن</span></div><button class="ob" onclick="openOrder('Store Bot Telegram','$18+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📢</div><span class="pr-tag">$14+</span></div><h3>Admin Bot</h3><div class="ads"><span class="ad g">✓ حظر/طرد</span><span class="ad c">✓ تحذيرات</span><span class="ad p">✓ رسائل مجدولة</span><span class="ad a">✓ فلتر كلمات</span></div><button class="ob" onclick="openOrder('Admin Bot Telegram','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🤖</div><span class="pr-tag">$22+</span></div><h3>AI Assistant Bot</h3><div class="ads"><span class="ad g">✓ ChatGPT</span><span class="ad c">✓ ترجمة</span><span class="ad p">✓ تلخيص</span><span class="ad a">✓ ذاكرة</span></div><button class="ob" onclick="openOrder('AI Assistant Telegram','$22+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">💳</div><span class="pr-tag">$25+</span></div><h3>Payment Bot</h3><div class="ads"><span class="ad g">✓ دفع مدمج</span><span class="ad c">✓ فواتير</span><span class="ad p">✓ استرداد</span><span class="ad a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Payment Bot Telegram','$25+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📋</div><span class="pr-tag">$16+</span></div><h3>Quiz Bot</h3><div class="ads"><span class="ad g">✓ أسئلة متعددة</span><span class="ad c">✓ نتائج فورية</span><span class="ad p">✓ إحصائيات</span><span class="ad a">✓ تصدير</span></div><button class="ob" onclick="openOrder('Quiz Bot Telegram','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔐</div><span class="pr-tag">$15+</span></div><h3>Channel Guard</h3><div class="ads"><span class="ad g">✓ Anti-Spam</span><span class="ad c">✓ موافقة يدوية</span><span class="ad p">✓ فلتر كلمات</span><span class="ad a">✓ Captcha</span></div><button class="ob" onclick="openOrder('Channel Guard Telegram','$15+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="pr-tag">$19+</span></div><h3>Stats Bot</h3><div class="ads"><span class="ad g">✓ إحصائيات</span><span class="ad c">✓ نشاط الأعضاء</span><span class="ad p">✓ رسوم بيانية</span><span class="ad a">✓ تقارير</span></div><button class="ob" onclick="openOrder('Stats Bot Telegram','$19+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔗</div><span class="pr-tag">$13+</span></div><h3>Referral Bot</h3><div class="ads"><span class="ad g">✓ رابط إحالة</span><span class="ad c">✓ مكافآت</span><span class="ad p">✓ ليدربورد</span><span class="ad a">✓ تتبع</span></div><button class="ob" onclick="openOrder('Referral Bot Telegram','$13+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📌</div><span class="pr-tag">$12+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad g">✓ تذكيرات</span><span class="ad c">✓ جدولة</span><span class="ad p">✓ تكرار</span><span class="ad a">✓ DM</span></div><button class="ob" onclick="openOrder('Reminder Bot Telegram','$12+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="pr-tag">$15+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad g">✓ تريفيا</span><span class="ad c">✓ TicTacToe</span><span class="ad p">✓ RPS</span><span class="ad a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Games Bot Telegram','$15+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📰</div><span class="pr-tag">$17+</span></div><h3>News / RSS Bot</h3><div class="ads"><span class="ad g">✓ RSS تلقائي</span><span class="ad c">✓ مصادر متعددة</span><span class="ad p">✓ جدولة نشر</span><span class="ad a">✓ فلترة</span></div><button class="ob" onclick="openOrder('News Bot Telegram','$17+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🖼️</div><span class="pr-tag">$14+</span></div><h3>Media Downloader</h3><div class="ads"><span class="ad g">✓ يوتيوب</span><span class="ad c">✓ انستجرام</span><span class="ad p">✓ تيك توك</span><span class="ad a">✓ تويتر/X</span></div><button class="ob" onclick="openOrder('Media Downloader Telegram','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🌐</div><span class="pr-tag">$20+</span></div><h3>Multi-Language Bot</h3><div class="ads"><span class="ad g">✓ لغات متعددة</span><span class="ad c">✓ ترجمة تلقائية</span><span class="ad p">✓ لوحة تحكم</span><span class="ad a">✓ إعدادات</span></div><button class="ob" onclick="openOrder('Multi-Language Bot Telegram','$20+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📈</div><span class="pr-tag">$18+</span></div><h3>Crypto Tracker</h3><div class="ads"><span class="ad g">✓ أسعار العملات</span><span class="ad c">✓ تنبيهات سعر</span><span class="ad p">✓ رسوم بيانية</span><span class="ad a">✓ تحديث تلقائي</span></div><button class="ob" onclick="openOrder('Crypto Tracker Telegram','$18+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="pr-tag">$25-$35</span></div><h3 data-i="cT">بوت Telegram مخصص</h3><div class="ads"><span class="ad a" data-i="ca1">✓ أي فكرة تريدها</span><span class="ad p" data-i="ca2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('بوت Telegram مخصص','$25-$35',true)" data-i="cB">✨ اطلب بوتك المخصص</button></div>
   </div>
 </div>
 <div id="tab-whatsapp" class="tc sec">
   <div class="sh"><div class="si" style="background:rgba(37,211,102,.09)">📱</div><div><h2>بوتات واتساب</h2><p>⚠️ Self Bots قانونية لا تنتهك شروط واتساب</p></div></div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">📨</div><span class="bp">$20+</span></div><h3>Auto Reply Bot</h3><div class="addons"><span class="addon g">✓ كلمات مفتاحية</span><span class="addon c">✓ ردود مخصصة</span><span class="addon p">✓ أوقات معينة</span><span class="addon a">✓ قائمة سوداء</span></div><button class="ob" onclick="openOrder('Auto Reply Bot WhatsApp','$20+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">👥</div><span class="bp">$18+</span></div><h3>Group Manager</h3><div class="addons"><span class="addon g">✓ طرد / حظر</span><span class="addon c">✓ ترحيب</span><span class="addon p">✓ Anti-Link</span><span class="addon a">✓ لوق</span></div><button class="ob" onclick="openOrder('Group Manager WhatsApp','$18+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🛍️</div><span class="bp">$22+</span></div><h3>Store Bot</h3><div class="addons"><span class="addon g">✓ قائمة منتجات</span><span class="addon c">✓ طلبات</span><span class="addon p">✓ تتبع</span><span class="addon a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Store Bot WhatsApp','$22+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">💬</div><span class="bp">$19+</span></div><h3>AI Chat Bot</h3><div class="addons"><span class="addon g">✓ ChatGPT</span><span class="addon c">✓ رد ذكي</span><span class="addon p">✓ ذاكرة</span><span class="addon a">✓ شخصية مخصصة</span></div><button class="ob" onclick="openOrder('AI Chat Bot WhatsApp','$19+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="bp">$16+</span></div><h3>Poll Bot</h3><div class="addons"><span class="addon g">✓ تصويت</span><span class="addon c">✓ إحصائيات</span><span class="addon p">✓ وقت محدد</span><span class="addon a">✓ تقرير نهائي</span></div><button class="ob" onclick="openOrder('Poll Bot WhatsApp','$16+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="bp">$14+</span></div><h3>Games Bot</h3><div class="addons"><span class="addon g">✓ تريفيا</span><span class="addon c">✓ تخمين</span><span class="addon p">✓ نقاط</span><span class="addon a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Games Bot WhatsApp','$14+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📌</div><span class="bp">$12+</span></div><h3>Reminder Bot</h3><div class="addons"><span class="addon g">✓ تذكيرات يومية</span><span class="addon c">✓ جدولة</span><span class="addon p">✓ تكرار</span><span class="addon a">✓ قائمة</span></div><button class="ob" onclick="openOrder('Reminder Bot WhatsApp','$12+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🖼️</div><span class="bp">$16+</span></div><h3>Media Downloader</h3><div class="addons"><span class="addon g">✓ يوتيوب</span><span class="addon c">✓ انستجرام</span><span class="addon p">✓ تيك توك</span><span class="addon a">✓ سريع</span></div><button class="ob" onclick="openOrder('Media Downloader WhatsApp','$16+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🔔</div><span class="bp">$13+</span></div><h3>Broadcast Bot</h3><div class="addons"><span class="addon g">✓ إرسال جماعي</span><span class="addon c">✓ قوائم مخصصة</span><span class="addon p">✓ جدولة</span><span class="addon a">✓ تتبع</span></div><button class="ob" onclick="openOrder('Broadcast Bot WhatsApp','$13+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc special"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="bp">$25-$35</span></div><h3 data-i="customW">سيلف بوت واتساب مخصص</h3><div class="addons"><span class="addon a" data-i="custa1">✓ أي فكرة تريدها</span><span class="addon p" data-i="custa2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('سيلف بوت WhatsApp مخصص','$25-$35',true)" data-i="customBtn">✨ اطلب سيلفك المخصص</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📨</div><span class="pr-tag">$20+</span></div><h3>Auto Reply Bot</h3><div class="ads"><span class="ad g">✓ كلمات مفتاحية</span><span class="ad c">✓ ردود مخصصة</span><span class="ad p">✓ أوقات معينة</span><span class="ad a">✓ قائمة سوداء</span></div><button class="ob" onclick="openOrder('Auto Reply Bot WhatsApp','$20+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">👥</div><span class="pr-tag">$18+</span></div><h3>Group Manager</h3><div class="ads"><span class="ad g">✓ طرد/حظر</span><span class="ad c">✓ ترحيب</span><span class="ad p">✓ Anti-Link</span><span class="ad a">✓ لوق</span></div><button class="ob" onclick="openOrder('Group Manager WhatsApp','$18+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🛍️</div><span class="pr-tag">$22+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad g">✓ قائمة منتجات</span><span class="ad c">✓ طلبات</span><span class="ad p">✓ تتبع</span><span class="ad a">✓ تأكيد تلقائي</span></div><button class="ob" onclick="openOrder('Store Bot WhatsApp','$22+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">💬</div><span class="pr-tag">$19+</span></div><h3>AI Chat Bot</h3><div class="ads"><span class="ad g">✓ ChatGPT</span><span class="ad c">✓ رد ذكي</span><span class="ad p">✓ ذاكرة</span><span class="ad a">✓ شخصية مخصصة</span></div><button class="ob" onclick="openOrder('AI Chat Bot WhatsApp','$19+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📊</div><span class="pr-tag">$16+</span></div><h3>Poll Bot</h3><div class="ads"><span class="ad g">✓ تصويت</span><span class="ad c">✓ إحصائيات</span><span class="ad p">✓ وقت محدد</span><span class="ad a">✓ تقرير نهائي</span></div><button class="ob" onclick="openOrder('Poll Bot WhatsApp','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="pr-tag">$14+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad g">✓ تريفيا</span><span class="ad c">✓ تخمين</span><span class="ad p">✓ نقاط</span><span class="ad a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Games Bot WhatsApp','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📌</div><span class="pr-tag">$12+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad g">✓ تذكيرات يومية</span><span class="ad c">✓ جدولة</span><span class="ad p">✓ تكرار</span><span class="ad a">✓ قائمة</span></div><button class="ob" onclick="openOrder('Reminder Bot WhatsApp','$12+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🖼️</div><span class="pr-tag">$16+</span></div><h3>Media Downloader</h3><div class="ads"><span class="ad g">✓ يوتيوب</span><span class="ad c">✓ انستجرام</span><span class="ad p">✓ تيك توك</span><span class="ad a">✓ سريع</span></div><button class="ob" onclick="openOrder('Media Downloader WhatsApp','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🔔</div><span class="pr-tag">$13+</span></div><h3>Broadcast Bot</h3><div class="ads"><span class="ad g">✓ إرسال جماعي</span><span class="ad c">✓ قوائم مخصصة</span><span class="ad p">✓ جدولة</span><span class="ad a">✓ تتبع</span></div><button class="ob" onclick="openOrder('Broadcast Bot WhatsApp','$13+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="pr-tag">$25-$35</span></div><h3 data-i="cW">سيلف بوت واتساب مخصص</h3><div class="ads"><span class="ad a" data-i="ca1">✓ أي فكرة تريدها</span><span class="ad p" data-i="ca2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('سيلف بوت WhatsApp مخصص','$25-$35',true)" data-i="cB">✨ اطلب سيلفك المخصص</button></div>
   </div>
 </div>
 
 <div id="tab-chrome" class="tc sec">
   <div class="sh"><div class="si" style="background:rgba(245,158,11,.09)">🌐</div><div><h2>موقع تعريف Chrome Extension</h2><p>تطوير مواقع تعريف لإضافات Chrome</p></div></div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">🎨</div><span class="bp">$30+</span></div><h3>Landing Page</h3><div class="addons"><span class="addon g">✓ تصميم احترافي</span><span class="addon c">✓ صور شاشة</span><span class="addon p">✓ زر تثبيت</span><span class="addon a">✓ Responsive</span></div><button class="ob" onclick="openOrder('Chrome Extension Landing Page','$30+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📦</div><span class="bp">$45+</span></div><h3>موقع كامل</h3><div class="addons"><span class="addon g">✓ صفحات متعددة</span><span class="addon c">✓ سياسة خصوصية</span><span class="addon p">✓ FAQ</span><span class="addon a">✓ SEO</span></div><button class="ob" onclick="openOrder('Chrome Extension Full Website','$45+')" data-i="orderBtn">🛒 اطلب الآن</button></div>
-    <div class="bc special"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="bp">$25-$35</span></div><h3>موقع Chrome مخصص</h3><div class="addons"><span class="addon a" data-i="custa1">✓ تصميم خاص</span><span class="addon p" data-i="custa2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('موقع Chrome مخصص','$25-$35',true)" data-i="customBtn">✨ اطلب موقعك</button></div>
+    <div class="bc"><div class="bh"><div class="bi">🎨</div><span class="pr-tag">$30+</span></div><h3>Landing Page</h3><div class="ads"><span class="ad g">✓ تصميم احترافي</span><span class="ad c">✓ صور شاشة</span><span class="ad p">✓ زر تثبيت</span><span class="ad a">✓ Responsive</span></div><button class="ob" onclick="openOrder('Chrome Extension Landing Page','$30+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi">📦</div><span class="pr-tag">$45+</span></div><h3>موقع كامل</h3><div class="ads"><span class="ad g">✓ صفحات متعددة</span><span class="ad c">✓ سياسة خصوصية</span><span class="ad p">✓ FAQ</span><span class="ad a">✓ SEO</span></div><button class="ob" onclick="openOrder('Chrome Extension Full Website','$45+')" data-i="oB">🛒 اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="pr-tag">$25-$35</span></div><h3>موقع Chrome مخصص</h3><div class="ads"><span class="ad a" data-i="ca1">✓ تصميم خاص</span><span class="ad p" data-i="ca2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('موقع Chrome مخصص','$25-$35',true)" data-i="cB">✨ اطلب موقعك</button></div>
   </div>
 </div>
 
 <div id="tab-about" class="tc sec">
-  <div class="sh"><div class="si" style="background:rgba(124,58,237,.12)">ℹ️</div><div><h2 data-i="about1">عن المشروع</h2><p data-i="about2">كل ما تحتاج معرفته عن Projects Bots</p></div></div>
-  <div class="about-grid">
-    <div class="acard"><div class="icon">🤖</div><h3 data-i="a1t">من نحن</h3><p data-i="a1p">مروان | Wano — مطور بوتات متخصص في Discord وTelegram وWhatsApp. خبرة واسعة في Node.js وPython.</p></div>
-    <div class="acard"><div class="icon">⚠️</div><h3 data-i="a2t">ملاحظة مهمة</h3><p data-i="a2p">الخدمة تشمل إنشاء ملفات البوتات فقط — لا تشمل التشغيل أو الاستضافة.</p></div>
-    <div class="acard"><div class="icon">💳</div><h3 data-i="a3t">طرق الدفع</h3><p data-i="a3p">فودافون كاش، PayPal، Binance، USDT، تحويل بنكي.</p></div>
-    <div class="acard"><div class="icon">⏱️</div><h3 data-i="a4t">وقت التسليم</h3><p data-i="a4p">بسيط: 1-3 أيام. متوسط: 3-7 أيام. كبير: يُتفق عليه.</p></div>
-    <div class="acard"><div class="icon">🔧</div><h3 data-i="a5t">الدعم</h3><p data-i="a5p">دعم مجاني 7 أيام بعد التسليم لأي مشكلة في الكود.</p></div>
-    <div class="acard"><div class="icon">📞</div><h3 data-i="a6t">تواصل</h3><p>WhatsApp: <strong style="color:var(--acc2)">+201145974113</strong><br>Discord: <strong style="color:var(--acc2)">@wn6b</strong><br>TikTok: <strong style="color:var(--acc2)">@w_n6b</strong></p></div>
+  <div class="sh"><div class="si" style="background:rgba(124,58,237,.12)">ℹ️</div><div><h2 data-i="ab1">عن المشروع</h2><p data-i="ab2">كل ما تحتاج معرفته</p></div></div>
+  <div class="ag">
+    <div class="ac"><div class="ic">🤖</div><h3 data-i="a1t">من نحن</h3><p data-i="a1p">مروان | Wano — مطور بوتات متخصص في Discord وTelegram وWhatsApp.</p></div>
+    <div class="ac"><div class="ic">⚠️</div><h3 data-i="a2t">ملاحظة</h3><p data-i="a2p">الخدمة تشمل إنشاء ملفات البوتات فقط — لا تشمل التشغيل.</p></div>
+    <div class="ac"><div class="ic">💳</div><h3 data-i="a3t">طرق الدفع</h3><p data-i="a3p">فودافون كاش، PayPal، Binance، USDT، تحويل بنكي.</p></div>
+    <div class="ac"><div class="ic">⏱️</div><h3 data-i="a4t">وقت التسليم</h3><p data-i="a4p">بسيط: 1-3 أيام. متوسط: 3-7 أيام.</p></div>
+    <div class="ac"><div class="ic">🔧</div><h3 data-i="a5t">الدعم</h3><p data-i="a5p">دعم مجاني 7 أيام بعد التسليم.</p></div>
+    <div class="ac"><div class="ic">📞</div><h3 data-i="a6t">تواصل</h3><p>WhatsApp: <strong style="color:var(--acc2)">+201145974113</strong><br>Discord: <strong style="color:var(--acc2)">@wn6b</strong><br>TikTok: <strong style="color:var(--acc2)">@w_n6b</strong></p></div>
   </div>
 </div>
 
-<div id="ownerPanel" style="display:none" class="owner-panel">
-  <h3>👑 <span data-i="ownerPanel">لوحة المالك — مروان | Wano</span></h3>
-  <div class="panel-stats">
-    <div class="ps"><div class="num" id="pVisits">0</div><div class="lbl" data-i="visits">زيارة</div></div>
-    <div class="ps"><div class="num" id="pOrders">0</div><div class="lbl" data-i="orders">طلب</div></div>
-    <div class="ps"><div class="num" id="pUsers">0</div><div class="lbl" data-i="pUsersL">مستخدم</div></div>
+<div id="ownerPanel" style="display:none" class="op">
+  <h3>👑 <span data-i="opT">لوحة المالك — مروان | Wano</span></h3>
+  <div class="ps">
+    <div class="psi"><div class="n" id="pV">…</div><div class="l" data-i="vis">زيارة</div></div>
+    <div class="psi"><div class="n" id="pO">…</div><div class="l" data-i="ords">طلب</div></div>
+    <div class="psi"><div class="n" id="pU">…</div><div class="l" data-i="pUL">مستخدم</div></div>
   </div>
-  <div class="panel-tabs">
-    <button class="ptab on" onclick="panelTab('orders',this)" data-i="ptOrders">📦 الطلبات</button>
-    <button class="ptab" onclick="panelTab('users',this)" data-i="ptUsers">👥 الحسابات</button>
+  <div class="ptabs">
+    <button class="ptab on" onclick="panelTab('o',this)" data-i="ptO">📦 الطلبات</button>
+    <button class="ptab" onclick="panelTab('u',this)" data-i="ptU">👥 الحسابات</button>
   </div>
-  <div id="pOrdersList"></div>
-  <div id="pUsersList" style="display:none"></div>
+  <div id="pOL"></div>
+  <div id="pUL" style="display:none"></div>
+</div>
 </div>
 
-</div>
 <div class="wrap"><footer>
-  <p>🤖 <strong>Projects Bots</strong> — <span data-i="footerRights">جميع الحقوق محفوظة لـ</span> <strong>مروان | Wano</strong> © 2026</p>
-  <p style="margin-top:5px;font-size:10px" data-i="footerNote">⚠️ إنشاء ملفات ومشاريع البوتات فقط — لا يشمل التشغيل أو الاستضافة</p>
+  <p>🤖 <strong>Projects Bots</strong> — <span data-i="fR">جميع الحقوق محفوظة لـ</span> <strong>مروان | Wano</strong> © 2026</p>
+  <p style="margin-top:5px;font-size:10px" data-i="fN">⚠️ إنشاء ملفات ومشاريع البوتات فقط — لا يشمل التشغيل أو الاستضافة</p>
 </footer></div>
 
-<div class="ov" id="ovOrder" style="z-index: 9999;">
+<div class="ov" id="ovO">
   <div class="modal">
-    <button class="mcl" onclick="closeModal('ovOrder')">✕</button>
+    <button class="mcl" onclick="closeM('ovO')">✕</button>
     <div style="font-size:26px;margin-bottom:9px">📦</div>
-    <h3 data-i="ord1">طلب مشروع</h3>
-    <p class="sub" data-i="ord2">📱 سيصلك رد من المطور مباشرة عبر واتساب</p>
-    <div class="fg"><label data-i="ord3">اسم البوت / المشروع</label><input id="bname" readonly></div>
-    <div class="fg"><label data-i="ord4">اسمك</label><input id="cname" placeholder="مثال: أحمد"></div>
-    <div class="fg"><label data-i="ord5">تواصل (واتساب أو ديسكورد)</label><input id="ccon" placeholder="+966XXXXXXXXX أو @username"></div>
-    <div id="descArea" class="fg" style="display:none"><label data-i="ord6">وصف ما تريده بالتفصيل</label><textarea id="cdesc" rows="4" placeholder="اشرح البوت والأوامر والميزات التي تريدها..."></textarea></div>
-    <div class="fg"><label data-i="ord7">الميزانية التقريبية</label><input id="cbudget" placeholder="مثال: $25"></div>
-    <div class="fg"><label data-i="ord8">طريقة الدفع</label>
+    <h3 data-i="or1">طلب مشروع</h3>
+    <p class="sub" data-i="or2">📱 سيصلك رد من المطور مباشرة عبر واتساب</p>
+    <div class="fg"><label data-i="or3">اسم البوت / المشروع</label><input id="bn" readonly></div>
+    <div class="fg"><label data-i="or4">اسمك</label><input id="cn" placeholder="مثال: أحمد"></div>
+    <div class="fg"><label data-i="or5">تواصل (واتساب أو ديسكورد)</label><input id="cc" placeholder="+966XXXXXXXXX أو @username"></div>
+    <div id="dA" class="fg" style="display:none"><label data-i="or6">وصف ما تريده بالتفصيل</label><textarea id="cd" rows="4" placeholder="اشرح البوت والأوامر والميزات..."></textarea></div>
+    <div class="fg"><label data-i="or7">الميزانية التقريبية</label><input id="cb" placeholder="$25+"></div>
+    <div class="fg"><label data-i="or8">طريقة الدفع</label>
       <div class="pays">
-        <button class="pay" onclick="selPay(this,'Vodafone Cash')">📱 فودافون كاش</button>
-        <button class="pay" onclick="selPay(this,'PayPal')">💳 PayPal</button>
-        <button class="pay" onclick="selPay(this,'Binance')">🟡 Binance</button>
-        <button class="pay" onclick="selPay(this,'USDT')">💲 USDT</button>
-        <button class="pay" onclick="selPay(this,'Bank')">🏦 تحويل بنكي</button>
-        <button class="pay" onclick="selPay(this,'Other')">🔄 أخرى</button>
+        <button class="pay" onclick="sP(this,'Vodafone Cash')">📱 فودافون كاش</button>
+        <button class="pay" onclick="sP(this,'PayPal')">💳 PayPal</button>
+        <button class="pay" onclick="sP(this,'Binance')">🟡 Binance</button>
+        <button class="pay" onclick="sP(this,'USDT')">💲 USDT</button>
+        <button class="pay" onclick="sP(this,'Bank')">🏦 تحويل بنكي</button>
+        <button class="pay" onclick="sP(this,'Other')">🔄 أخرى</button>
       </div>
     </div>
-    <button class="send" onclick="submitOrder()" data-i="ord9">📤 إرسال الطلب عبر واتساب</button>
+    <button class="send" onclick="submitOrder()" data-i="or9">📤 إرسال الطلب عبر واتساب</button>
   </div>
 </div>
 
-<div class="ov" id="ovAuth" style="z-index: 9999;">
+<div class="ov" id="ovA">
   <div class="modal" style="max-width:400px">
-    <button class="mcl" onclick="closeModal('ovAuth')">✕</button>
+    <button class="mcl" onclick="closeM('ovA')">✕</button>
     <div style="font-size:26px;margin-bottom:9px">🔐</div>
-    <div class="tabs-auth">
-      <button class="auth-tab on" id="tab-login-btn" onclick="authSwitch('login')" data-i="login">تسجيل دخول</button>
-      <button class="auth-tab" id="tab-reg-btn" onclick="authSwitch('register')" data-i="register">إنشاء حساب</button>
+    <div class="atabs">
+      <button class="atab on" id="tLB" onclick="aSwitch('l')" data-i="login">تسجيل دخول</button>
+      <button class="atab" id="tRB" onclick="aSwitch('r')" data-i="register">إنشاء حساب</button>
     </div>
-    <div id="loginForm">
-      <div class="fg"><label data-i="lbl1">الإيميل</label><input type="email" id="lemail" placeholder="example@gmail.com"></div>
-      <div class="fg"><label data-i="lbl2">الباسورد</label><input type="password" id="lpass" placeholder="••••••••"></div>
-      <div class="errmsg" id="lerr"></div>
-      <div class="cap-box"><span class="cap-q" id="capQ"></span><div class="cap-right"><input class="cap-in" type="number" id="capAns" placeholder="؟"><button class="cap-rf" onclick="newCaptcha()">🔄</button></div></div>
-      <button class="send acc" onclick="doLogin()" data-i="lbl3">🔑 دخول</button>
-      <div class="divider" data-i="or">أو</div>
-      <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="noAcc">ما عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="authSwitch('register')" data-i="createOne">أنشئ حساب</span></p>
+    <div id="lF">
+      <div class="fg"><label data-i="lb1">الإيميل</label><input type="email" id="le" placeholder="example@gmail.com" autocomplete="email"></div>
+      <div class="fg"><label data-i="lb2">الباسورد</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="em" id="lE"></div>
+      <div class="cb"><span class="cq" id="cQ"></span><div class="cr"><input class="cin" type="number" id="cA" placeholder="؟"><button class="crf" onclick="newCap()">🔄</button></div></div>
+      <button class="send ac" onclick="doLogin()" data-i="lb3">🔑 دخول</button>
+      <div class="dv" data-i="or">أو</div>
+      <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="nA">ما عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="aSwitch('r')" data-i="cO">أنشئ حساب</span></p>
     </div>
-    <div id="registerForm" style="display:none">
-      <div class="fg"><label data-i="rl1">الاسم</label><input id="rname" placeholder="مثال: أحمد"></div>
-      <div class="fg"><label data-i="rl2">الإيميل</label><input type="email" id="remail" placeholder="example@gmail.com"></div>
-      <div class="fg"><label data-i="rl3">الباسورد (6 أحرف على الأقل)</label><input type="password" id="rpass" placeholder="••••••••"></div>
-      <div class="fg"><label data-i="rl4">تأكيد الباسورد</label><input type="password" id="rpass2" placeholder="••••••••"></div>
-      <div class="errmsg" id="rerr"></div>
-      <div class="cap-box"><span class="cap-q" id="capQ2"></span><div class="cap-right"><input class="cap-in" type="number" id="capAns2" placeholder="؟"><button class="cap-rf" onclick="newCaptcha()">🔄</button></div></div>
-      <button class="send acc" onclick="doRegister()" data-i="rl5">✅ إنشاء الحساب</button>
-      <div class="divider" data-i="or">أو</div>
-      <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="haveAcc">عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="authSwitch('login')" data-i="signIn">سجّل دخول</span></p>
+    <div id="rF" style="display:none">
+      <div class="fg"><label data-i="rl1">الاسم</label><input id="rn" placeholder="مثال: أحمد" autocomplete="name"></div>
+      <div class="fg"><label data-i="rl2">الإيميل</label><input type="email" id="re" placeholder="example@gmail.com" autocomplete="email"></div>
+      <div class="fg"><label data-i="rl3">الباسورد (6 أحرف على الأقل)</label><input type="password" id="rp" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="fg"><label data-i="rl4">تأكيد الباسورد</label><input type="password" id="rp2" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="em" id="rE"></div>
+      <div class="cb"><span class="cq" id="cQ2"></span><div class="cr"><input class="cin" type="number" id="cA2" placeholder="؟"><button class="crf" onclick="newCap()">🔄</button></div></div>
+      <button class="send ac" onclick="doReg()" data-i="rl5">✅ إنشاء الحساب</button>
+      <div class="dv" data-i="or">أو</div>
+      <p style="font-size:12px;color:var(--mut);text-align:center"><span data-i="hA">عندك حساب؟</span> <span style="color:var(--acc);cursor:pointer;font-weight:700" onclick="aSwitch('l')" data-i="sI">سجّل دخول</span></p>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script src="script.js"></script>
