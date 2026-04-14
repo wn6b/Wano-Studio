@@ -39,7 +39,11 @@
 </nav>
 
 <div class="hero">
-  <div class="badge"><span class="dot"></span><span data-i="h1">متاح للطلبات الآن</span></div>
+  <div class="badge" onclick="toggleStoreStatus()" style="cursor:pointer; user-select:none;">
+    <span class="dot" id="heroBadgeDot"></span>
+    <span id="heroBadgeTxt" data-i="h1">متاح للطلبات الآن</span>
+    <span id="heroBadgeArrow" style="display:none; font-size:10px; margin-right:5px">🔽</span>
+  </div>
   <h1><span class="grad" data-i="h2">بوتات احترافية</span><br><span data-i="h3">لكل منصة</span></h1>
   <p data-i="h4">تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط.</p>
   <div class="hbtns">
@@ -146,7 +150,14 @@
     <div class="bc"><div class="bh"><div class="bi">📊</div><span class="pt">$16+</span></div><h3>Poll Bot</h3><div class="ads"><span class="ad g">✓ تصويت</span><span class="ad c">✓ إحصائيات</span><span class="ad p">✓ وقت محدد</span><span class="ad a">✓ تقرير نهائي</span></div><button class="ob" onclick="openOrder('Poll Bot WhatsApp','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
     <div class="bc"><div class="bh"><div class="bi">🎮</div><span class="pt">$14+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad g">✓ تريفيا</span><span class="ad c">✓ تخمين</span><span class="ad p">✓ نقاط</span><span class="ad a">✓ ليدربورد</span></div><button class="ob" onclick="openOrder('Games Bot WhatsApp','$14+')" data-i="oB">🛒 اطلب الآن</button></div>
     <div class="bc"><div class="bh"><div class="bi">📌</div><span class="pt">$12+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad g">✓ تذكيرات يومية</span><span class="ad c">✓ جدولة</span><span class="ad p">✓ تكرار</span><span class="ad a">✓ قائمة</span></div><button class="ob" onclick="openOrder('Reminder Bot WhatsApp','$12+')" data-i="oB">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">🖼️</div><span class="pt">$16+</span></div><h3>Media Downloader</h3><div class="ads"><span class="ad g">✓ يوتيوب</span><span class="ad c">✓ انستجرام</span><span class="ad p">✓ تيك توك</span><span class="ad a">✓ سريع</span></div><button class="ob" onclick="openOrder('Media Downloader WhatsApp','$16+')" data-i="oB">🛒 اطلب الآن</button></div>
+    
+    <div class="bc dis">
+      <div class="bh"><div class="bi">🖼️</div><span class="ut" data-i="uv">غير متوفر حالياً</span></div>
+      <h3>Media Downloader</h3>
+      <div class="ads"><span class="ad g">✓ يوتيوب</span><span class="ad c">✓ انستجرام</span><span class="ad p">✓ تيك توك</span><span class="ad a">✓ سريع</span></div>
+      <button class="ob" disabled data-i="oB">🛒 اطلب الآن</button>
+    </div>
+
     <div class="bc"><div class="bh"><div class="bi">🔔</div><span class="pt">$13+</span></div><h3>Broadcast Bot</h3><div class="ads"><span class="ad g">✓ إرسال جماعي</span><span class="ad c">✓ قوائم مخصصة</span><span class="ad p">✓ جدولة</span><span class="ad a">✓ تتبع</span></div><button class="ob" onclick="openOrder('Broadcast Bot WhatsApp','$13+')" data-i="oB">🛒 اطلب الآن</button></div>
     <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(124,58,237,.14)">✨</div><span class="pt">$25-$35</span></div><h3 data-i="cW">سيلف بوت واتساب مخصص</h3><div class="ads"><span class="ad a" data-i="ca1">✓ أي فكرة تريدها</span><span class="ad p" data-i="ca2">✓ سعر مخصص</span></div><button class="ob" onclick="openOrder('سيلف بوت WhatsApp مخصص','$25-$35',true)" data-i="cB">✨ اطلب سيلفك المخصص</button></div>
   </div>
