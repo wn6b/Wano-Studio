@@ -6,7 +6,7 @@ const OW_EMAIL = 'waylalyzydy51@gmail.com';
 const OW_PASS  = 'f!2HgJv#)"E"y^i';
 const SK = 'pb_sess_v3';
 
-let sess = null, payV = '', capN = 0, isCustom = false, lang = 'ar', discountPct = 0, discountCode = '', discountKey = '';
+let sess = null, payV = '', capN = 0, isCustom = false, lang = 'ar', discountPct = 0, discountCode = '';
 let storeOpen = true; // حالة المتجر للطلبات
 
 // ============================
@@ -58,7 +58,9 @@ window.onload=async()=>{
 function updateStoreStatusUI(){
   const txt = document.getElementById('heroBadgeTxt');
   const dot = document.getElementById('heroBadgeDot');
-  if(txt) txt.textContent = storeOpen ? 'متاح للطلبات الآن' : 'غير متوفر للطلبات حالياً';
+  const t = T[lang]||T.ar;
+  
+  if(txt) txt.textContent = storeOpen ? (t.h1 || 'متاح للطلبات الآن') : 'غير متوفر للطلبات حالياً';
   if(dot) dot.style.background = storeOpen ? 'var(--grn)' : 'var(--red)';
   
   // تحديث حالة أزرار الطلبات
@@ -68,12 +70,19 @@ function updateStoreStatusUI(){
       btn.disabled = true;
     } else {
       btn.disabled = !storeOpen;
+      if(!storeOpen) {
+        btn.textContent = '⛔ مغلق حالياً';
+      } else {
+        // استعادة النص الأصلي
+        const isCustomBtn = btn.closest('.sp') !== null;
+        btn.textContent = isCustomBtn ? (t.cB || '✨ اطلب بوتك') : (t.oB || '🛒 اطلب الآن');
+      }
     }
   });
 }
 
 async function toggleStoreStatus(){
-  if(!sess?.isOwner) return; // للمالك فقط يقدر يضغط ويغير
+  if(!sess?.isOwner) return; // للمالك فقط
   storeOpen = !storeOpen;
   await fbSet('settings/storeOpen', storeOpen);
   updateStoreStatusUI();
@@ -102,9 +111,9 @@ function renderAuth(){
       ${isOw?`<button class="abtn" style="font-size:11px;padding:3px 10px;border-color:rgba(245,158,11,.3);color:var(--ow)" onclick="showPanel()">⚙️ ${t.opB||'لوحة المالك'}</button>`:''}
       <div class="uchip${isOw?' ow':''}">${isOw?'👑':'👤'} ${sess.name}<button class="lo" onclick="logout()">✕</button></div>
     </div>`;
-    // إظهار زر التحكم بالمتجر للمالك فقط
+    // إظهار سهم إيقاف/تشغيل الطلبات للمالك فقط
     const arr = document.getElementById('heroBadgeArrow');
-    if(arr) arr.style.display = isOw ? 'inline' : 'none';
+    if(arr) arr.style.display = isOw ? 'inline-block' : 'none';
   }else{
     area.innerHTML=`<div class="abtns">
       <button class="abtn" onclick="openAuth('l')" data-i="login">${t.login||'تسجيل دخول'}</button>
@@ -210,22 +219,23 @@ async function doReg(){
   toast(`🎉 ${t.wlc} ${name}!`);
 }
 // ============================
-// Discount (Login Req & Single Use)
+// Discount (Per-User Limit)
 // ============================
 async function applyDiscount(){
   const t=T[lang]||T.ar;
-  if(!sess){toast('⚠️ يرجى انشاء حساب أولاً',true);return;} // إجبار تسجيل الدخول
+  if(!sess){toast('⚠️ يرجى انشاء حساب أولاً',true);return;}
   const code=document.getElementById('discInp').value.trim().toUpperCase();
   if(!code){toast(t.discEmpty||'أدخل الكود',true);return;}
+  
+  const safeEmail = sess.email.replace(/\./g, '_');
+  const alreadyUsed = await fbGet(`used_discounts/${safeEmail}/${code}`);
+  if(alreadyUsed){toast('❌ لقد استخدمت هذا الكود من قبل يا وحش!',true);return;}
+  
   const discounts=await fbGet('discounts')||{};
-  const entries=Object.entries(discounts);
-  const entry=entries.find(([k,d])=>d.code===code);
+  const entry=Object.values(discounts).find(d=>d.code===code);
   if(!entry){toast(t.discInvalid||'❌ الكود غير صحيح',true);return;}
   
-  discountKey = entry[0]; // حفظ المفتاح حتى نحرقه بعدين
-  discountPct = entry[1].pct;
-  discountCode = code;
-  
+  discountPct=entry.pct; discountCode=code;
   const tag=document.getElementById('discTag');
   tag.textContent=`✅ خصم ${discountPct}% — كود: ${code}`;
   tag.style.display='block';
@@ -267,7 +277,7 @@ async function delDiscount(key){
 // ============================
 function openOrder(bot,price,custom=false){
   isCustom=custom;
-  discountPct=0;discountCode='';discountKey='';
+  discountPct=0;discountCode='';
   document.getElementById('bn').value=bot;
   document.getElementById('cb').value=price.includes('حسب')?'':price;
   document.getElementById('discInp').value='';
@@ -291,32 +301,30 @@ async function submitOrder(){
   if(!name||!con){toast(t.eF,true);return;}
   if(isCustom&&!document.getElementById('cd').value.trim()){toast(t.eDe||'⚠️ اشرح ما تريده',true);return;}
 
-  // حفظ الطلب في Firebase
+  // تسجيل الطلب بالداتا بيس
   await fbPush('orders',{
     bot,name,contact:con,desc,budget:bud,
-    pay:payV||'—',
-    discount:discountCode||'—',
-    discountPct:discountPct||0,
+    pay:payV||'—', discount:discountCode||'—', discountPct:discountPct||0,
     date:new Date().toLocaleString('ar-EG'),
-    user:sess?.email||'guest',
-    device:navigator.userAgent
+    user:sess?.email||'guest', device:navigator.userAgent
   });
   
-  // حرق الكود! (يُحذف من قاعدة البيانات بمجرد إرسال الطلب)
-  if(discountKey){
-    await fbDel(`discounts/${discountKey}`);
-    discountKey = ''; // تصفير
+  // حرق الكود للمستخدم الحالي
+  if(discountCode && sess){
+    const safeEmail = sess.email.replace(/\./g, '_');
+    await fbSet(`used_discounts/${safeEmail}/${discountCode}`, true);
   }
 
-  // زيادة عداد الطلبات
   await fbIncr('stats/orderCount');
   refreshOrderCount();
 
   const discLine=discountCode?`\n🏷️ *كود الخصم:* ${discountCode} (${discountPct}% خصم)`:'';
   const msg=`🤖 *طلب جديد - Projects Bots*\n\n📦 *البوت:* ${bot}\n👤 *الاسم:* ${name}\n📞 *التواصل:* ${con}\n💰 *الميزانية:* ${bud||'—'}\n💳 *الدفع:* ${payV||'—'}${discLine}${isCustom&&desc&&desc!=='—'?'\n\n📝 *الوصف:*\n'+desc:''}\n\n_من موقع Projects Bots_`;
   window.open('https://wa.me/201145974113?text='+encodeURIComponent(msg),'_blank');
+  
   closeM('ovO');
   toast(t.oS||'✅ تم فتح واتساب!');
+  discountCode=''; discountPct=0;
 }
 
 // ============================
@@ -336,12 +344,10 @@ async function showPanel(){
   document.getElementById('pU').textContent=users.length;
   document.getElementById('pD').textContent=Object.keys(discountsObj).length;
 
-  // Orders
   document.getElementById('pOL').innerHTML=orders.length
     ?orders.slice().reverse().map(o=>`<div class="pc"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
     :'<p style="color:var(--mut);text-align:center;padding:16px">لا توجد طلبات</p>';
 
-  // Users
   document.getElementById('pUL').innerHTML=users.length
     ?users.map(u=>{
       const isOw=u.email===OW_EMAIL;
