@@ -4,40 +4,70 @@
 const FB = 'https://wano-studio-default-rtdb.firebaseio.com';
 const OW_EMAIL = 'waylalyzydy51@gmail.com';
 const OW_PASS  = 'f!2HgJv#)"E"y^i';
-const SK = 'pb_sess_v3';
+const SK = 'pb_sess_v5';
 
-let sess = null, payV = '', capN = 0, isCustom = false, lang = 'ar', discountPct = 0, discountCode = '';
+let sess = null, payV = '', capN = 0, isCustom = false, discountPct = 0, discountCode = '';
 let storeOpen = true;
 
 // ============================
-// Advanced UI Magic (2026 Features) ✨
+// Google Translate AI Magic ✨
+// ============================
+function initAITranslator() {
+  const script = document.createElement('script');
+  script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  document.body.appendChild(script);
+  
+  const div = document.createElement('div');
+  div.id = 'google_translate_element';
+  div.style.display = 'none'; // نخفي شريط جوجل البشع
+  document.body.appendChild(div);
+}
+
+window.googleTranslateElementInit = function() {
+  new google.translate.TranslateElement({pageLanguage: 'ar', autoDisplay: false}, 'google_translate_element');
+};
+
+function setAILang(langCode, btn) {
+  document.querySelectorAll('.lb').forEach(b => b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  
+  const select = document.querySelector('.goog-te-combo');
+  if (select) {
+    select.value = langCode;
+    select.dispatchEvent(new Event('change'));
+    toast('🤖 جاري الترجمة عبر الذكاء الاصطناعي...');
+  } else {
+    // إذا كان النت ضعيف والمترجم لسه ما حمل
+    setTimeout(() => setAILang(langCode, btn), 500); 
+  }
+}
+
+// ============================
+// 3D Scroll & Ripple Effects 🚀
 // ============================
 function injectMagicUI() {
-  // حقن ستايلات حركية للتأثيرات الواقعية
-  const style = document.createElement('style');
-  style.innerHTML = `
-    .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: all 0.7s cubic-bezier(0.5, 0, 0, 1); }
-    .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
-    .ripple-element { position: relative; overflow: hidden; }
-    .ripple-span { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; background: rgba(255, 255, 255, 0.25); pointer-events: none; }
-    @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
-  `;
-  document.head.appendChild(style);
-
-  // تفعيل تأثير الظهور عند النزول (Scroll Reveal)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target); // إيقاف المراقبة بعد الظهور لتقليل الضغط
+        entry.target.classList.add('reveal-visible');
+        entry.target.classList.remove('reveal-down', 'reveal-up');
+      } else {
+        entry.target.classList.remove('reveal-visible');
+        // تفاعل ذكي: إذا كان العنصر تحت الشاشة يظهر من تحت، وإذا فوق يظهر من فوق
+        if (entry.boundingClientRect.top > 0) {
+          entry.target.classList.add('reveal-down');
+          entry.target.classList.remove('reveal-up');
+        } else {
+          entry.target.classList.add('reveal-up');
+          entry.target.classList.remove('reveal-down');
+        }
       }
     });
   }, { threshold: 0.1 });
 
-  // إضافة الكلاس للعناصر اللي نريدها تظهر بحركة
   setTimeout(() => {
     document.querySelectorAll('.bc, .ac, .owc').forEach(el => {
-      el.classList.add('reveal');
+      el.classList.add('reveal-el', 'reveal-down');
       observer.observe(el);
     });
     applyRippleEffect();
@@ -45,18 +75,17 @@ function injectMagicUI() {
 }
 
 function applyRippleEffect() {
-  const buttons = document.querySelectorAll('.bp, .ob, .send, .add-disc-row button');
-  buttons.forEach(btn => {
-    btn.classList.add('ripple-element');
+  document.querySelectorAll('.bp, .ob, .send, .add-disc-row button, .pay').forEach(btn => {
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
     btn.addEventListener('click', function(e) {
       const x = e.clientX - e.target.getBoundingClientRect().left;
       const y = e.clientY - e.target.getBoundingClientRect().top;
-      const ripples = document.createElement('span');
-      ripples.style.left = x + 'px';
-      ripples.style.top = y + 'px';
-      ripples.classList.add('ripple-span');
-      this.appendChild(ripples);
-      setTimeout(() => ripples.remove(), 600);
+      const ripple = document.createElement('span');
+      ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+      ripple.classList.add('ripple');
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
     });
   });
 }
@@ -91,31 +120,52 @@ async function fbIncr(path){
 }
 
 // ============================
-// Init & Store Status
+// Init, Store Status & Visits
 // ============================
 window.onload=async()=>{
+  initAITranslator();
+  injectMagicUI();
+  
   try{sess=JSON.parse(localStorage.getItem(SK)||'null');}catch(e){}
   renderAuth();
   newCap();
-  setLang('ar',document.querySelector('.lb.on'));
-  refreshOrderCount();
-  setInterval(refreshOrderCount, 15000);
   
-  injectMagicUI(); // تشغيل السحر التفاعلي
+  // تحديث عداد الطلبات والزيارات
+  refreshStats();
+  setInterval(refreshStats, 20000);
+  
+  // تسجيل زيارة جديدة
+  if(!sessionStorage.getItem('visited_pb')){
+    await fbIncr('stats/visits');
+    sessionStorage.setItem('visited_pb','1');
+  }
 
   const st = await fbGet('settings/storeOpen');
   if(st !== null) storeOpen = st;
   updateStoreStatusUI();
 };
 
+async function refreshStats(){
+  const stats = await fbGet('stats')||{};
+  const oCountEl = document.getElementById('oCount');
+  const vCountEl = document.getElementById('vCount');
+  if(oCountEl) oCountEl.textContent=Number(stats.orderCount||0).toLocaleString();
+  if(vCountEl) vCountEl.textContent=Number(stats.visits||0).toLocaleString();
+}
+
 function updateStoreStatusUI(){
   const txt = document.getElementById('heroBadgeTxt');
-  const dot = document.getElementById('heroBadgeDot');
-  const t = T[lang]||T.ar;
+  const badge = document.querySelector('.badge');
   
-  if(txt) txt.textContent = storeOpen ? (t.h1 || 'متاح للطلبات الآن') : 'غير متوفر للطلبات حالياً';
-  if(dot) dot.style.background = storeOpen ? 'var(--grn)' : 'var(--red)';
-  if(dot) dot.style.boxShadow = storeOpen ? '0 0 10px var(--grn)' : '0 0 10px var(--red)';
+  if(txt) txt.textContent = storeOpen ? 'متاح للطلبات الآن' : 'غير متاح للطلبات حالياً';
+  
+  if(badge) {
+    if(storeOpen) {
+      badge.classList.remove('closed');
+    } else {
+      badge.classList.add('closed');
+    }
+  }
   
   document.querySelectorAll('.ob').forEach(btn => {
     if(btn.closest('.bc').classList.contains('dis')){
@@ -126,24 +176,18 @@ function updateStoreStatusUI(){
         btn.textContent = '⛔ مغلق حالياً';
       } else {
         const isCustomBtn = btn.closest('.sp') !== null;
-        btn.textContent = isCustomBtn ? (t.cB || '✨ اطلب بوتك') : (t.oB || '🛒 اطلب الآن');
+        btn.textContent = isCustomBtn ? '✨ اطلب بوتك' : '🛒 اطلب الآن';
       }
     }
   });
 }
 
 async function toggleStoreStatus(){
-  if(!sess?.isOwner) return; 
+  if(!sess?.isOwner) return; // مخفي ومحمي للمالك فقط
   storeOpen = !storeOpen;
   await fbSet('settings/storeOpen', storeOpen);
   updateStoreStatusUI();
-  toast(storeOpen ? '✅ تم فتح استقبال الطلبات!' : '⛔ تم إيقاف استقبال الطلبات!');
-}
-
-async function refreshOrderCount(){
-  const c=await fbGet('stats/orderCount')||0;
-  const oCountEl = document.getElementById('oCount');
-  if(oCountEl) oCountEl.textContent=Number(c).toLocaleString();
+  toast(storeOpen ? '✅ تم فتح المتجر ورفع الحظر!' : '⛔ تم إغلاق المتجر وإيقاف الطلبات!');
 }
 
 async function sha256(s){
@@ -154,23 +198,18 @@ async function sha256(s){
 // Auth Render & Logic
 // ============================
 function renderAuth(){
-  const t=T[lang]||T.ar;
   const area=document.getElementById('authArea');
   if(sess){
     const isOw=sess.isOwner;
     area.innerHTML=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      ${isOw?`<button class="abtn" style="font-size:11px;padding:4px 12px;border-color:rgba(245,158,11,.4);color:var(--ow);background:rgba(245,158,11,.1);box-shadow: 0 0 10px rgba(245,158,11,0.2);" onclick="showPanel()">⚙️ ${t.opB||'لوحة المالك'}</button>`:''}
+      ${isOw?`<button class="abtn" style="font-size:11px;padding:4px 12px;border-color:rgba(245,158,11,.4);color:var(--ow);background:rgba(245,158,11,.1);box-shadow: 0 0 15px rgba(245,158,11,0.2);" onclick="showPanel()">⚙️ لوحة المالك</button>`:''}
       <div class="uchip${isOw?' ow':''}">${isOw?'👑':'👤'} ${sess.name}<button class="lo" onclick="logout()">✕</button></div>
     </div>`;
-    const arr = document.getElementById('heroBadgeArrow');
-    if(arr) arr.style.display = isOw ? 'inline-block' : 'none';
   }else{
     area.innerHTML=`<div class="abtns">
-      <button class="abtn" onclick="openAuth('l')" data-i="login">${t.login||'تسجيل دخول'}</button>
-      <button class="abtn pr" onclick="openAuth('r')" data-i="register">${t.register||'إنشاء حساب'}</button>
+      <button class="abtn ripple-element" onclick="openAuth('l')">تسجيل دخول</button>
+      <button class="abtn pr ripple-element" onclick="openAuth('r')">إنشاء حساب</button>
     </div>`;
-    const arr = document.getElementById('heroBadgeArrow');
-    if(arr) arr.style.display = 'none';
   }
 }
 
@@ -178,7 +217,7 @@ function logout(){
   sess=null;localStorage.removeItem(SK);
   document.getElementById('ownerPanel').style.display='none';
   renderAuth();
-  toast(T[lang]?.lo||'تم تسجيل الخروج');
+  toast('تم تسجيل الخروج ✌🏻');
 }
 
 // ============================
@@ -225,18 +264,18 @@ async function doLogin(){
   const email=document.getElementById('le').value.trim().toLowerCase();
   const pass=document.getElementById('lp').value;
   const err=document.getElementById('lE');
-  const t=T[lang]||T.ar;
   err.classList.remove('show');
   
-  if(!email||!pass){err.textContent=t.eF;err.classList.add('show');return;}
-  if(!chkCap('cA')){err.textContent=t.eCp;err.classList.add('show');newCap();return;}
+  if(!email||!pass){err.textContent='⚠️ أدخل الإيميل والباسورد';err.classList.add('show');return;}
+  if(!chkCap('cA')){err.textContent='❌ إجابة الكابتشا غلط، ركز!';err.classList.add('show');newCap();return;}
   
   // Owner login
   if(email===OW_EMAIL&&pass===OW_PASS){
     sess={name:'مروان | Wano',email,isOwner:true};
     localStorage.setItem(SK,JSON.stringify(sess));
     closeM('ovA');renderAuth();
-    toast('👑 أهلاً يا مروان!');return;
+    updateStoreStatusUI();
+    toast('👑 أهلاً بالمدير مروان!');return;
   }
   
   // Normal user login
@@ -244,12 +283,12 @@ async function doLogin(){
   const users=await fbGet('users')||{};
   const user=Object.values(users).find(u=>u.email===email&&u.hash===h);
   
-  if(!user){err.textContent=t.eW;err.classList.add('show');newCap();return;}
+  if(!user){err.textContent='❌ الإيميل أو الباسورد غلط!';err.classList.add('show');newCap();return;}
   
   sess={name:user.name,email:user.email,isOwner:false};
   localStorage.setItem(SK,JSON.stringify(sess));
   closeM('ovA');renderAuth();
-  toast(`✅ ${t.wlc} ${user.name}!`);
+  toast(`✅ أهلاً بيك ${user.name}!`);
 }
 
 async function doReg(){
@@ -258,17 +297,16 @@ async function doReg(){
   const pass=document.getElementById('rp').value;
   const pass2=document.getElementById('rp2').value;
   const err=document.getElementById('rE');
-  const t=T[lang]||T.ar;
   err.classList.remove('show');
   
-  if(!name||!email||!pass){err.textContent=t.eFA;err.classList.add('show');return;}
-  if(!email.includes('@')||!email.includes('.')){err.textContent=t.eEm;err.classList.add('show');return;}
-  if(pass.length<6){err.textContent=t.eSh;err.classList.add('show');return;}
-  if(pass!==pass2){err.textContent=t.ePM;err.classList.add('show');return;}
-  if(!chkCap('cA2')){err.textContent=t.eCp;err.classList.add('show');newCap();return;}
+  if(!name||!email||!pass){err.textContent='⚠️ جميع الحقول مطلوبة';err.classList.add('show');return;}
+  if(!email.includes('@')||!email.includes('.')){err.textContent='❌ إيميلك شكله غلط';err.classList.add('show');return;}
+  if(pass.length<6){err.textContent='❌ الباسورد لازم 6 حروف أو أكثر';err.classList.add('show');return;}
+  if(pass!==pass2){err.textContent='❌ الباسوردين ما يتطابقون!';err.classList.add('show');return;}
+  if(!chkCap('cA2')){err.textContent='❌ إجابة الكابتشا غلط';err.classList.add('show');newCap();return;}
   
   const users=await fbGet('users')||{};
-  if(Object.values(users).find(u=>u.email===email)){err.textContent=t.eEx;err.classList.add('show');return;}
+  if(Object.values(users).find(u=>u.email===email)){err.textContent='❌ الإيميل مسجل قبل، استعمل غيره!';err.classList.add('show');return;}
   
   const h=await sha256(pass+email+'_pb25');
   await fbPush('users',{name,email,hash:h,device:navigator.userAgent,joined:new Date().toISOString()});
@@ -276,16 +314,15 @@ async function doReg(){
   sess={name,email,isOwner:(email===OW_EMAIL&&pass===OW_PASS)};
   localStorage.setItem(SK,JSON.stringify(sess));
   closeM('ovA');renderAuth();
-  toast(`🎉 ${t.wlc} ${name}!`);
+  toast(`🎉 نورتنا يا ${name}!`);
 }
 // ============================
 // Discount (Per-User Limit)
 // ============================
 async function applyDiscount(){
-  const t=T[lang]||T.ar;
   if(!sess){toast('⚠️ يرجى انشاء حساب أولاً لتتمكن من استخدام الكود',true);return;}
   const code=document.getElementById('discInp').value.trim().toUpperCase();
-  if(!code){toast(t.discEmpty||'أدخل الكود',true);return;}
+  if(!code){toast('⚠️ أدخل الكود',true);return;}
   
   const safeEmail = sess.email.replace(/\./g, '_');
   const alreadyUsed = await fbGet(`used_discounts/${safeEmail}/${code}`);
@@ -293,13 +330,13 @@ async function applyDiscount(){
   
   const discounts=await fbGet('discounts')||{};
   const entry=Object.values(discounts).find(d=>d.code===code);
-  if(!entry){toast(t.discInvalid||'❌ الكود غير صحيح',true);return;}
+  if(!entry){toast('❌ الكود غير صحيح',true);return;}
   
   discountPct=entry.pct; discountCode=code;
   const tag=document.getElementById('discTag');
   tag.textContent=`✅ خصم ${discountPct}% — كود: ${code}`;
   tag.style.display='block';
-  toast(`🎉 ${t.discApplied||'تم تطبيق الخصم'} ${discountPct}%`);
+  toast(`🎉 تم تطبيق الخصم ${discountPct}%`);
 }
 
 async function addDiscount(){
@@ -333,7 +370,7 @@ async function delDiscount(key){
 }
 
 // ============================
-// Order System
+// Order System (Mandatory Payment 🔥)
 // ============================
 function openOrder(bot,price,custom=false){
   isCustom=custom;
@@ -343,13 +380,25 @@ function openOrder(bot,price,custom=false){
   document.getElementById('discInp').value='';
   document.getElementById('discTag').style.display='none';
   ['cn','cc','cd'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  document.querySelectorAll('.pay').forEach(b=>b.classList.remove('on'));
+  
+  document.querySelectorAll('.pay').forEach(b=>{
+    b.classList.remove('on');
+    b.classList.remove('pay-error'); // تصفير الأخطاء
+  });
   payV='';
   document.getElementById('dA').style.display=custom?'block':'none';
   if(sess?.name)document.getElementById('cn').value=sess.name;
   openM('ovO');
 }
-function sP(btn,m){document.querySelectorAll('.pay').forEach(b=>b.classList.remove('on'));btn.classList.add('on');payV=m;}
+
+function sP(btn,m){
+  document.querySelectorAll('.pay').forEach(b=>{
+    b.classList.remove('on');
+    b.classList.remove('pay-error');
+  });
+  btn.classList.add('on');
+  payV=m;
+}
 
 async function submitOrder(){
   const bot=document.getElementById('bn').value;
@@ -357,14 +406,24 @@ async function submitOrder(){
   const con=document.getElementById('cc').value.trim();
   const desc=isCustom?document.getElementById('cd').value.trim():'—';
   const bud=document.getElementById('cb').value.trim();
-  const t=T[lang]||T.ar;
-  if(!name||!con){toast(t.eF,true);return;}
-  if(isCustom&&!document.getElementById('cd').value.trim()){toast(t.eDe||'⚠️ اشرح ما تريده',true);return;}
+  
+  if(!name||!con){toast('⚠️ يرجى إدخال اسمك وطريقة التواصل',true);return;}
+  if(isCustom&&!document.getElementById('cd').value.trim()){toast('⚠️ اشرح ما تريده بالتفصيل',true);return;}
+
+  // 🔥 الإجبار على طريقة الدفع (لن يمر الطلب بدونها)
+  if(!payV){
+    toast('❌ يرجى اختيار طريقة الدفع أولاً!',true);
+    document.querySelectorAll('.pay').forEach(b => b.classList.add('pay-error'));
+    setTimeout(() => {
+      document.querySelectorAll('.pay').forEach(b => b.classList.remove('pay-error'));
+    }, 500); // مدة الاهتزاز
+    return;
+  }
 
   // تسجيل الطلب بالداتا بيس
   await fbPush('orders',{
     bot,name,contact:con,desc,budget:bud,
-    pay:payV||'—', discount:discountCode||'—', discountPct:discountPct||0,
+    pay:payV, discount:discountCode||'—', discountPct:discountPct||0,
     date:new Date().toLocaleString('ar-EG'),
     user:sess?.email||'guest', device:navigator.userAgent
   });
@@ -376,25 +435,27 @@ async function submitOrder(){
   }
 
   await fbIncr('stats/orderCount');
-  refreshOrderCount();
+  refreshStats();
 
   const discLine=discountCode?`\n🏷️ *كود الخصم:* ${discountCode} (${discountPct}% خصم)`:'';
-  const msg=`🤖 *طلب جديد - Projects Bots*\n\n📦 *البوت:* ${bot}\n👤 *الاسم:* ${name}\n📞 *التواصل:* ${con}\n💰 *الميزانية:* ${bud||'—'}\n💳 *الدفع:* ${payV||'—'}${discLine}${isCustom&&desc&&desc!=='—'?'\n\n📝 *الوصف:*\n'+desc:''}\n\n_من موقع Projects Bots_`;
+  const msg=`🤖 *طلب جديد - Projects Bots*\n\n📦 *البوت:* ${bot}\n👤 *الاسم:* ${name}\n📞 *التواصل:* ${con}\n💰 *الميزانية:* ${bud||'—'}\n💳 *الدفع:* ${payV}${discLine}${isCustom&&desc&&desc!=='—'?'\n\n📝 *الوصف:*\n'+desc:''}\n\n_من موقع Projects Bots_`;
   window.open('https://wa.me/201145974113?text='+encodeURIComponent(msg),'_blank');
   
   closeM('ovO');
-  toast(t.oS||'✅ تم فتح واتساب!');
+  toast('✅ تم تحويلك للواتساب لإتمام الطلب!');
   discountCode=''; discountPct=0;
 }
 
 // ============================
-// Owner Panel
+// Owner Panel (Holographic Reveal)
 // ============================
 async function showPanel(){
   if(!sess?.isOwner)return;
   const panel=document.getElementById('ownerPanel');
   panel.style.display='block';
-  panel.classList.add('active'); // للأنيميشن
+  
+  // أنيميشن الانبثاق
+  setTimeout(() => { panel.classList.add('reveal-el', 'reveal-visible'); }, 50);
   
   const oc=await fbGet('stats/orderCount')||0;
   const usersObj=await fbGet('users')||{};
@@ -408,14 +469,14 @@ async function showPanel(){
   document.getElementById('pD').textContent=Object.keys(discountsObj).length;
 
   document.getElementById('pOL').innerHTML=orders.length
-    ?orders.slice().reverse().map(o=>`<div class="pc reveal active"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
+    ?orders.slice().reverse().map(o=>`<div class="pc reveal-el reveal-visible"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
     :'<p style="color:var(--mut);text-align:center;padding:16px">لا توجد طلبات</p>';
 
   document.getElementById('pUL').innerHTML=users.length
     ?users.map(u=>{
       const isOw=u.email===OW_EMAIL;
       const dt=u.joined?new Date(u.joined).toLocaleString('ar-EG',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-      return `<div class="uc reveal active"><div class="ua">${isOw?'👑':'👤'}</div><div class="ui"><h4>${u.name} <span class="utg ${isOw?'ow':'us'}">${isOw?'👑 Owner':'عضو'}</span></h4><p>📧 ${u.email}<br>🔒 <span style="font-family:monospace;font-size:10px">${(u.hash||'').substring(0,40)}…</span><br>📱 <span style="font-size:10px">${(u.device||'').substring(0,80)}</span><br>📅 ${dt}</p></div></div>`;
+      return `<div class="uc reveal-el reveal-visible"><div class="ua">${isOw?'👑':'👤'}</div><div class="ui"><h4>${u.name} <span class="utg ${isOw?'ow':'us'}">${isOw?'👑 Owner':'عضو'}</span></h4><p>📧 ${u.email}<br>🔒 <span style="font-family:monospace;font-size:10px">${(u.hash||'').substring(0,40)}…</span><br>📱 <span style="font-size:10px">${(u.device||'').substring(0,80)}</span><br>📅 ${dt}</p></div></div>`;
     }).join('')
     :'<p style="color:var(--mut);text-align:center;padding:16px">لا يوجد مستخدمون</p>';
 
@@ -449,33 +510,12 @@ const lpEl = document.getElementById('lp');
 if(lpEl) lpEl.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
 // ============================
-// Toast
+// Toast Notification
 // ============================
 function toast(msg,isErr){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast'+(isErr?' e':'');
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);
-}
-
-// ============================
-// i18n
-// ============================
-const T={
-ar:{dir:'rtl',ll:'اللغة:',ords:'طلب',n1:'ديسكورد',n2:'تيليجرام',n3:'واتساب',n6:'عنّا',h1:'متاح للطلبات الآن',h2:'بوتات احترافية',h3:'لكل منصة',h4:'تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات فقط.',h5:'📦 اطلب الآن',h6:'تعرف علينا',od:'مطور بوتات — إنشاء ملفات ومشاريع البوتات فقط، لا يشمل التشغيل',t1:'ديسكورد',t2:'تيليجرام',t3:'واتساب',t6:'عنّا',d1:'بوتات ديسكورد',d2:'جميع البوتات المسموح بها على Discord',ab1:'عن المشروع',ab2:'كل ما تحتاج معرفته',a1t:'من نحن',a1p:'مروان | Wano — مطور بوتات متخصص.',a2t:'ملاحظة',a2p:'الخدمة تشمل إنشاء ملفات البوتات فقط.',a3t:'طرق الدفع',a3p:'فودافون كاش، PayPal، Binance، USDT، تحويل بنكي.',a4t:'وقت التسليم',a4p:'بسيط: 1-3 أيام. متوسط: 3-7 أيام.',a5t:'الدعم',a5p:'دعم مجاني 7 أيام بعد التسليم.',a6t:'تواصل',login:'تسجيل دخول',register:'إنشاء حساب',lb1:'الإيميل',lb2:'الباسورد',lb3:'🔑 دخول',dvOr:'أو',nA:'ما عندك حساب؟',cO:'أنشئ حساب',hA:'عندك حساب؟',sI:'سجّل دخول',rl1:'الاسم',rl2:'الإيميل',rl3:'الباسورد (6 أحرف على الأقل)',rl4:'تأكيد الباسورد',rl5:'✅ إنشاء الحساب',or1:'طلب مشروع',or2:'📱 سيصلك رد من المطور مباشرة عبر واتساب',or3:'اسم البوت / المشروع',or4:'اسمك',or5:'تواصل',or6:'وصف ما تريده بالتفصيل',or7:'الميزانية التقريبية',or8:'طريقة الدفع',or9:'📤 إرسال الطلب عبر واتساب',oB:'🛒 اطلب الآن',cB:'✨ اطلب بوتك المخصص',cD:'بوت Discord مخصص',cT:'بوت Telegram مخصص',cW:'سيلف بوت واتساب مخصص',ca1:'✓ أي فكرة تريدها',ca2:'✓ سعر مخصص',uv:'غير متوفر حالياً',opT:'لوحة المالك — مروان | Wano',opB:'لوحة المالك',ptO:'📦 الطلبات',ptU:'👥 الحسابات',ptD:'🏷️ كودات الخصم',pUL:'مستخدم',pDL:'كود خصم',addDiscT:'➕ إضافة كود خصم جديد',addDiscBtn:'➕ إضافة',discLbl:'كود الخصم (اختياري)',discApply:'تطبيق',discEmpty:'أدخل الكود',discInvalid:'❌ الكود غير صحيح',discApplied:'تم تطبيق الخصم',fR:'جميع الحقوق محفوظة لـ',fN:'⚠️ إنشاء ملفات ومشاريع البوتات فقط — لا يشمل التشغيل أو الاستضافة',eF:'⚠️ أدخل الإيميل والباسورد',eCp:'❌ إجابة الكابتشا خاطئة',eW:'❌ الإيميل أو الباسورد خاطئ',eFA:'⚠️ جميع الحقول مطلوبة',eEm:'❌ إيميل غير صحيح',eSh:'❌ الباسورد أقل من 6 أحرف',ePM:'❌ الباسوردان غير متطابقان',eEx:'❌ الإيميل مسجل مسبقاً',eDe:'⚠️ اشرح ما تريده بالتفصيل',wlc:'أهلاً',lo:'تم تسجيل الخروج',oS:'✅ تم فتح واتساب!'},
-en:{dir:'ltr',ll:'Language:',ords:'orders',n1:'Discord',n2:'Telegram',n3:'WhatsApp',n6:'About',h1:'Available for orders',h2:'Professional Bots',h3:'For Every Platform',h4:'Custom bot development — file creation only.',h5:'📦 Order Now',h6:'About Us',od:'Bot Developer — File creation only, no hosting',t1:'Discord',t2:'Telegram',t3:'WhatsApp',t6:'About',d1:'Discord Bots',d2:'All allowed bot types',ab1:'About Us',ab2:'Everything you need to know',a1t:'Who We Are',a1p:'Marwan | Wano — Bot developer.',a2t:'Note',a2p:'File creation only, no hosting.',a3t:'Payments',a3p:'Vodafone Cash, PayPal, Binance, USDT, Bank.',a4t:'Delivery',a4p:'Simple: 1-3 days. Medium: 3-7 days.',a5t:'Support',a5p:'Free 7-day support.',a6t:'Contact',login:'Login',register:'Sign Up',lb1:'Email',lb2:'Password',lb3:'🔑 Login',dvOr:'or',nA:"Don't have an account?",cO:'Create one',hA:'Have an account?',sI:'Sign in',rl1:'Name',rl2:'Email',rl3:'Password (min 6)',rl4:'Confirm Password',rl5:'✅ Create Account',or1:'Order',or2:'📱 Reply via WhatsApp',or3:'Bot Name',or4:'Your Name',or5:'Contact',or6:'Describe in detail',or7:'Budget',or8:'Payment',or9:'📤 Send via WhatsApp',oB:'🛒 Order Now',cB:'✨ Custom Bot',cD:'Custom Discord Bot',cT:'Custom Telegram Bot',cW:'Custom WhatsApp Bot',ca1:'✓ Any idea',ca2:'✓ Custom price',uv:'Not Available',opT:'Owner Panel',opB:'Owner Panel',ptO:'📦 Orders',ptU:'👥 Users',ptD:'🏷️ Discounts',pUL:'users',pDL:'discount',addDiscT:'➕ Add Discount Code',addDiscBtn:'➕ Add',discLbl:'Discount Code (optional)',discApply:'Apply',discEmpty:'Enter code',discInvalid:'❌ Invalid code',discApplied:'Discount applied',fR:'All rights reserved by',fN:'⚠️ File creation only',eF:'⚠️ Enter email and password',eCp:'❌ Wrong captcha',eW:'❌ Wrong credentials',eFA:'⚠️ All fields required',eEm:'❌ Invalid email',eSh:'❌ Password too short',ePM:'❌ Passwords mismatch',eEx:'❌ Email exists',eDe:'⚠️ Describe please',wlc:'Welcome',lo:'Logged out',oS:'✅ WhatsApp!'}
-};
-
-function setLang(l,btn){
-  lang=l;
-  const t=T[l]||T.ar;
-  document.documentElement.lang=l;
-  document.documentElement.dir=t.dir;
-  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));
-  if(btn)btn.classList.add('on');
-  document.getElementById('ll').textContent=t.ll;
-  document.querySelectorAll('[data-i]').forEach(el=>{
-    const k=el.getAttribute('data-i');
-    if(t[k]!==undefined)el.textContent=t[k];
-  });
-  renderAuth();
+  t.textContent=msg;
+  t.className='toast'+(isErr?' e':'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
 }
