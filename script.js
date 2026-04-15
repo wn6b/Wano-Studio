@@ -65,7 +65,6 @@ function updateStoreStatusUI(){
   
   // تحديث حالة أزرار الطلبات
   document.querySelectorAll('.ob').forEach(btn => {
-    // البوتات المقفلة برمجياً (مثل الموسيقى والميديا) تبقى مقفلة دائماً
     if(btn.closest('.bc').classList.contains('dis')){
       btn.disabled = true;
     } else {
@@ -73,7 +72,6 @@ function updateStoreStatusUI(){
       if(!storeOpen) {
         btn.textContent = '⛔ مغلق حالياً';
       } else {
-        // استعادة النص الأصلي
         const isCustomBtn = btn.closest('.sp') !== null;
         btn.textContent = isCustomBtn ? (t.cB || '✨ اطلب بوتك') : (t.oB || '🛒 اطلب الآن');
       }
@@ -223,7 +221,7 @@ async function doReg(){
 // ============================
 async function applyDiscount(){
   const t=T[lang]||T.ar;
-  if(!sess){toast('⚠️ يرجى انشاء حساب أولاً',true);return;}
+  if(!sess){toast('⚠️ يرجى انشاء حساب أولاً لتتمكن من استخدام الكود',true);return;}
   const code=document.getElementById('discInp').value.trim().toUpperCase();
   if(!code){toast(t.discEmpty||'أدخل الكود',true);return;}
   
@@ -309,7 +307,7 @@ async function submitOrder(){
     user:sess?.email||'guest', device:navigator.userAgent
   });
   
-  // حرق الكود للمستخدم الحالي
+  // حرق الكود للمستخدم الحالي بعد إرسال الطلب
   if(discountCode && sess){
     const safeEmail = sess.email.replace(/\./g, '_');
     await fbSet(`used_discounts/${safeEmail}/${discountCode}`, true);
