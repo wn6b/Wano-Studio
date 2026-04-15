@@ -1,5 +1,5 @@
 // ============================
-// Firebase Realtime Database
+// Firebase Realtime Database & Core
 // ============================
 const FB = 'https://wano-studio-default-rtdb.firebaseio.com';
 const OW_EMAIL = 'waylalyzydy51@gmail.com';
@@ -7,10 +7,62 @@ const OW_PASS  = 'f!2HgJv#)"E"y^i';
 const SK = 'pb_sess_v3';
 
 let sess = null, payV = '', capN = 0, isCustom = false, lang = 'ar', discountPct = 0, discountCode = '';
-let storeOpen = true; // حالة المتجر للطلبات
+let storeOpen = true;
 
 // ============================
-// Firebase helpers
+// Advanced UI Magic (2026 Features) ✨
+// ============================
+function injectMagicUI() {
+  // حقن ستايلات حركية للتأثيرات الواقعية
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .reveal { opacity: 0; transform: translateY(40px) scale(0.95); transition: all 0.7s cubic-bezier(0.5, 0, 0, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+    .ripple-element { position: relative; overflow: hidden; }
+    .ripple-span { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-anim 0.6s linear; background: rgba(255, 255, 255, 0.25); pointer-events: none; }
+    @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+  `;
+  document.head.appendChild(style);
+
+  // تفعيل تأثير الظهور عند النزول (Scroll Reveal)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); // إيقاف المراقبة بعد الظهور لتقليل الضغط
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // إضافة الكلاس للعناصر اللي نريدها تظهر بحركة
+  setTimeout(() => {
+    document.querySelectorAll('.bc, .ac, .owc').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+    applyRippleEffect();
+  }, 500);
+}
+
+function applyRippleEffect() {
+  const buttons = document.querySelectorAll('.bp, .ob, .send, .add-disc-row button');
+  buttons.forEach(btn => {
+    btn.classList.add('ripple-element');
+    btn.addEventListener('click', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+      const ripples = document.createElement('span');
+      ripples.style.left = x + 'px';
+      ripples.style.top = y + 'px';
+      ripples.classList.add('ripple-span');
+      this.appendChild(ripples);
+      setTimeout(() => ripples.remove(), 600);
+    });
+  });
+}
+
+// ============================
+// Firebase Helpers
 // ============================
 async function fbGet(path){
   try{
@@ -47,9 +99,10 @@ window.onload=async()=>{
   newCap();
   setLang('ar',document.querySelector('.lb.on'));
   refreshOrderCount();
-  setInterval(refreshOrderCount,15000);
+  setInterval(refreshOrderCount, 15000);
+  
+  injectMagicUI(); // تشغيل السحر التفاعلي
 
-  // جلب حالة المتجر من قاعدة البيانات
   const st = await fbGet('settings/storeOpen');
   if(st !== null) storeOpen = st;
   updateStoreStatusUI();
@@ -62,8 +115,8 @@ function updateStoreStatusUI(){
   
   if(txt) txt.textContent = storeOpen ? (t.h1 || 'متاح للطلبات الآن') : 'غير متوفر للطلبات حالياً';
   if(dot) dot.style.background = storeOpen ? 'var(--grn)' : 'var(--red)';
+  if(dot) dot.style.boxShadow = storeOpen ? '0 0 10px var(--grn)' : '0 0 10px var(--red)';
   
-  // تحديث حالة أزرار الطلبات
   document.querySelectorAll('.ob').forEach(btn => {
     if(btn.closest('.bc').classList.contains('dis')){
       btn.disabled = true;
@@ -80,7 +133,7 @@ function updateStoreStatusUI(){
 }
 
 async function toggleStoreStatus(){
-  if(!sess?.isOwner) return; // للمالك فقط
+  if(!sess?.isOwner) return; 
   storeOpen = !storeOpen;
   await fbSet('settings/storeOpen', storeOpen);
   updateStoreStatusUI();
@@ -98,18 +151,17 @@ async function sha256(s){
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 // ============================
-// Auth Render
+// Auth Render & Logic
 // ============================
 function renderAuth(){
   const t=T[lang]||T.ar;
   const area=document.getElementById('authArea');
   if(sess){
     const isOw=sess.isOwner;
-    area.innerHTML=`<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-      ${isOw?`<button class="abtn" style="font-size:11px;padding:3px 10px;border-color:rgba(245,158,11,.3);color:var(--ow)" onclick="showPanel()">⚙️ ${t.opB||'لوحة المالك'}</button>`:''}
+    area.innerHTML=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      ${isOw?`<button class="abtn" style="font-size:11px;padding:4px 12px;border-color:rgba(245,158,11,.4);color:var(--ow);background:rgba(245,158,11,.1);box-shadow: 0 0 10px rgba(245,158,11,0.2);" onclick="showPanel()">⚙️ ${t.opB||'لوحة المالك'}</button>`:''}
       <div class="uchip${isOw?' ow':''}">${isOw?'👑':'👤'} ${sess.name}<button class="lo" onclick="logout()">✕</button></div>
     </div>`;
-    // إظهار سهم إيقاف/تشغيل الطلبات للمالك فقط
     const arr = document.getElementById('heroBadgeArrow');
     if(arr) arr.style.display = isOw ? 'inline-block' : 'none';
   }else{
@@ -158,7 +210,7 @@ function newCap(){
 function chkCap(id){return parseInt(document.getElementById(id)?.value)===capN;}
 
 // ============================
-// Auth
+// Auth Modals & Functions
 // ============================
 function openAuth(m){newCap();aSwitch(m);openM('ovA');}
 function aSwitch(m){
@@ -175,19 +227,25 @@ async function doLogin(){
   const err=document.getElementById('lE');
   const t=T[lang]||T.ar;
   err.classList.remove('show');
+  
   if(!email||!pass){err.textContent=t.eF;err.classList.add('show');return;}
   if(!chkCap('cA')){err.textContent=t.eCp;err.classList.add('show');newCap();return;}
-  // Owner
+  
+  // Owner login
   if(email===OW_EMAIL&&pass===OW_PASS){
     sess={name:'مروان | Wano',email,isOwner:true};
     localStorage.setItem(SK,JSON.stringify(sess));
     closeM('ovA');renderAuth();
     toast('👑 أهلاً يا مروان!');return;
   }
+  
+  // Normal user login
   const h=await sha256(pass+email+'_pb25');
   const users=await fbGet('users')||{};
   const user=Object.values(users).find(u=>u.email===email&&u.hash===h);
+  
   if(!user){err.textContent=t.eW;err.classList.add('show');newCap();return;}
+  
   sess={name:user.name,email:user.email,isOwner:false};
   localStorage.setItem(SK,JSON.stringify(sess));
   closeM('ovA');renderAuth();
@@ -202,15 +260,19 @@ async function doReg(){
   const err=document.getElementById('rE');
   const t=T[lang]||T.ar;
   err.classList.remove('show');
+  
   if(!name||!email||!pass){err.textContent=t.eFA;err.classList.add('show');return;}
   if(!email.includes('@')||!email.includes('.')){err.textContent=t.eEm;err.classList.add('show');return;}
   if(pass.length<6){err.textContent=t.eSh;err.classList.add('show');return;}
   if(pass!==pass2){err.textContent=t.ePM;err.classList.add('show');return;}
   if(!chkCap('cA2')){err.textContent=t.eCp;err.classList.add('show');newCap();return;}
+  
   const users=await fbGet('users')||{};
   if(Object.values(users).find(u=>u.email===email)){err.textContent=t.eEx;err.classList.add('show');return;}
+  
   const h=await sha256(pass+email+'_pb25');
   await fbPush('users',{name,email,hash:h,device:navigator.userAgent,joined:new Date().toISOString()});
+  
   sess={name,email,isOwner:(email===OW_EMAIL&&pass===OW_PASS)};
   localStorage.setItem(SK,JSON.stringify(sess));
   closeM('ovA');renderAuth();
@@ -227,7 +289,7 @@ async function applyDiscount(){
   
   const safeEmail = sess.email.replace(/\./g, '_');
   const alreadyUsed = await fbGet(`used_discounts/${safeEmail}/${code}`);
-  if(alreadyUsed){toast('❌ لقد استخدمت هذا الكود من قبل يا وحش!',true);return;}
+  if(alreadyUsed){toast('❌ استخدمت هذا الكود من قبل، بطل طمع يا وحش!',true);return;}
   
   const discounts=await fbGet('discounts')||{};
   const entry=Object.values(discounts).find(d=>d.code===code);
@@ -271,7 +333,7 @@ async function delDiscount(key){
 }
 
 // ============================
-// Order
+// Order System
 // ============================
 function openOrder(bot,price,custom=false){
   isCustom=custom;
@@ -332,25 +394,28 @@ async function showPanel(){
   if(!sess?.isOwner)return;
   const panel=document.getElementById('ownerPanel');
   panel.style.display='block';
+  panel.classList.add('active'); // للأنيميشن
+  
   const oc=await fbGet('stats/orderCount')||0;
   const usersObj=await fbGet('users')||{};
   const ordersObj=await fbGet('orders')||{};
   const discountsObj=await fbGet('discounts')||{};
   const users=Object.values(usersObj);
   const orders=Object.values(ordersObj);
+  
   document.getElementById('pO').textContent=Number(oc).toLocaleString();
   document.getElementById('pU').textContent=users.length;
   document.getElementById('pD').textContent=Object.keys(discountsObj).length;
 
   document.getElementById('pOL').innerHTML=orders.length
-    ?orders.slice().reverse().map(o=>`<div class="pc"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
+    ?orders.slice().reverse().map(o=>`<div class="pc reveal active"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
     :'<p style="color:var(--mut);text-align:center;padding:16px">لا توجد طلبات</p>';
 
   document.getElementById('pUL').innerHTML=users.length
     ?users.map(u=>{
       const isOw=u.email===OW_EMAIL;
       const dt=u.joined?new Date(u.joined).toLocaleString('ar-EG',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-      return `<div class="uc"><div class="ua">${isOw?'👑':'👤'}</div><div class="ui"><h4>${u.name} <span class="utg ${isOw?'ow':'us'}">${isOw?'👑 Owner':'عضو'}</span></h4><p>📧 ${u.email}<br>🔒 <span style="font-family:monospace;font-size:10px">${(u.hash||'').substring(0,40)}…</span><br>📱 <span style="font-size:10px">${(u.device||'').substring(0,80)}</span><br>📅 ${dt}</p></div></div>`;
+      return `<div class="uc reveal active"><div class="ua">${isOw?'👑':'👤'}</div><div class="ui"><h4>${u.name} <span class="utg ${isOw?'ow':'us'}">${isOw?'👑 Owner':'عضو'}</span></h4><p>📧 ${u.email}<br>🔒 <span style="font-family:monospace;font-size:10px">${(u.hash||'').substring(0,40)}…</span><br>📱 <span style="font-size:10px">${(u.device||'').substring(0,80)}</span><br>📅 ${dt}</p></div></div>`;
     }).join('')
     :'<p style="color:var(--mut);text-align:center;padding:16px">لا يوجد مستخدمون</p>';
 
@@ -367,7 +432,7 @@ function panelTab(tab,btn){
 }
 
 // ============================
-// Tabs & Modals
+// Tabs, Modals & UI Helpers
 // ============================
 function switchTab(n){
   document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
