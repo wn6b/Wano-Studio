@@ -1,6 +1,5 @@
 // =============================================================
 // Projects Bots — Ultra Realistic Script (10,000% Realism)
-// Core, AI Translate, Firebase, and Magic UI
 // =============================================================
 
 const FB = 'https://wano-studio-default-rtdb.firebaseio.com';
@@ -37,7 +36,8 @@ function setAILang(langCode, btn) {
   if (select) {
     select.value = langCode;
     select.dispatchEvent(new Event('change'));
-    toast('🤖 جاري الترجمة عبر الذكاء الاصطناعي...');
+    // التوست راح يتبرمج جوا فخليناه يستدعى بس
+    if(typeof toast === 'function') toast('🤖 جاري الترجمة عبر الذكاء الاصطناعي...');
   } else {
     setTimeout(() => setAILang(langCode, btn), 500); 
   }
@@ -85,7 +85,6 @@ function injectMagicUI() {
     }
   });
 }
-
 // ============================
 // Firebase Helpers
 // ============================
@@ -137,7 +136,6 @@ async function refreshStats(){
   if(oCountEl) oCountEl.textContent=Number(stats.orderCount||0).toLocaleString();
   if(vCountEl) vCountEl.textContent=Number(stats.visits||0).toLocaleString();
 }
-
 function updateStoreStatusUI(){
   const txt = document.getElementById('heroBadgeTxt');
   const badge = document.querySelector('.badge');
@@ -167,13 +165,14 @@ async function toggleStoreStatus(){
   storeOpen = !storeOpen;
   await fbSet('settings/storeOpen', storeOpen);
   updateStoreStatusUI();
-  toast(storeOpen ? '✅ تم فتح المتجر ورفع الحظر!' : '⛔ تم إغلاق المتجر وإيقاف الطلبات!');
+  if(typeof toast === 'function') toast(storeOpen ? '✅ تم فتح المتجر بنجاح!' : '⛔ تم إغلاق المتجر وإيقاف الطلبات!');
 }
 
 async function sha256(s){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
+
 // ============================
 // Auth Render & Unlocking Gate
 // ============================
@@ -192,26 +191,25 @@ function logout(){
   sess=null; localStorage.removeItem(SK);
   document.getElementById('ownerPanel').style.display='none';
   
-  // قفل النظام وارجاع البوابة الضبابية 🛡️
+  // قفل الموقع وارجاع البوابة
   document.getElementById('authGate').classList.remove('hidden');
   document.getElementById('mainContent').classList.remove('auth-success');
   
-  toast('تم تسجيل الخروج وقفل النظام 🛡️');
+  if(typeof toast === 'function') toast('تم تسجيل الخروج بنجاح.');
 }
 
 function unlockGate(userObj) {
   sess = userObj;
   localStorage.setItem(SK, JSON.stringify(sess));
-  closeM('ovA');
+  if(typeof closeM === 'function') closeM('ovA');
   renderAuth();
   
-  // فتح البوابة بلمسة Sci-Fi ✨
+  // فتح الموقع وإخفاء البوابة
   document.getElementById('authGate').classList.add('hidden');
   document.getElementById('mainContent').classList.add('auth-success');
 }
-
 // ============================
-// Captcha (Hard Mode 🔥)
+// Captcha 
 // ============================
 function newCap(){
   const ops = ['+', '-', '×'];
@@ -252,7 +250,7 @@ async function doLogin(){
   if(email===OW_EMAIL&&pass===OW_PASS){
     unlockGate({name:'مروان | Wano',email,isOwner:true});
     updateStoreStatusUI();
-    toast('👑 تم فتح النظام يا مدير!');return;
+    if(typeof toast === 'function') toast('👑 أهلاً بك في لوحة التحكم يا مدير!');return;
   }
   
   // Normal user login
@@ -263,7 +261,7 @@ async function doLogin(){
   if(!user){err.textContent='❌ الإيميل أو الباسورد غلط!';err.classList.add('show');newCap();return;}
   
   unlockGate({name:user.name,email:user.email,isOwner:false});
-  toast(`✅ مرحباً بعودتك ${user.name}!`);
+  if(typeof toast === 'function') toast(`✅ مرحباً بعودتك ${user.name}!`);
 }
 
 async function doReg(){
@@ -287,11 +285,11 @@ async function doReg(){
   await fbPush('users',{name,email,hash:h,device:navigator.userAgent,joined:new Date().toISOString()});
   
   unlockGate({name,email,isOwner:(email===OW_EMAIL&&pass===OW_PASS)});
-  toast(`🎉 تم فتح النظام يا ${name}!`);
+  if(typeof toast === 'function') toast(`🎉 تم إنشاء حسابك بنجاح يا ${name}!`);
 }
 
 // ============================
-// TAB SWITCHER (FIXED: NO SCROLL TO TOP 🚫👆)
+// TAB SWITCHER 
 // ============================
 function switchTab(n){
   document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
@@ -302,10 +300,7 @@ function switchTab(n){
   
   if(el) el.classList.add('on');
   if(btn) btn.classList.add('on');
-  
-  // انحذف كود الـ scrollTo تماماً حتى لا يطفر الموقع
 }
-
 // ============================
 // MODALS UI & STORE GATING
 // ============================
@@ -313,8 +308,8 @@ function openM(id){document.getElementById(id).classList.add('open');}
 function closeM(id){document.getElementById(id).classList.remove('open');}
 
 function openOrder(bn,bp,c=false){
-  if(!sess){openAuth('l');toast('⚠️ لازم تسجل دخول قبل لا تطلب!');return;}
-  if(!storeOpen){toast('⛔ المتجر مغلق حالياً، لا يمكن استقبال طلبات!');return;}
+  if(!sess){openAuth('l'); if(typeof toast === 'function') toast('⚠️ لازم تسجل دخول قبل لا تطلب!'); return;}
+  if(!storeOpen){ if(typeof toast === 'function') toast('⛔ المتجر مغلق حالياً، لا يمكن استقبال طلبات!'); return;}
   
   isCustom=c;
   document.getElementById('bn').value=bn;
@@ -343,33 +338,32 @@ function sP(b,m){
 // ============================
 async function applyDiscount(){
   const inp=document.getElementById('discInp').value.trim().toUpperCase();
-  if(!inp){toast('⚠️ اكتب كود الخصم أولاً', 'e');return;}
+  if(!inp){ if(typeof toast === 'function') toast('⚠️ اكتب كود الخصم أولاً', 'e'); return;}
   
   const codes=await fbGet('discounts')||{};
   const foundId=Object.keys(codes).find(k=>codes[k].code===inp);
   
-  if(!foundId){toast('❌ الكود غير صحيح أو مستخدم مسبقاً', 'e');return;}
+  if(!foundId){ if(typeof toast === 'function') toast('❌ الكود غير صحيح أو مستخدم مسبقاً', 'e'); return;}
   
   discountPct=codes[foundId].pct;
   discountCode=inp;
   const tag=document.getElementById('discTag');
   tag.textContent=`تم تفعيل خصم ${discountPct}% 🎉`;
   tag.style.display='block';
-  toast('🎉 تم تطبيق الخصم بنجاح!');
+  if(typeof toast === 'function') toast('🎉 تم تطبيق الخصم بنجاح!');
 }
 
 async function burnDiscountCode(codeStr){
   const codes=await fbGet('discounts')||{};
   const foundId=Object.keys(codes).find(k=>codes[k].code===codeStr);
-  if(foundId) await fbDel(`discounts/${foundId}`); // حرق الكود بعد استخدامه 🔥
+  if(foundId) await fbDel(`discounts/${foundId}`); // حذف الكود نهائياً من قاعدة البيانات
 }
-
 // ============================
 // SUBMIT ORDER (MANDATORY PAYMENT)
 // ============================
 async function submitOrder(){
   if(!payV){
-    toast('⚠️ لازم تختار طريقة دفع حتى نكمل الطلب!','e');
+    if(typeof toast === 'function') toast('⚠️ لازم تختار طريقة دفع حتى نكمل الطلب!','e');
     document.querySelectorAll('.pay').forEach(b=>b.classList.add('pay-error'));
     return;
   }
@@ -377,8 +371,8 @@ async function submitOrder(){
   const n=document.getElementById('cn').value.trim();
   const c=document.getElementById('cc').value.trim();
   const d=isCustom?document.getElementById('cd').value.trim():'';
-  if(!n||!c){toast('⚠️ اكتب اسمك ورقمك/حسابك','e');return;}
-  if(isCustom&&!d){toast('⚠️ اشرح طلبك بالتفصيل','e');return;}
+  if(!n||!c){if(typeof toast === 'function') toast('⚠️ اكتب اسمك ورقمك/حسابك','e');return;}
+  if(isCustom&&!d){if(typeof toast === 'function') toast('⚠️ اشرح طلبك بالتفصيل','e');return;}
 
   const bName=document.getElementById('bn').value;
   let bPrice=document.getElementById('cb').value;
@@ -399,14 +393,14 @@ async function submitOrder(){
   window.open(`https://wa.me/201145974113?text=${encodeURIComponent(t)}`,'_blank');
   closeM('ovO');
   refreshStats();
-  toast('✅ تم إرسال طلبك بنجاح!');
+  if(typeof toast === 'function') toast('✅ تم إرسال طلبك بنجاح!');
 }
 
 // ============================
 // OWNER PANEL 👑
 // ============================
 async function showPanel(){
-  if(!sess?.isOwner){toast('⛔ خاص بالمالك فقط!','e');return;}
+  if(!sess?.isOwner){if(typeof toast === 'function') toast('⛔ خاص بالمالك فقط!','e');return;}
   document.getElementById('ownerPanel').style.display='block';
   const st=await fbGet('stats')||{};
   document.getElementById('pO').textContent=st.orderCount||0;
@@ -470,7 +464,7 @@ async function loadUsers(){
 async function delUser(k){
   if(confirm('هل أنت متأكد من مسح هذا المستخدم؟')){
     await fbDel(`users/${k}`);
-    toast('🗑️ تم مسح المستخدم');
+    if(typeof toast === 'function') toast('🗑️ تم مسح المستخدم');
     loadUsers();
   }
 }
@@ -494,18 +488,18 @@ async function loadDiscounts(){
 async function addDiscount(){
   const code=document.getElementById('discCode').value.trim().toUpperCase();
   const pct=parseInt(document.getElementById('discPct').value);
-  if(!code||isNaN(pct)||pct<1||pct>99){toast('⚠️ أدخل كود صحيح ونسبة بين 1 و 99','e');return;}
+  if(!code||isNaN(pct)||pct<1||pct>99){if(typeof toast === 'function') toast('⚠️ أدخل كود صحيح ونسبة بين 1 و 99','e');return;}
   
   await fbPush('discounts',{code,pct});
   document.getElementById('discCode').value='';
   document.getElementById('discPct').value='';
-  toast(`✅ تم إضافة كود ${code} بخصم ${pct}%`);
+  if(typeof toast === 'function') toast(`✅ تم إضافة كود ${code} بخصم ${pct}%`);
   loadDiscounts();
 }
 
 async function delDiscount(k){
   await fbDel(`discounts/${k}`);
-  toast('🗑️ تم حذف الكود');
+  if(typeof toast === 'function') toast('🗑️ تم حذف الكود');
   loadDiscounts();
 }
 
