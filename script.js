@@ -314,3 +314,223 @@ function switchTab(n){
   if(el) el.classList.add('on');
   if(btn) btn.classList.add('on');
 }
+/* ============================ */
+/* Modals UI & Order Management */
+/* ============================ */
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+
+function openOrder(bn,bp,c=false){
+  if(!sess){
+    openAuth('l'); 
+    if(typeof toast === 'function') toast('يجب تسجيل الدخول لتقديم الطلب', 'e'); 
+    return;
+  }
+  if(!storeOpen){ 
+    if(typeof toast === 'function') toast('المتجر مغلق حالياً، لا يمكن استقبال طلبات جديدة', 'e'); 
+    return;
+  }
+  
+  isCustom=c;
+  document.getElementById('bn').value=bn;
+  document.getElementById('cn').value=sess.name||'';
+  document.getElementById('cc').value='';
+  document.getElementById('cb').value=bp;
+  document.getElementById('dA').style.display=c?'block':'none';
+  document.getElementById('cd').value='';
+  
+  payV=''; 
+  document.querySelectorAll('.pay').forEach(b=>{b.classList.remove('on','pay-error');});
+  
+  discountPct=0; discountCode='';
+  document.getElementById('discInp').value='';
+  document.getElementById('discTag').style.display='none';
+  
+  openM('ovO');
+}
+
+function sP(b,m){
+  document.querySelectorAll('.pay').forEach(x=>x.classList.remove('on','pay-error'));
+  b.classList.add('on'); payV=m;
+}
+
+/* ============================ */
+/* Secure Discount System       */
+/* ============================ */
+async function applyDiscount(){
+  const inp=document.getElementById('discInp').value.trim().toUpperCase();
+  if(!inp){ if(typeof toast === 'function') toast('يرجى إدخال كود الخصم أولاً', 'e'); return;}
+  
+  const codes=await fbGet('discounts')||{};
+  const foundId=Object.keys(codes).find(k=>codes[k].code===inp);
+  
+  if(!foundId){ if(typeof toast === 'function') toast('الكود غير صحيح أو تم استخدامه مسبقاً', 'e'); return;}
+  
+  discountPct=codes[foundId].pct;
+  discountCode=inp;
+  const tag=document.getElementById('discTag');
+  tag.textContent=`تم تفعيل خصم ${discountPct}% بنجاح`;
+  tag.style.display='block';
+  if(typeof toast === 'function') toast('تم تطبيق الخصم على الطلب بنجاح', 's');
+}
+
+async function burnDiscountCode(codeStr){
+  const codes=await fbGet('discounts')||{};
+  const foundId=Object.keys(codes).find(k=>codes[k].code===codeStr);
+  if(foundId) await fbDel(`discounts/${foundId}`);
+}
+/* ============================ */
+/* Order Submission & WhatsApp  */
+/* ============================ */
+async function submitOrder(){
+  if(!payV){
+    if(typeof toast === 'function') toast('يجب اختيار طريقة الدفع لإتمام الطلب','e');
+    document.querySelectorAll('.pay').forEach(b=>b.classList.add('pay-error'));
+    return;
+  }
+  
+  const n=document.getElementById('cn').value.trim();
+  const c=document.getElementById('cc').value.trim();
+  const d=isCustom?document.getElementById('cd').value.trim():'';
+  if(!n||!c){if(typeof toast === 'function') toast('يرجى إدخال الاسم وبيانات التواصل','e');return;}
+  if(isCustom&&!d){if(typeof toast === 'function') toast('يرجى كتابة تفاصيل المشروع بوضوح','e');return;}
+
+  const bName=document.getElementById('bn').value;
+  let bPrice=document.getElementById('cb').value;
+  
+  if(discountPct>0){
+    bPrice+=` (خصم ${discountPct}% عبر الكود ${discountCode})`;
+    await burnDiscountCode(discountCode); 
+  }
+
+  const o={bn:bName,n,c,cb:bPrice,pay:payV,d,time:new Date().toLocaleString('ar-SA')};
+  await fbPush('orders',o);
+  await fbIncr('stats/orderCount');
+
+  let t=`*طلب مشروع جديد*\n\n*المشروع:* ${bName}\n*الميزانية:* ${bPrice}\n*طريقة الدفع:* ${payV}\n*الاسم:* ${n}\n*التواصل:* ${c}`;
+  if(isCustom) t+=`\n*التفاصيل:* ${d}`;
+  t+=`\n\n*Projects Bots System*`;
+
+  window.open(`https://wa.me/201145974113?text=${encodeURIComponent(t)}`,'_blank');
+  closeM('ovO');
+  refreshStats();
+  if(typeof toast === 'function') toast('تم تحويل الطلب بنجاح', 's');
+}
+
+/* ============================ */
+/* Owner Control Panel          */
+/* ============================ */
+async function showPanel(){
+  if(!sess?.isOwner){if(typeof toast === 'function') toast('صلاحيات وصول مرفوضة','e');return;}
+  document.getElementById('ownerPanel').style.display='block';
+  const st=await fbGet('stats')||{};
+  document.getElementById('pO').textContent=st.orderCount||0;
+  
+  const us=await fbGet('users')||{};
+  document.getElementById('pU').textContent=Object.keys(us).length;
+  
+  const ds=await fbGet('discounts')||{};
+  document.getElementById('pD').textContent=Object.keys(ds).length;
+  
+  loadOrders();
+}
+
+function panelTab(t,b){
+  document.querySelectorAll('.ptab').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ['pOL','pUL','pDL'].forEach(id=>document.getElementById(id).style.display='none');
+  
+  if(t==='o'){document.getElementById('pOL').style.display='block';loadOrders();}
+  if(t==='u'){document.getElementById('pUL').style.display='block';loadUsers();}
+  if(t==='d'){document.getElementById('pDL').style.display='block';loadDiscounts();}
+}
+
+async function loadOrders(){
+  const ol=document.getElementById('pOL'); ol.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" style="animation: spinIcon 1s linear infinite; width: 30px;" alt=""></div>';
+  const data=await fbGet('orders')||{};
+  const keys=Object.keys(data).reverse();
+  if(!keys.length){ol.innerHTML='<p style="text-align:center;color:var(--mut)">لا توجد طلبات مسجلة.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="bc" style="margin-bottom:15px;padding:20px;">
+      <h3 style="color:var(--acc2)">${v.bn} <span style="font-size:12px;color:var(--mut);float:left">${v.time}</span></h3>
+      <p><strong>بواسطة:</strong> ${v.n} | <strong>التواصل:</strong> ${v.c}</p>
+      <p><strong>الميزانية:</strong> ${v.cb} | <strong>الدفع:</strong> ${v.pay}</p>
+      ${v.d?`<p><strong>التفاصيل:</strong> ${v.d}</p>`:''}
+    </div>`;
+  });
+  ol.innerHTML=h;
+}
+
+async function loadUsers(){
+  const ul=document.getElementById('pUL'); ul.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" style="animation: spinIcon 1s linear infinite; width: 30px;" alt=""></div>';
+  const data=await fbGet('users')||{};
+  const keys=Object.keys(data);
+  if(!keys.length){ul.innerHTML='<p style="text-align:center;color:var(--mut)">لا يوجد مستخدمون مسجلون.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="bc" style="margin-bottom:15px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div>
+        <h4 style="color:var(--grn);margin-bottom:4px">${v.name}</h4>
+        <p style="color:var(--mut);font-size:12px">${v.email} | تاريخ الانضمام: ${new Date(v.joined).toLocaleDateString('ar-SA')}</p>
+      </div>
+      <button class="del-btn ripple-element" onclick="delUser('${k}')"><img src="https://api.iconify.design/lucide:trash-2.svg?color=ef4444" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مسح المستخدم</button>
+    </div>`;
+  });
+  ul.innerHTML=h;
+}
+
+async function delUser(k){
+  if(confirm('تأكيد مسح هذا المستخدم من النظام؟')){
+    await fbDel(`users/${k}`);
+    if(typeof toast === 'function') toast('تم مسح بيانات المستخدم');
+    loadUsers();
+  }
+}
+
+async function loadDiscounts(){
+  const dl=document.getElementById('discList'); dl.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" style="animation: spinIcon 1s linear infinite; width: 30px;" alt=""></div>';
+  const data=await fbGet('discounts')||{};
+  const keys=Object.keys(data);
+  if(!keys.length){dl.innerHTML='<p style="text-align:center;color:var(--mut)">لا توجد أكواد خصم نشطة.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="dc">
+      <span><img src="https://api.iconify.design/lucide:tag.svg?color=white" style="width:14px; vertical-align:middle;" alt=""> ${v.code} — خصم ${v.pct}%</span>
+      <button class="del-btn ripple-element" onclick="delDiscount('${k}')"><img src="https://api.iconify.design/lucide:trash-2.svg?color=ef4444" style="width:16px;" alt=""> حذف</button>
+    </div>`;
+  });
+  dl.innerHTML=h;
+}
+
+async function addDiscount(){
+  const code=document.getElementById('discCode').value.trim().toUpperCase();
+  const pct=parseInt(document.getElementById('discPct').value);
+  if(!code||isNaN(pct)||pct<1||pct>99){if(typeof toast === 'function') toast('يرجى إدخال بيانات الكود والنسبة بشكل صحيح','e');return;}
+  
+  await fbPush('discounts',{code,pct});
+  document.getElementById('discCode').value='';
+  document.getElementById('discPct').value='';
+  if(typeof toast === 'function') toast(`تم تفعيل الكود ${code} بنسبة ${pct}%`, 's');
+  loadDiscounts();
+}
+
+async function delDiscount(k){
+  await fbDel(`discounts/${k}`);
+  if(typeof toast === 'function') toast('تم حذف الكود');
+  loadDiscounts();
+}
+
+/* ============================ */
+/* System Notifications (Toast) */
+/* ============================ */
+function toast(m,t='s'){
+  const b=document.getElementById('toast');
+  b.innerHTML = `<div style="display:flex;align-items:center;gap:10px;"><img src="https://api.iconify.design/lucide:${t==='e'?'alert-circle':'check-circle-2'}.svg?color=white" style="width:20px;" alt=""> ${m}</div>`;
+  if(t==='e')b.classList.add('e');else b.classList.remove('e');
+  b.classList.add('show');
+  setTimeout(()=>b.classList.remove('show'),3500);
+}
