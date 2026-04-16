@@ -75,7 +75,8 @@ body::before {
 /* Ultimate Auth Gate (Login Overlay)                            */
 /* ============================================================= */
 #authGate {
-    position: fixed; inset: 0; z-index: 9999999;
+    position: fixed; inset: 0; 
+    z-index: 99999; /* تم ضبط الطبقة لتبقى أسفل النوافذ المنبثقة */
     background: rgba(3, 3, 5, 0.9);
     backdrop-filter: var(--blur-intense);
     -webkit-backdrop-filter: var(--blur-intense);
@@ -399,10 +400,11 @@ body::before {
 .set-info p { font-size: 13px; color: var(--text-secondary); }
 
 /* ============================================================= */
-/* Ultra-Realistic Modals - النوافذ المنبثقة                     */
+/* Ultra-Realistic Modals - النوافذ المنبثقة (Z-INDEX FIXED)     */
 /* ============================================================= */
 .ov {
-    position: fixed; inset: 0; z-index: 999999;
+    position: fixed; inset: 0; 
+    z-index: 99999999 !important; /* هذا الحل الجذري لمشكلة الطبقات */
     background: rgba(2, 2, 4, 0.85);
     backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -518,7 +520,8 @@ body::before {
 /* System Notifications (Toasts)                                 */
 /* ============================================================= */
 .toast {
-    position: fixed; bottom: 40px; right: 40px; z-index: 9999999;
+    position: fixed; bottom: 40px; right: 40px; 
+    z-index: 999999999 !important; /* لضمان ظهور الإشعار فوق أي شيء */
     background: rgba(16, 185, 129, 0.9); color: #fff;
     padding: 18px 30px; border-radius: 20px; font-weight: 800; font-size: 15px;
     transform: translateY(100px) scale(0.8); opacity: 0; pointer-events: none;
