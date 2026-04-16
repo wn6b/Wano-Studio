@@ -30,8 +30,12 @@
     <div id="mainContent">
         <div id="topBar">
             <div class="bar-l">
-                <button class="lang-btn ripple-element" onclick="setAILang('en', this)">AI Translate</button>
-                <button class="lang-btn on ripple-element" onclick="setAILang('ar', this)">AR</button>
+                <button class="lang-btn ripple-element" onclick="setAILang('en', this)">
+                    <img src="https://api.iconify.design/lucide:languages.svg?color=94a3b8" style="width:16px; margin-left:5px;"> AI Translate
+                </button>
+                <button class="lang-btn on ripple-element" onclick="setAILang('ar', this)">
+                    <img src="https://api.iconify.design/lucide:globe.svg?color=ffffff" style="width:16px; margin-left:5px;"> AR
+                </button>
             </div>
             <div class="bar-r">
                 <div class="sb v"><img src="https://api.iconify.design/lucide:eye.svg?color=00ff88" style="width:16px;"> <span id="vCount">0</span></div>
@@ -84,111 +88,93 @@
             </div>
             <div id="tab-discord" class="tc on sec">
                 <div class="sh">
-                    <div class="si"><img src="https://api.iconify.design/logos:discord-icon.svg" style="width:34px;"></div>
-                    <div><h2>أنظمة ديسكورد (30 نظام)</h2><p>أكبر مكتبة برمجية متكاملة لإدارة وتطوير الخوادم الاحترافية.</p></div>
+                    <div class="si"><img src="https://api.iconify.design/logos:discord-icon.svg" style="width:34px;" alt=""></div>
+                    <div><h2>بوتات ديسكورد</h2><p>مشاريع احترافية مخصصة لمنصة ديسكورد.</p></div>
                 </div>
                 <div class="grid">
-                    <div class="bc"><h3>Moderation Pro</h3><p class="ad">إدارة كاملة</p><button class="ob" onclick="openOrder('Moderation Pro','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Economy Global</h3><p class="ad">نظام مالي</p><button class="ob" onclick="openOrder('Economy','$25+')">طلب</button></div>
-                    <div class="bc"><h3>Advanced Ticket</h3><p class="ad">نظام تذاكر</p><button class="ob" onclick="openOrder('Ticket','$12+')">طلب</button></div>
-                    <div class="bc"><h3>Music Ultra</h3><p class="ad">مشغل صوتيات</p><button class="ob" onclick="openOrder('Music','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Auto Line</h3><p class="ad">تنسيق تلقائي</p><button class="ob" onclick="openOrder('Auto Line','$8+')">طلب</button></div>
-                    <div class="bc"><h3>Giveaway Master</h3><p class="ad">سحوبات</p><button class="ob" onclick="openOrder('Giveaway','$5+')">طلب</button></div>
-                    <div class="bc"><h3>Log System</h3><p class="ad">رقابة شاملة</p><button class="ob" onclick="openOrder('Log','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Welcome Canvas</h3><p class="ad">ترحيب صوري</p><button class="ob" onclick="openOrder('Welcome','$12+')">طلب</button></div>
-                    <div class="bc"><h3>Leveling System</h3><p class="ad">نظام تفاعل</p><button class="ob" onclick="openOrder('Levels','$15+')">طلب</button></div>
-                    <div class="bc"><h3>YouTube Alerts</h3><p class="ad">تنبيهات بث</p><button class="ob" onclick="openOrder('YT Alerts','$7+')">طلب</button></div>
-                    <div class="bc"><h3>Twitch Sync</h3><p class="ad">ربط تويتش</p><button class="ob" onclick="openOrder('Twitch','$7+')">طلب</button></div>
-                    <div class="bc"><h3>Suggestions</h3><p class="ad">اقتراحات</p><button class="ob" onclick="openOrder('Suggestions','$5+')">طلب</button></div>
-                    <div class="bc"><h3>Verification</h3><p class="ad">تحقق أمني</p><button class="ob" onclick="openOrder('Verify','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Self-Roles</h3><p class="ad">رتب ذاتية</p><button class="ob" onclick="openOrder('SelfRoles','$8+')">طلب</button></div>
-                    <div class="bc"><h3>Auto Reaction</h3><p class="ad">تفاعل تلقائي</p><button class="ob" onclick="openOrder('AutoReact','$5+')">طلب</button></div>
-                    <div class="bc"><h3>Server Stats</h3><p class="ad">إحصائيات</p><button class="ob" onclick="openOrder('Stats','$7+')">طلب</button></div>
-                    <div class="bc"><h3>Invite Tracker</h3><p class="ad">تتبع دعوات</p><button class="ob" onclick="openOrder('Invites','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Anti-Raid</h3><p class="ad">حماية هجمات</p><button class="ob" onclick="openOrder('AntiRaid','$20+')">طلب</button></div>
-                    <div class="bc"><h3>Backup System</h3><p class="ad">نسخ احتياطي</p><button class="ob" onclick="openOrder('Backup','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Shop System</h3><p class="ad">متجر رتب</p><button class="ob" onclick="openOrder('Shop','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Partnership</h3><p class="ad">نظام شراكات</p><button class="ob" onclick="openOrder('Partner','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Temp Channels</h3><p class="ad">رومات مؤقتة</p><button class="ob" onclick="openOrder('TempRooms','$12+')">طلب</button></div>
-                    <div class="bc"><h3>Games Bot</h3><p class="ad">ألعاب ترفيه</p><button class="ob" onclick="openOrder('Games','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Donation Log</h3><p class="ad">سجل تبرعات</p><button class="ob" onclick="openOrder('Donations','$8+')">طلب</button></div>
-                    <div class="bc"><h3>Blacklist</h3><p class="ad">قائمة سوداء</p><button class="ob" onclick="openOrder('Blacklist','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Broadcaster</h3><p class="ad">نشر جماعي</p><button class="ob" onclick="openOrder('Broadcast','$12+')">طلب</button></div>
-                    <div class="bc"><h3>Apply System</h3><p class="ad">تقديم إدارة</p><button class="ob" onclick="openOrder('Apply','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Captcha Pro</h3><p class="ad">حماية متطورة</p><button class="ob" onclick="openOrder('Captcha','$15+')">طلب</button></div>
-                    <div class="bc"><h3>AI Chatbot</h3><p class="ad">ذكاء اصطناعي</p><button class="ob" onclick="openOrder('AIChat','$25+')">طلب</button></div>
-                    <div class="bc sp"><h3>Custom Project</h3><p class="ad">طلب خاص</p><button class="ob" onclick="openOrder('Custom','$40+', true)">طلب</button></div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shield-check.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$15+</span></div>
+                        <h3>Moderation Pro</h3>
+                        <div class="ads"><span class="ad">حماية</span><span class="ad">سجلات</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('Moderation Pro','$15+')">تقديم طلب</button>
+                    </div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:coins.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$28+</span></div>
+                        <h3>Economy Global</h3>
+                        <div class="ads"><span class="ad">بنك</span><span class="ad">تجارة</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('Economy Global','$28+')">تقديم طلب</button>
+                    </div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:ticket.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$12+</span></div>
+                        <h3>Advanced Ticket</h3>
+                        <div class="ads"><span class="ad">دعم فني</span><span class="ad">ترانزكريبت</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('Ticket System','$12+')">تقديم طلب</button>
+                    </div>
+                    <div class="bc" style="opacity: 0.7; filter: grayscale(0.5);">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:music-4.svg?color=94a3b8" style="width:26px;" alt=""></div><span class="pt" style="color:var(--neon-rose);">OFFLINE</span></div>
+                        <h3>Music Ultra</h3>
+                        <div class="ads"><span class="ad" style="background:rgba(239,68,68,0.1); color:var(--neon-rose);">غير متاح حالياً</span></div>
+                        <button class="ob ripple-element" disabled style="cursor: not-allowed; border-color:rgba(255,255,255,0.1); color:#555;">مغلق للصيانة</button>
+                    </div>
+                    <div class="bc sp">
+                        <h3>Custom Project</h3>
+                        <p class="ad">اطلب فكرتك الخاصة بالكامل</p>
+                        <button class="ob ripple-element" onclick="openOrder('Custom Discord','$40+', true)">اطلب الآن</button>
+                    </div>
                 </div>
             </div>
 
             <div id="tab-telegram" class="tc sec">
                 <div class="sh">
-                    <div class="si"><img src="https://api.iconify.design/logos:telegram.svg" style="width:34px;"></div>
-                    <div><h2>أنظمة تيليجرام (20 نظام)</h2><p>أتمتة وحماية شاملة للقنوات والمجموعات.</p></div>
+                    <div class="si"><img src="https://api.iconify.design/logos:telegram.svg" style="width:34px;" alt=""></div>
+                    <div><h2>بوتات تيليجرام</h2><p>أتمتة القنوات والمجموعات بأعلى كفاءة.</p></div>
                 </div>
                 <div class="grid">
-                    <div class="bc"><h3>Group Admin Pro</h3><p class="ad">حماية</p><button class="ob" onclick="openOrder('TG Admin','$14+')">طلب</button></div>
-                    <div class="bc"><h3>Store Bot</h3><p class="ad">متجر</p><button class="ob" onclick="openOrder('TG Store','$25+')">طلب</button></div>
-                    <div class="bc"><h3>Files Protect</h3><p class="ad">حماية ملفات</p><button class="ob" onclick="openOrder('TG Files','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Auto Post</h3><p class="ad">نشر تلقائي</p><button class="ob" onclick="openOrder('TG Post','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Translator</h3><p class="ad">ترجمة</p><button class="ob" onclick="openOrder('TG Trans','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Feedback</h3><p class="ad">تواصل</p><button class="ob" onclick="openOrder('TG Feed','$8+')">طلب</button></div>
-                    <div class="bc"><h3>Movies Bot</h3><p class="ad">بحث أفلام</p><button class="ob" onclick="openOrder('TG Movies','$20+')">طلب</button></div>
-                    <div class="bc"><h3>Music DL</h3><p class="ad">تحميل أغاني</p><button class="ob" onclick="openOrder('TG Music','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Instagram DL</h3><p class="ad">تحميل ريلز</p><button class="ob" onclick="openOrder('TG Insta','$12+')">طلب</button></div>
-                    <div class="bc"><h3>TikTok DL</h3><p class="ad">تحميل تيك توك</p><button class="ob" onclick="openOrder('TG TT','$12+')">طلب</button></div>
-                    <div class="bc"><h3>Subscription</h3><p class="ad">اشتراكات</p><button class="ob" onclick="openOrder('TG Sub','$30+')">طلب</button></div>
-                    <div class="bc"><h3>Controller</h3><p class="ad">تحكم قنوات</p><button class="ob" onclick="openOrder('TG Control','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Buttons Bot</h3><p class="ad">صانع أزرار</p><button class="ob" onclick="openOrder('TG Buttons','$7+')">طلب</button></div>
-                    <div class="bc"><h3>Members Scraper</h3><p class="ad">سحب أعضاء</p><button class="ob" onclick="openOrder('TG Scraper','$35+')">طلب</button></div>
-                    <div class="bc"><h3>Force Join</h3><p class="ad">إجبار اشتراك</p><button class="ob" onclick="openOrder('TG Force','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Link Shortener</h3><p class="ad">اختصار روابط</p><button class="ob" onclick="openOrder('TG Link','$8+')">طلب</button></div>
-                    <div class="bc"><h3>Anonymous Chat</h3><p class="ad">شات مجهول</p><button class="ob" onclick="openOrder('TG Anon','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Search Engine</h3><p class="ad">محرك بحث</p><button class="ob" onclick="openOrder('TG Search','$18+')">طلب</button></div>
-                    <div class="bc"><h3>Referral Bot</h3><p class="ad">نظام إحالة</p><button class="ob" onclick="openOrder('TG Ref','$20+')">طلب</button></div>
-                    <div class="bc sp"><h3>TG Mega Custom</h3><p class="ad">برمجة خاصة</p><button class="ob" onclick="openOrder('TG Custom','$40+', true)">طلب</button></div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:user-cog.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$14+</span></div>
+                        <h3>Group Admin</h3>
+                        <div class="ads"><span class="ad">حماية</span><span class="ad">ترحيب</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('TG Admin','$14+')">تقديم طلب</button>
+                    </div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$25+</span></div>
+                        <h3>Store Bot</h3>
+                        <div class="ads"><span class="ad">مبيعات</span><span class="ad">أتمتة</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('TG Store','$25+')">تقديم طلب</button>
+                    </div>
                 </div>
             </div>
 
             <div id="tab-whatsapp" class="tc sec">
                 <div class="sh">
-                    <div class="si"><img src="https://api.iconify.design/logos:whatsapp-icon.svg" style="width:34px;"></div>
-                    <div><h2>أنظمة واتساب (15 نظام)</h2><p>أفضل تقنيات الـ Self-Bot وأتمتة الردود.</p></div>
+                    <div class="si"><img src="https://api.iconify.design/logos:whatsapp-icon.svg" style="width:34px;" alt=""></div>
+                    <div><h2>بوتات واتساب</h2><p>أنظمة الـ Self-Bot والردود الآلية المتطورة.</p></div>
                 </div>
                 <div class="grid">
-                    <div class="bc"><h3>Auto Responder</h3><p class="ad">رد آلي</p><button class="ob" onclick="openOrder('WA Auto','$20+')">طلب</button></div>
-                    <div class="bc"><h3>WA AI Chat</h3><p class="ad">ذكاء اصطناعي</p><button class="ob" onclick="openOrder('WA AI','$25+')">طلب</button></div>
-                    <div class="bc"><h3>Broadcaster</h3><p class="ad">نشر جماعي</p><button class="ob" onclick="openOrder('WA Broad','$30+')">طلب</button></div>
-                    <div class="bc"><h3>WA Store</h3><p class="ad">متجر واتساب</p><button class="ob" onclick="openOrder('WA Store','$45+')">طلب</button></div>
-                    <div class="bc"><h3>Media DL</h3><p class="ad">تحميل ميديا</p><button class="ob" onclick="openOrder('WA DL','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Anti-Delete</h3><p class="ad">كشف المحذوف</p><button class="ob" onclick="openOrder('WA Anti','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Group Manager</h3><p class="ad">إدارة مجموعات</p><button class="ob" onclick="openOrder('WA Groups','$20+')">طلب</button></div>
-                    <div class="bc"><h3>Sticker Maker</h3><p class="ad">صانع ملصقات</p><button class="ob" onclick="openOrder('WA Sticker','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Status Saver</h3><p class="ad">حفظ حالات</p><button class="ob" onclick="openOrder('WA Saver','$10+')">طلب</button></div>
-                    <div class="bc"><h3>Security Bot</h3><p class="ad">حماية وتأمين</p><button class="ob" onclick="openOrder('WA Sec','$25+')">طلب</button></div>
-                    <div class="bc"><h3>Reminder Bot</h3><p class="ad">نظام تذكير</p><button class="ob" onclick="openOrder('WA Remind','$10+')">طلب</button></div>
-                    <div class="bc"><h3>WA Games</h3><p class="ad">ألعاب شات</p><button class="ob" onclick="openOrder('WA Games','$15+')">طلب</button></div>
-                    <div class="bc"><h3>Contact Scraper</h3><p class="ad">سحب جهات</p><button class="ob" onclick="openOrder('WA Scrap','$30+')">طلب</button></div>
-                    <div class="bc"><h3>WA Support</h3><p class="ad">دعم فني</p><button class="ob" onclick="openOrder('WA Support','$25+')">طلب</button></div>
-                    <div class="bc sp"><h3>WA Premium</h3><p class="ad">طلب خاص</p><button class="ob" onclick="openOrder('WA Custom','$50+', true)">طلب</button></div>
+                    <div class="bc">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bot.svg?color=ffffff" style="width:26px;" alt=""></div><span class="pt">$20+</span></div>
+                        <h3>Auto Responder</h3>
+                        <div class="ads"><span class="ad">رد آلي</span><span class="ad">AI</span></div>
+                        <button class="ob ripple-element" onclick="openOrder('WA Auto','$20+')">تقديم طلب</button>
+                    </div>
+                    <div class="bc" style="opacity: 0.7; filter: grayscale(0.5);">
+                        <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:clapperboard.svg?color=94a3b8" style="width:26px;" alt=""></div><span class="pt" style="color:var(--neon-rose);">OFFLINE</span></div>
+                        <h3>Media Downloader</h3>
+                        <div class="ads"><span class="ad" style="background:rgba(239,68,68,0.1); color:var(--neon-rose);">غير متاح حالياً</span></div>
+                        <button class="ob ripple-element" disabled style="cursor: not-allowed; border-color:rgba(255,255,255,0.1); color:#555;">مغلق</button>
+                    </div>
                 </div>
             </div>
 
             <div id="tab-chrome" class="tc sec">
                 <div class="sh">
-                    <div class="si"><img src="https://api.iconify.design/logos:chrome.svg" style="width:34px;"></div>
-                    <div><h2>تطبيقات المتصفح (5 مشاريع)</h2><p style="color:var(--neon-rose);">قسم محمي مخصص للأونر فقط.</p></div>
+                    <div class="si"><img src="https://api.iconify.design/logos:chrome.svg" style="width:34px;" alt=""></div>
+                    <div><h2>تطبيقات كروم</h2><p>إضافات المتصفح وأدوات الويب.</p></div>
                 </div>
-                <div id="chromeLockOverlay" style="text-align:center; padding:50px; background:rgba(239,68,68,0.05); border-radius:25px; border:1px solid rgba(239,68,68,0.2);">
-                    <img src="https://api.iconify.design/lucide:lock-keyhole.svg?color=ff0055" style="width:50px; margin-bottom:20px;">
-                    <h3>الوصول مرفوض</h3><p>هذا القسم تحت الصيانة الصارمة.</p>
-                </div>
-                <div class="grid" id="chromeContent" style="display:none;">
-                    <div class="bc"><h3>Extension V1</h3><button class="ob">دخول</button></div>
-                    <div class="bc"><h3>Web Scraper</h3><button class="ob">دخول</button></div>
-                    <div class="bc"><h3>SEO Tool</h3><button class="ob">دخول</button></div>
-                    <div class="bc"><h3>Proxy Switcher</h3><button class="ob">دخول</button></div>
-                    <div class="bc"><h3>Ads Blocker</h3><button class="ob">دخول</button></div>
+                <div style="text-align:center; padding:60px 20px; background:rgba(239,68,68,0.03); border-radius:30px; border:1px dashed rgba(239,68,68,0.2); margin-top:20px;">
+                    <img src="https://api.iconify.design/lucide:construction.svg?color=ff0055" style="width:50px; margin-bottom:20px;" alt="">
+                    <h3 style="color:#fff; font-size:22px; margin-bottom:10px;">القسم تحت الصيانة</h3>
+                    <p style="color:var(--text-secondary); max-width:400px; margin:0 auto;">يتم حالياً تحديث تطبيقات كروم لتتوافق مع معايير 2026. الوصول متاح للمطور مروان فقط حالياً.</p>
                 </div>
             </div>
             <div id="tab-rules" class="tc sec">
@@ -231,7 +217,6 @@
                             <span class="ad"><img src="https://api.iconify.design/logos:binance.svg" style="width:14px; margin-left:5px;"> Binance</span>
                             <span class="ad"><img src="https://api.iconify.design/logos:paypal.svg" style="width:14px; margin-left:5px;"> PayPal</span>
                             <span class="ad"><img src="https://api.iconify.design/lucide:landmark.svg?color=00ff88" style="width:14px; margin-left:5px;"> تحويل بنكي</span>
-                            <span class="ad"><img src="https://api.iconify.design/logos:bitcoin.svg" style="width:14px; margin-left:5px;"> USDT</span>
                         </div>
                     </div>
                 </div>
