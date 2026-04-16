@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="no-referrer">
 <title>Projects Bots | مروان Wano</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 <div class="orb-2"></div> <div id="topBar">
   <div class="bar-l">
     <button class="ai-translate-btn" onclick="setAILang('en', this)">
@@ -66,7 +69,7 @@
       <span class="bdg" style="color:var(--red)">🚀 Founder</span>
       <span class="bdg" style="color:var(--acc2)">🤖 Bot Expert</span>
     </div>
-    <p style="color:var(--mut);font-size:12px">مطور بوتات متخصص — إنشاء ملفات ومشاريع البوتات فقط.</p>
+    <p style="color:var(--mut);font-size:12px">مطور بوتات متخصص — نبتكر الحلول البرمجية من المستقبل.</p>
     <div class="socs">
       <a href="https://discord.com/users/wn6b" target="_blank" class="soc"><img src="https://api.iconify.design/logos:discord-icon.svg" alt=""> @wn6b</a>
       <a href="https://youtube.com/@wn5b" target="_blank" class="soc"><img src="https://api.iconify.design/logos:youtube-icon.svg" alt=""> @wn5b</a>
@@ -170,12 +173,12 @@
     <div class="si" style="background:rgba(245,158,11,.15)">
       <img src="https://api.iconify.design/logos:chrome.svg" style="width:28px" alt="">
     </div>
-    <div><h2>موقع تعريف Chrome Extension</h2><p>تطوير مواقع تعريف احترافية لإضافات Chrome</p></div>
+    <div><h2>موقع تعريف Chrome Extension</h2><p style="color:var(--red);font-weight:700;">⚠️ جميع الخدمات غير متوفرة حالياً</p></div>
   </div>
   <div class="grid">
-    <div class="bc"><div class="bh"><div class="bi">🎨</div><span class="pt">$30+</span></div><h3>Landing Page</h3><div class="ads"><span class="ad">تصميم احترافي</span><span class="ad">صور شاشة</span><span class="ad">زر تثبيت</span><span class="ad">Responsive</span></div><button class="ob" onclick="openOrder('Chrome Extension Landing Page','$30+')">🛒 اطلب الآن</button></div>
-    <div class="bc"><div class="bh"><div class="bi">📦</div><span class="pt">$45+</span></div><h3>موقع كامل</h3><div class="ads"><span class="ad">صفحات متعددة</span><span class="ad">سياسة خصوصية</span><span class="ad">FAQ</span><span class="ad">SEO</span></div><button class="ob" onclick="openOrder('Chrome Extension Full Website','$45+')">🛒 اطلب الآن</button></div>
-    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)">✨</div><span class="pt" style="color:#fcd34d">$25-$35</span></div><h3>موقع Chrome مخصص</h3><div class="ads"><span class="ad">تصميم خاص</span><span class="ad">سعر مخصص</span></div><button class="ob" onclick="openOrder('موقع Chrome مخصص','$25-$35',true)">✨ اطلب موقعك</button></div>
+    <div class="bc dis"><div class="bh"><div class="bi">🎨</div><span class="ut">غير متوفر حالياً</span></div><h3>Landing Page</h3><div class="ads"><span class="ad">تصميم احترافي</span><span class="ad">زر تثبيت</span></div><button class="ob" disabled>⛔ مغلق حالياً</button></div>
+    <div class="bc dis"><div class="bh"><div class="bi">📦</div><span class="ut">غير متوفر حالياً</span></div><h3>موقع كامل</h3><div class="ads"><span class="ad">صفحات متعددة</span><span class="ad">SEO</span></div><button class="ob" disabled>⛔ مغلق حالياً</button></div>
+    <div class="bc dis sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)">✨</div><span class="ut">غير متوفر حالياً</span></div><h3>موقع Chrome مخصص</h3><div class="ads"><span class="ad">تصميم خاص</span></div><button class="ob" disabled>⛔ مغلق حالياً</button></div>
   </div>
 </div>
 
@@ -289,5 +292,22 @@
 <div class="toast" id="toast"></div>
 
 <script src="script.js"></script>
+
+<script>
+  document.addEventListener('keydown', function(e) {
+    if(e.keyCode == 123) { // منع زر F12
+      e.preventDefault();
+      return false;
+    }
+    if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) {
+      e.preventDefault(); // منع Ctrl+Shift+I/J/C
+      return false;
+    }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+      e.preventDefault(); // منع Ctrl+U (View Source)
+      return false;
+    }
+  });
+</script>
 </body>
 </html>
