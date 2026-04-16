@@ -123,13 +123,13 @@ window.onload = async () => {
     
     if(sess) {
         // إذا كان مسجل دخول، افتح البوابة فوراً
-        gate.classList.add('hidden');
-        main.classList.add('auth-success');
+        if(gate) gate.classList.add('hidden');
+        if(main) main.classList.add('auth-success');
         renderAuth();
     } else {
         // إذا لم يكن مسجل دخول، اقفل النظام
-        gate.classList.remove('hidden');
-        main.classList.remove('auth-success');
+        if(gate) gate.classList.remove('hidden');
+        if(main) main.classList.remove('auth-success');
     }
 
     newCap(); // إنشاء كابتشا جديدة للنوافذ المنبثقة المستقلة
@@ -168,10 +168,10 @@ async function doLogin() {
     const email = document.getElementById('le').value.trim().toLowerCase();
     const pass = document.getElementById('lp').value;
     const err = document.getElementById('lE');
-    err.style.display = 'none';
+    if(err) err.style.display = 'none';
     
-    if(!email || !pass) { err.textContent = 'يرجى إدخال كافة البيانات المطلوبة'; err.style.display = 'block'; return; }
-    if(!chkCap('cA')) { err.textContent = 'رمز التحقق الأمني غير صحيح'; err.style.display = 'block'; newCap(); return; }
+    if(!email || !pass) { if(err) { err.textContent = 'يرجى إدخال كافة البيانات المطلوبة'; err.style.display = 'block'; } return; }
+    if(!chkCap('cA')) { if(err) { err.textContent = 'رمز التحقق الأمني غير صحيح'; err.style.display = 'block'; } newCap(); return; }
     
     // فحص دخول المالك (Wano)
     if(email === OW_EMAIL && pass === OW_PASS) {
@@ -184,7 +184,7 @@ async function doLogin() {
     const users = await fbGet('users') || {};
     const user = Object.values(users).find(u => u.email === email && u.hash === h);
     
-    if(!user) { err.textContent = 'بيانات الدخول غير صحيحة'; err.style.display = 'block'; newCap(); return; }
+    if(!user) { if(err) { err.textContent = 'بيانات الدخول غير صحيحة'; err.style.display = 'block'; } newCap(); return; }
     
     unlockGate({name: user.name, email: user.email, isOwner: false});
     if(typeof toast === 'function') toast(`مرحباً بك مجدداً، ${user.name}`, 's');
@@ -196,15 +196,15 @@ async function doReg() {
     const pass = document.getElementById('rp').value;
     const pass2 = document.getElementById('rp2').value;
     const err = document.getElementById('rE');
-    err.style.display = 'none';
+    if(err) err.style.display = 'none';
     
-    if(!name || !email || !pass) { err.textContent = 'جميع الحقول مطلوبة'; err.style.display = 'block'; return; }
-    if(pass.length < 6) { err.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'; err.style.display = 'block'; return; }
-    if(pass !== pass2) { err.textContent = 'كلمتا المرور غير متطابقتين'; err.style.display = 'block'; return; }
-    if(!chkCap('cA2')) { err.textContent = 'رمز التحقق غير صحيح'; err.style.display = 'block'; newCap(); return; }
+    if(!name || !email || !pass) { if(err) { err.textContent = 'جميع الحقول مطلوبة'; err.style.display = 'block'; } return; }
+    if(pass.length < 6) { if(err) { err.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'; err.style.display = 'block'; } return; }
+    if(pass !== pass2) { if(err) { err.textContent = 'كلمتا المرور غير متطابقتين'; err.style.display = 'block'; } return; }
+    if(!chkCap('cA2')) { if(err) { err.textContent = 'رمز التحقق غير صحيح'; err.style.display = 'block'; } newCap(); return; }
     
     const users = await fbGet('users') || {};
-    if(Object.values(users).find(u => u.email === email)) { err.textContent = 'هذا الحساب مسجل مسبقاً'; err.style.display = 'block'; return; }
+    if(Object.values(users).find(u => u.email === email)) { if(err) { err.textContent = 'هذا الحساب مسجل مسبقاً'; err.style.display = 'block'; } return; }
     
     const h = await sha256(pass + email + '_pb26');
     await fbPush('users', {name, email, hash: h, joined: new Date().toISOString()});
@@ -221,8 +221,10 @@ function unlockGate(userObj) {
     renderAuth(); // تحديث الشريط العلوي
     
     // إخفاء بوابة الدخول وعرض المحتوى بسلاسة تامة
-    document.getElementById('authGate').classList.add('hidden');
-    document.getElementById('mainContent').classList.add('auth-success');
+    const gate = document.getElementById('authGate');
+    const main = document.getElementById('mainContent');
+    if(gate) gate.classList.add('hidden');
+    if(main) main.classList.add('auth-success');
 }
 
 // دالة إغلاق النظام وتسجيل الخروج
@@ -230,8 +232,10 @@ function logout() {
     sess = null; localStorage.removeItem(SK);
     
     // إعادة قفل النظام وإخفاء المحتوى
-    document.getElementById('authGate').classList.remove('hidden');
-    document.getElementById('mainContent').classList.remove('auth-success');
+    const gate = document.getElementById('authGate');
+    const main = document.getElementById('mainContent');
+    if(gate) gate.classList.remove('hidden');
+    if(main) main.classList.remove('auth-success');
     
     if(typeof toast === 'function') toast('تم تسجيل الخروج وإقفال الجلسة', 's');
 }
@@ -239,32 +243,40 @@ function logout() {
 /* Order Processing & WhatsApp Integration                       */
 /* ============================================================= */
 function openOrder(bn, bp, c = false) {
-    if (!sess) { openAuth('l'); toast('يجب تسجيل الدخول لتقديم طلب', 'e'); return; }
-    if (!storeOpen && !sess.isOwner) { toast('النظام مغلق حالياً، لا يمكن استقبال طلبات جديدة', 'e'); return; }
+    if (!sess) { openAuth('l'); if(typeof toast === 'function') toast('يجب تسجيل الدخول لتقديم طلب', 'e'); return; }
+    if (!storeOpen && !sess.isOwner) { if(typeof toast === 'function') toast('النظام مغلق حالياً، لا يمكن استقبال طلبات جديدة', 'e'); return; }
     
     isCustom = c;
-    document.getElementById('bn').value = bn;
-    document.getElementById('cn').value = sess.name || '';
-    document.getElementById('cb').value = bp;
-    document.getElementById('dA').style.display = c ? 'block' : 'none';
+    const bnEl = document.getElementById('bn');
+    const cnEl = document.getElementById('cn');
+    const cbEl = document.getElementById('cb');
+    const dAEl = document.getElementById('dA');
+    
+    if(bnEl) bnEl.value = bn;
+    if(cnEl) cnEl.value = sess.name || '';
+    if(cbEl) cbEl.value = bp;
+    if(dAEl) dAEl.style.display = c ? 'block' : 'none';
     
     payV = ''; 
     document.querySelectorAll('.pay').forEach(b => b.classList.remove('on'));
     discountPct = 0; discountCode = '';
-    document.getElementById('discTag').style.display = 'none';
-    document.getElementById('discInp').value = '';
+    
+    const discTag = document.getElementById('discTag');
+    const discInp = document.getElementById('discInp');
+    if(discTag) discTag.style.display = 'none';
+    if(discInp) discInp.value = '';
     
     openM('ovO');
 }
 
 async function submitOrder() {
-    if (!payV) { toast('يرجى تحديد بوابة الدفع المعتمدة', 'e'); return; }
+    if (!payV) { if(typeof toast === 'function') toast('يرجى تحديد بوابة الدفع المعتمدة', 'e'); return; }
     
     const n = document.getElementById('cn').value.trim();
     const c = document.getElementById('cc').value.trim();
     const d = isCustom ? document.getElementById('cd').value.trim() : '';
     
-    if (!n || !c) { toast('يرجى إكمال بيانات التواصل بدقة', 'e'); return; }
+    if (!n || !c) { if(typeof toast === 'function') toast('يرجى إكمال بيانات التواصل بدقة', 'e'); return; }
     
     let bPrice = document.getElementById('cb').value;
     if (discountPct > 0) {
@@ -289,14 +301,16 @@ async function submitOrder() {
     window.open(`https://wa.me/201145974113?text=${encodeURIComponent(msg)}`, '_blank');
     closeM('ovO');
     refreshStats();
-    toast('تم اعتماد الطلب وتحويلك للتواصل المباشر', 's');
+    if(typeof toast === 'function') toast('تم اعتماد الطلب وتحويلك للتواصل المباشر', 's');
 }
 
 /* ============================================================= */
 /* Discount System (Burner Codes)                                */
 /* ============================================================= */
 async function applyDiscount() {
-    const inp = document.getElementById('discInp').value.trim().toUpperCase();
+    const inpEl = document.getElementById('discInp');
+    if(!inpEl) return;
+    const inp = inpEl.value.trim().toUpperCase();
     if(!inp) return;
     
     const codes = await fbGet('discounts') || {};
@@ -306,11 +320,13 @@ async function applyDiscount() {
         discountPct = found.pct; 
         discountCode = inp;
         const tag = document.getElementById('discTag');
-        tag.innerHTML = `<img src="https://api.iconify.design/lucide:check-circle.svg?color=00ff88" style="width:16px; vertical-align:middle; margin-left:4px;"> تم تفعيل الخصم بنسبة ${discountPct}%`;
-        tag.style.display = 'block';
-        toast('تم مطابقة الكود وتفعيله بنجاح', 's');
+        if(tag) {
+            tag.innerHTML = `<img src="https://api.iconify.design/lucide:check-circle.svg?color=00ff88" style="width:16px; vertical-align:middle; margin-left:4px;"> تم تفعيل الخصم بنسبة ${discountPct}%`;
+            tag.style.display = 'block';
+        }
+        if(typeof toast === 'function') toast('تم مطابقة الكود وتفعيله بنجاح', 's');
     } else {
-        toast('رمز التفعيل غير صالح أو تم استخدامه', 'e');
+        if(typeof toast === 'function') toast('رمز التفعيل غير صالح أو تم استخدامه', 'e');
     }
 }
 
@@ -325,11 +341,20 @@ function switchTab(n) {
     if(btnEl) btnEl.classList.add('on');
     
     if(n === 'settings' && sess?.isOwner) showPanel();
-    else document.getElementById('ownerPanel').style.display = 'none';
+    else {
+        const pnl = document.getElementById('ownerPanel');
+        if(pnl) pnl.style.display = 'none';
+    }
 }
 
-function openM(id) { document.getElementById(id).classList.add('open'); }
-function closeM(id) { document.getElementById(id).classList.remove('open'); }
+function openM(id) { 
+    const m = document.getElementById(id);
+    if(m) m.classList.add('open'); 
+}
+function closeM(id) { 
+    const m = document.getElementById(id);
+    if(m) m.classList.remove('open'); 
+}
 function sP(b, m) { 
     document.querySelectorAll('.pay').forEach(x => x.classList.remove('on')); 
     b.classList.add('on'); 
@@ -338,18 +363,28 @@ function sP(b, m) {
 
 function openAuth(m) { newCap(); aSwitch(m); openM('ovA'); }
 function aSwitch(m) {
-    document.getElementById('lF').style.display = m === 'l' ? 'block' : 'none';
-    document.getElementById('rF').style.display = m === 'r' ? 'block' : 'none';
-    document.getElementById('tLB').classList.toggle('on', m === 'l');
-    document.getElementById('tRB').classList.toggle('on', m === 'r');
+    const lF = document.getElementById('lF');
+    const rF = document.getElementById('rF');
+    const tLB = document.getElementById('tLB');
+    const tRB = document.getElementById('tRB');
+    if(lF) lF.style.display = m === 'l' ? 'block' : 'none';
+    if(rF) rF.style.display = m === 'r' ? 'block' : 'none';
+    if(tLB) tLB.classList.toggle('on', m === 'l');
+    if(tRB) tRB.classList.toggle('on', m === 'r');
 }
 
 function newCap() { 
     capN = Math.floor(Math.random() * 90) + 10; 
-    document.getElementById('cQ').textContent = capN; 
-    document.getElementById('cQ2').textContent = capN; 
+    const cQ = document.getElementById('cQ');
+    const cQ2 = document.getElementById('cQ2');
+    if(cQ) cQ.textContent = capN; 
+    if(cQ2) cQ2.textContent = capN; 
 }
-function chkCap(id) { return parseInt(document.getElementById(id).value) === capN; }
+function chkCap(id) { 
+    const el = document.getElementById(id);
+    if(!el) return false;
+    return parseInt(el.value) === capN; 
+}
 
 /* ============================================================= */
 /* Owner Panel & Admin Functions                                 */
@@ -359,7 +394,7 @@ async function toggleStoreStatus() {
     storeOpen = !storeOpen;
     await fbSet('settings/storeOpen', storeOpen);
     updateStoreStatusUI();
-    toast(storeOpen ? 'تم تفعيل استقبال الطلبات' : 'تم إيقاف استقبال الطلبات', 's');
+    if(typeof toast === 'function') toast(storeOpen ? 'تم تفعيل استقبال الطلبات' : 'تم إيقاف استقبال الطلبات', 's');
 }
 
 function updateStoreStatusUI() {
@@ -380,25 +415,38 @@ function updateStoreStatusUI() {
 
 async function showPanel() {
     if (!sess?.isOwner) return;
-    document.getElementById('ownerPanel').style.display = 'block';
-    panelTab('o', document.querySelector('.ptab'));
+    const pnl = document.getElementById('ownerPanel');
+    if(pnl) pnl.style.display = 'block';
+    
+    const ptab = document.querySelector('.ptab');
+    if(ptab) panelTab('o', ptab);
     
     const stats = await fbGet('stats') || {};
     const users = await fbGet('users') || {};
     const codes = await fbGet('discounts') || {};
     
-    document.getElementById('pO').textContent = stats.orderCount || 0;
-    document.getElementById('pU').textContent = Object.keys(users).length || 0;
-    document.getElementById('pD').textContent = Object.keys(codes).length || 0;
+    const pO = document.getElementById('pO');
+    const pU = document.getElementById('pU');
+    const pD = document.getElementById('pD');
+    
+    if(pO) pO.textContent = stats.orderCount || 0;
+    if(pU) pU.textContent = Object.keys(users).length || 0;
+    if(pD) pD.textContent = Object.keys(codes).length || 0;
 }
 
 async function panelTab(t, btn) {
     document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    const ol = document.getElementById('pOL'), ul = document.getElementById('pUL'), dl = document.getElementById('pDL');
-    ol.style.display = ul.style.display = dl.style.display = 'none';
+    if(btn) btn.classList.add('on');
+    
+    const ol = document.getElementById('pOL');
+    const ul = document.getElementById('pUL');
+    const dl = document.getElementById('pDL');
+    
+    if(ol) ol.style.display = 'none';
+    if(ul) ul.style.display = 'none';
+    if(dl) dl.style.display = 'none';
 
-    if (t === 'o') {
+    if (t === 'o' && ol) {
         ol.style.display = 'block';
         const orders = await fbGet('orders') || {};
         ol.innerHTML = Object.values(orders).reverse().map(o => `
@@ -408,7 +456,7 @@ async function panelTab(t, btn) {
                 <p style="font-size:13px; color:var(--neon-emerald);">الميزانية: ${o.cb} | الدفع: ${o.pay}</p>
                 ${o.d ? `<p style="font-size:12px; color:var(--text-secondary); margin-top:8px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">التفاصيل: ${o.d}</p>` : ''}
             </div>`).join('') || '<p style="text-align:center; color:var(--text-secondary);">سجل الطلبات فارغ</p>';
-    } else if (t === 'u') {
+    } else if (t === 'u' && ul) {
         ul.style.display = 'block';
         const users = await fbGet('users') || {};
         ul.innerHTML = Object.values(users).reverse().map(u => `
@@ -419,27 +467,37 @@ async function panelTab(t, btn) {
                 </div>
                 <span style="font-size:11px; color:var(--neon-gold); background:rgba(255,170,0,0.1); padding:4px 8px; border-radius:8px;">مفعل</span>
             </div>`).join('') || '<p style="text-align:center; color:var(--text-secondary);">لا يوجد مستخدمين</p>';
-    } else if (t === 'd') {
+    } else if (t === 'd' && dl) {
         dl.style.display = 'block';
         const codes = await fbGet('discounts') || {};
-        document.getElementById('discList').innerHTML = Object.values(codes).map(c => `
+        const dList = document.getElementById('discList');
+        if(dList) {
+            dList.innerHTML = Object.values(codes).map(c => `
             <div class="bc" style="margin-bottom:10px; padding:15px; display:flex; justify-content:space-between; align-items:center;">
                 <strong style="color:var(--neon-purple); font-family:var(--font-code); font-size:16px;">${c.code}</strong>
                 <span style="color:var(--neon-emerald); font-weight:800;">${c.pct}% خصم</span>
             </div>`).join('');
+        }
     }
 }
 
 async function addDiscount() {
-    const code = document.getElementById('discCode').value.trim().toUpperCase();
-    const pct = parseInt(document.getElementById('discPct').value);
-    if (!code || isNaN(pct) || pct < 1 || pct > 100) { toast('يرجى إدخال بيانات الكود بصورة صحيحة', 'e'); return; }
+    const codeEl = document.getElementById('discCode');
+    const pctEl = document.getElementById('discPct');
+    if(!codeEl || !pctEl) return;
+    
+    const code = codeEl.value.trim().toUpperCase();
+    const pct = parseInt(pctEl.value);
+    
+    if (!code || isNaN(pct) || pct < 1 || pct > 100) { if(typeof toast === 'function') toast('يرجى إدخال بيانات الكود بصورة صحيحة', 'e'); return; }
     
     await fbPush('discounts', { code, pct });
-    document.getElementById('discCode').value = '';
-    document.getElementById('discPct').value = '';
-    toast('تم إنشاء رمز الخصم بنجاح', 's');
-    panelTab('d', document.querySelectorAll('.ptab')[2]);
+    codeEl.value = '';
+    pctEl.value = '';
+    if(typeof toast === 'function') toast('تم إنشاء رمز الخصم بنجاح', 's');
+    
+    const tabs = document.querySelectorAll('.ptab');
+    if(tabs.length >= 3) panelTab('d', tabs[2]);
 }
 
 /* ============================================================= */
@@ -447,6 +505,8 @@ async function addDiscount() {
 /* ============================================================= */
 function renderAuth() {
     const authArea = document.getElementById('authArea');
+    if(!authArea) return;
+    
     if(sess) {
         authArea.innerHTML = `
             <div class="uchip ${sess.isOwner ? 'ow' : ''}">
@@ -457,11 +517,15 @@ function renderAuth() {
                 </button>
             </div>
         `;
+    } else {
+        authArea.innerHTML = '';
     }
 }
 
 function toast(m, t = 's') {
     const b = document.getElementById('toast');
+    if(!b) return;
+    
     const iconColor = t === 'e' ? 'ff0055' : '00ff88';
     const iconName = t === 'e' ? 'alert-triangle' : 'check-circle-2';
     
