@@ -1,10 +1,12 @@
-// ============================
-// Firebase Realtime Database & Core
-// ============================
+// =============================================================
+// Projects Bots — Ultra Realistic Script (10,000% Realism)
+// Core, AI Translate, and Magic UI
+// =============================================================
+
 const FB = 'https://wano-studio-default-rtdb.firebaseio.com';
 const OW_EMAIL = 'waylalyzydy51@gmail.com';
 const OW_PASS  = 'f!2HgJv#)"E"y^i';
-const SK = 'pb_sess_v5';
+const SK = 'pb_sess_v6'; // غيرنا الإصدار حتى نجبر الكل يسجل دخول من جديد
 
 let sess = null, payV = '', capN = 0, isCustom = false, discountPct = 0, discountCode = '';
 let storeOpen = true;
@@ -19,7 +21,7 @@ function initAITranslator() {
   
   const div = document.createElement('div');
   div.id = 'google_translate_element';
-  div.style.display = 'none'; // نخفي شريط جوجل البشع
+  div.style.display = 'none'; // إخفاء شريط جوجل
   document.body.appendChild(div);
 }
 
@@ -28,7 +30,7 @@ window.googleTranslateElementInit = function() {
 };
 
 function setAILang(langCode, btn) {
-  document.querySelectorAll('.lb').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('on'));
   if(btn) btn.classList.add('on');
   
   const select = document.querySelector('.goog-te-combo');
@@ -37,7 +39,6 @@ function setAILang(langCode, btn) {
     select.dispatchEvent(new Event('change'));
     toast('🤖 جاري الترجمة عبر الذكاء الاصطناعي...');
   } else {
-    // إذا كان النت ضعيف والمترجم لسه ما حمل
     setTimeout(() => setAILang(langCode, btn), 500); 
   }
 }
@@ -46,6 +47,7 @@ function setAILang(langCode, btn) {
 // 3D Scroll & Ripple Effects 🚀
 // ============================
 function injectMagicUI() {
+  // تفاعل الظهور والاختفاء الذكي (Parallax & Reveal)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -53,7 +55,6 @@ function injectMagicUI() {
         entry.target.classList.remove('reveal-down', 'reveal-up');
       } else {
         entry.target.classList.remove('reveal-visible');
-        // تفاعل ذكي: إذا كان العنصر تحت الشاشة يظهر من تحت، وإذا فوق يظهر من فوق
         if (entry.boundingClientRect.top > 0) {
           entry.target.classList.add('reveal-down');
           entry.target.classList.remove('reveal-up');
@@ -66,27 +67,25 @@ function injectMagicUI() {
   }, { threshold: 0.1 });
 
   setTimeout(() => {
-    document.querySelectorAll('.bc, .ac, .owc').forEach(el => {
+    document.querySelectorAll('.bc, .ac, .owc, .rule-item, .set-card').forEach(el => {
       el.classList.add('reveal-el', 'reveal-down');
       observer.observe(el);
     });
-    applyRippleEffect();
   }, 500);
-}
 
-function applyRippleEffect() {
-  document.querySelectorAll('.bp, .ob, .send, .add-disc-row button, .pay').forEach(btn => {
-    btn.style.position = 'relative';
-    btn.style.overflow = 'hidden';
-    btn.addEventListener('click', function(e) {
-      const x = e.clientX - e.target.getBoundingClientRect().left;
-      const y = e.clientY - e.target.getBoundingClientRect().top;
+  // تأثير الموجة المائية المطور (Ripple Effect) لكل العناصر اللي بيها كلاس ripple-element
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('.ripple-element');
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
       const ripple = document.createElement('span');
       ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
-      ripple.classList.add('ripple');
-      this.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 600);
-    });
+      ripple.classList.add('ripple-span');
+      target.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 700); // إزالة الموجة بعد انتهاء الحركة
+    }
   });
 }
 
@@ -118,26 +117,37 @@ async function fbIncr(path){
   await fbSet(path,nv);
   return nv;
 }
-
 // ============================
-// Init, Store Status & Visits
+// Init, Stats & Store Status
 // ============================
 window.onload=async()=>{
   initAITranslator();
   injectMagicUI();
   
   try{sess=JSON.parse(localStorage.getItem(SK)||'null');}catch(e){}
-  renderAuth();
+  
+  // 🛡️ Auth Gate Logic (تفعيل البوابة الإجبارية)
+  const gate = document.getElementById('authGate');
+  const main = document.getElementById('mainContent');
+  
+  if(sess) {
+    // إذا مسجل دخول من قبل، افتح البوابة مباشرة
+    gate.classList.add('hidden');
+    main.classList.add('auth-success');
+    renderAuth();
+  } else {
+    // إذا ما مسجل، اقفل الموقع
+    gate.classList.remove('hidden');
+    main.classList.remove('auth-success');
+  }
+
   newCap();
-  
-  // تحديث عداد الطلبات والزيارات
   refreshStats();
-  setInterval(refreshStats, 20000);
+  setInterval(refreshStats, 20000); // تحديث العدادات كل 20 ثانية
   
-  // تسجيل زيارة جديدة
-  if(!sessionStorage.getItem('visited_pb')){
+  if(!sessionStorage.getItem('visited_pb_v6')){
     await fbIncr('stats/visits');
-    sessionStorage.setItem('visited_pb','1');
+    sessionStorage.setItem('visited_pb_v6','1');
   }
 
   const st = await fbGet('settings/storeOpen');
@@ -158,18 +168,15 @@ function updateStoreStatusUI(){
   const badge = document.querySelector('.badge');
   
   if(txt) txt.textContent = storeOpen ? 'متاح للطلبات الآن' : 'غير متاح للطلبات حالياً';
-  
   if(badge) {
-    if(storeOpen) {
-      badge.classList.remove('closed');
-    } else {
-      badge.classList.add('closed');
-    }
+    if(storeOpen) badge.classList.remove('closed');
+    else badge.classList.add('closed');
   }
   
   document.querySelectorAll('.ob').forEach(btn => {
     if(btn.closest('.bc').classList.contains('dis')){
       btn.disabled = true;
+      btn.textContent = '⛔ مغلق حالياً';
     } else {
       btn.disabled = !storeOpen;
       if(!storeOpen) {
@@ -183,7 +190,7 @@ function updateStoreStatusUI(){
 }
 
 async function toggleStoreStatus(){
-  if(!sess?.isOwner) return; // مخفي ومحمي للمالك فقط
+  if(!sess?.isOwner) return; // محمي للمالك
   storeOpen = !storeOpen;
   await fbSet('settings/storeOpen', storeOpen);
   updateStoreStatusUI();
@@ -194,30 +201,42 @@ async function sha256(s){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
+
 // ============================
-// Auth Render & Logic
+// Auth Render & Unlocking Gate
 // ============================
 function renderAuth(){
   const area=document.getElementById('authArea');
   if(sess){
     const isOw=sess.isOwner;
     area.innerHTML=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      ${isOw?`<button class="abtn" style="font-size:11px;padding:4px 12px;border-color:rgba(245,158,11,.4);color:var(--ow);background:rgba(245,158,11,.1);box-shadow: 0 0 15px rgba(245,158,11,0.2);" onclick="showPanel()">⚙️ لوحة المالك</button>`:''}
-      <div class="uchip${isOw?' ow':''}">${isOw?'👑':'👤'} ${sess.name}<button class="lo" onclick="logout()">✕</button></div>
-    </div>`;
-  }else{
-    area.innerHTML=`<div class="abtns">
-      <button class="abtn ripple-element" onclick="openAuth('l')">تسجيل دخول</button>
-      <button class="abtn pr ripple-element" onclick="openAuth('r')">إنشاء حساب</button>
+      ${isOw?`<button class="abtn ripple-element" style="font-size:12px;padding:6px 14px;border-color:rgba(245,158,11,.4);color:var(--ow);background:rgba(245,158,11,.1);box-shadow: 0 0 15px rgba(245,158,11,0.2);" onclick="showPanel()"><img src="https://api.iconify.design/lucide:settings.svg?color=f59e0b" style="width:16px; margin-left:4px;"> لوحة المالك</button>`:''}
+      <div class="uchip${isOw?' ow':''}"><img src="${isOw?'https://api.iconify.design/lucide:crown.svg?color=ffffff':'https://api.iconify.design/lucide:user.svg?color=ffffff'}" style="width:14px; margin-left:4px;"> ${sess.name}<button class="lo" onclick="logout()"><img src="https://api.iconify.design/lucide:log-out.svg?color=ef4444" style="width:16px;"></button></div>
     </div>`;
   }
 }
 
 function logout(){
-  sess=null;localStorage.removeItem(SK);
+  sess=null; localStorage.removeItem(SK);
   document.getElementById('ownerPanel').style.display='none';
+  
+  // 🛡️ قفل الموقع بالبوابة من جديد عند تسجيل الخروج
+  document.getElementById('authGate').classList.remove('hidden');
+  document.getElementById('mainContent').classList.remove('auth-success');
+  
+  toast('تم تسجيل الخروج وقفل النظام 🛡️');
+}
+
+// الدالة المسؤولة عن فتح البوابة
+function unlockGate(userObj) {
+  sess = userObj;
+  localStorage.setItem(SK, JSON.stringify(sess));
+  closeM('ovA'); // إغلاق المودال
   renderAuth();
-  toast('تم تسجيل الخروج ✌🏻');
+  
+  // فتح البوابة بستايل هولوجرامي 🌟
+  document.getElementById('authGate').classList.add('hidden');
+  document.getElementById('mainContent').classList.add('auth-success');
 }
 
 // ============================
@@ -227,20 +246,9 @@ function newCap(){
   const ops = ['+', '-', '×'];
   const op = ops[Math.floor(Math.random() * ops.length)];
   let a, b;
-
-  if (op === '×') {
-    a = Math.floor(Math.random() * 10) + 1;
-    b = Math.floor(Math.random() * 10) + 1;
-    capN = a * b;
-  } else if (op === '-') {
-    a = Math.floor(Math.random() * 20) + 10;
-    b = Math.floor(Math.random() * 10) + 1;
-    capN = a - b;
-  } else {
-    a = Math.floor(Math.random() * 20) + 1;
-    b = Math.floor(Math.random() * 20) + 1;
-    capN = a + b;
-  }
+  if (op === '×') { a = Math.floor(Math.random() * 10) + 1; b = Math.floor(Math.random() * 10) + 1; capN = a * b; }
+  else if (op === '-') { a = Math.floor(Math.random() * 20) + 10; b = Math.floor(Math.random() * 10) + 1; capN = a - b; }
+  else { a = Math.floor(Math.random() * 20) + 1; b = Math.floor(Math.random() * 20) + 1; capN = a + b; }
 
   const q = `${a} ${op} ${b} = ?`;
   ['cQ','cQ2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=q;});
@@ -271,11 +279,9 @@ async function doLogin(){
   
   // Owner login
   if(email===OW_EMAIL&&pass===OW_PASS){
-    sess={name:'مروان | Wano',email,isOwner:true};
-    localStorage.setItem(SK,JSON.stringify(sess));
-    closeM('ovA');renderAuth();
+    unlockGate({name:'مروان | Wano',email,isOwner:true});
     updateStoreStatusUI();
-    toast('👑 أهلاً بالمدير مروان!');return;
+    toast('👑 تم فتح النظام يا مدير!');return;
   }
   
   // Normal user login
@@ -285,10 +291,8 @@ async function doLogin(){
   
   if(!user){err.textContent='❌ الإيميل أو الباسورد غلط!';err.classList.add('show');newCap();return;}
   
-  sess={name:user.name,email:user.email,isOwner:false};
-  localStorage.setItem(SK,JSON.stringify(sess));
-  closeM('ovA');renderAuth();
-  toast(`✅ أهلاً بيك ${user.name}!`);
+  unlockGate({name:user.name,email:user.email,isOwner:false});
+  toast(`✅ مرحباً بعودتك ${user.name}!`);
 }
 
 async function doReg(){
@@ -311,211 +315,235 @@ async function doReg(){
   const h=await sha256(pass+email+'_pb25');
   await fbPush('users',{name,email,hash:h,device:navigator.userAgent,joined:new Date().toISOString()});
   
-  sess={name,email,isOwner:(email===OW_EMAIL&&pass===OW_PASS)};
-  localStorage.setItem(SK,JSON.stringify(sess));
-  closeM('ovA');renderAuth();
-  toast(`🎉 نورتنا يا ${name}!`);
+  unlockGate({name,email,isOwner:(email===OW_EMAIL&&pass===OW_PASS)});
+  toast(`🎉 تم فتح النظام يا ${name}!`);
+}
+
+// ============================
+// TAB SWITCHER (FIXED: NO SCROLL TO TOP 🚫👆)
+// ============================
+function switchTab(n){
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  
+  const el = document.getElementById('tab-'+n);
+  const btn = document.getElementById('btn-'+n);
+  
+  if(el) el.classList.add('on');
+  if(btn) btn.classList.add('on');
+  
+  // شلنا كود الـ window.scrollTo حتى يبقى المستخدم بمكانه بدون إزعاج!
 }
 // ============================
-// Discount (Per-User Limit)
+// MODALS UI & STORE GATING
+// ============================
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+
+function openOrder(bn,bp,c=false){
+  if(!sess){openAuth('l');toast('⚠️ لازم تسجل دخول قبل لا تطلب!');return;}
+  if(!storeOpen){toast('⛔ المتجر مغلق حالياً، لا يمكن استقبال طلبات!');return;}
+  
+  isCustom=c;
+  document.getElementById('bn').value=bn;
+  document.getElementById('cn').value=sess.name||'';
+  document.getElementById('cc').value='';
+  document.getElementById('cb').value=bp;
+  document.getElementById('dA').style.display=c?'block':'none';
+  document.getElementById('cd').value='';
+  
+  payV=''; document.querySelectorAll('.pay').forEach(b=>{b.classList.remove('on','pay-error');});
+  
+  discountPct=0; discountCode='';
+  document.getElementById('discInp').value='';
+  document.getElementById('discTag').style.display='none';
+  
+  openM('ovO');
+}
+
+function sP(b,m){
+  document.querySelectorAll('.pay').forEach(x=>x.classList.remove('on','pay-error'));
+  b.classList.add('on'); payV=m;
+}
+
+// ============================
+// DISCOUNT CODES (BURN ON USE) 🔥
 // ============================
 async function applyDiscount(){
-  if(!sess){toast('⚠️ يرجى انشاء حساب أولاً لتتمكن من استخدام الكود',true);return;}
-  const code=document.getElementById('discInp').value.trim().toUpperCase();
-  if(!code){toast('⚠️ أدخل الكود',true);return;}
+  const inp=document.getElementById('discInp').value.trim().toUpperCase();
+  if(!inp){toast('⚠️ اكتب كود الخصم أولاً');return;}
   
-  const safeEmail = sess.email.replace(/\./g, '_');
-  const alreadyUsed = await fbGet(`used_discounts/${safeEmail}/${code}`);
-  if(alreadyUsed){toast('❌ استخدمت هذا الكود من قبل، بطل طمع يا وحش!',true);return;}
+  const codes=await fbGet('discounts')||{};
+  const foundId=Object.keys(codes).find(k=>codes[k].code===inp);
   
-  const discounts=await fbGet('discounts')||{};
-  const entry=Object.values(discounts).find(d=>d.code===code);
-  if(!entry){toast('❌ الكود غير صحيح',true);return;}
+  if(!foundId){toast('❌ الكود غير صحيح أو مستخدم مسبقاً');return;}
   
-  discountPct=entry.pct; discountCode=code;
+  discountPct=codes[foundId].pct;
+  discountCode=inp;
   const tag=document.getElementById('discTag');
-  tag.textContent=`✅ خصم ${discountPct}% — كود: ${code}`;
+  tag.textContent=`تم تفعيل خصم ${discountPct}% 🎉`;
   tag.style.display='block';
-  toast(`🎉 تم تطبيق الخصم ${discountPct}%`);
+  toast('🎉 تم تطبيق الخصم بنجاح!');
+}
+
+async function burnDiscountCode(codeStr){
+  const codes=await fbGet('discounts')||{};
+  const foundId=Object.keys(codes).find(k=>codes[k].code===codeStr);
+  if(foundId) await fbDel(`discounts/${foundId}`);
+}
+
+// ============================
+// SUBMIT ORDER (MANDATORY PAYMENT)
+// ============================
+async function submitOrder(){
+  if(!payV){
+    toast('⚠️ لازم تختار طريقة دفع حتى نكمل الطلب!','e');
+    document.querySelectorAll('.pay').forEach(b=>b.classList.add('pay-error'));
+    return;
+  }
+  
+  const n=document.getElementById('cn').value.trim();
+  const c=document.getElementById('cc').value.trim();
+  const d=isCustom?document.getElementById('cd').value.trim():'';
+  if(!n||!c){toast('⚠️ اكتب اسمك ورقمك/حسابك','e');return;}
+  if(isCustom&&!d){toast('⚠️ اشرح طلبك بالتفصيل','e');return;}
+
+  const bName=document.getElementById('bn').value;
+  let bPrice=document.getElementById('cb').value;
+  
+  if(discountPct>0){
+    bPrice+=` (خصم ${discountPct}% عبر الكود ${discountCode})`;
+    await burnDiscountCode(discountCode); // حرق الكود 🔥
+  }
+
+  const o={bn:bName,n,c,cb:bPrice,pay:payV,d,time:new Date().toLocaleString('ar-SA')};
+  await fbPush('orders',o);
+  await fbIncr('stats/orderCount');
+
+  let t=`*📦 طلب بوت جديد*\n\n*الطلب:* ${bName}\n*الميزانية:* ${bPrice}\n*طريقة الدفع:* ${payV}\n*الاسم:* ${n}\n*التواصل:* ${c}`;
+  if(isCustom) t+=`\n*التفاصيل:* ${d}`;
+  t+=`\n\n*~ Projects Bots 2026*`;
+
+  window.open(`https://wa.me/201145974113?text=${encodeURIComponent(t)}`,'_blank');
+  closeM('ovO');
+  refreshStats();
+  toast('✅ تم إرسال طلبك بنجاح!');
+}
+
+// ============================
+// OWNER PANEL 👑
+// ============================
+async function showPanel(){
+  if(!sess?.isOwner){toast('⛔ خاص بالمالك فقط!','e');return;}
+  document.getElementById('ownerPanel').style.display='block';
+  const st=await fbGet('stats')||{};
+  document.getElementById('pO').textContent=st.orderCount||0;
+  
+  const us=await fbGet('users')||{};
+  document.getElementById('pU').textContent=Object.keys(us).length;
+  
+  const ds=await fbGet('discounts')||{};
+  document.getElementById('pD').textContent=Object.keys(ds).length;
+  
+  loadOrders();
+}
+
+function panelTab(t,b){
+  document.querySelectorAll('.ptab').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ['pOL','pUL','pDL'].forEach(id=>document.getElementById(id).style.display='none');
+  
+  if(t==='o'){document.getElementById('pOL').style.display='block';loadOrders();}
+  if(t==='u'){document.getElementById('pUL').style.display='block';loadUsers();}
+  if(t==='d'){document.getElementById('pDL').style.display='block';loadDiscounts();}
+}
+
+async function loadOrders(){
+  const ol=document.getElementById('pOL'); ol.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" class="icon-lang" style="animation: spinIcon 1s linear infinite;"></div>';
+  const data=await fbGet('orders')||{};
+  const keys=Object.keys(data).reverse();
+  if(!keys.length){ol.innerHTML='<p style="text-align:center;color:var(--mut)">لا توجد طلبات بعد.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="bc" style="margin-bottom:15px;padding:20px;">
+      <h3 style="color:var(--acc2)">${v.bn} <span style="font-size:12px;color:var(--mut);float:left">${v.time}</span></h3>
+      <p><strong>بواسطة:</strong> ${v.n} | <strong>التواصل:</strong> ${v.c}</p>
+      <p><strong>الميزانية:</strong> ${v.cb} | <strong>الدفع:</strong> ${v.pay}</p>
+      ${v.d?`<p><strong>التفاصيل:</strong> ${v.d}</p>`:''}
+    </div>`;
+  });
+  ol.innerHTML=h;
+}
+
+async function loadUsers(){
+  const ul=document.getElementById('pUL'); ul.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" class="icon-lang" style="animation: spinIcon 1s linear infinite;"></div>';
+  const data=await fbGet('users')||{};
+  const keys=Object.keys(data);
+  if(!keys.length){ul.innerHTML='<p style="text-align:center;color:var(--mut)">لا يوجد مستخدمين.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="bc" style="margin-bottom:15px;padding:20px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <h4 style="color:var(--grn);margin-bottom:4px">${v.name}</h4>
+        <p style="color:var(--mut);font-size:12px">${v.email} | انضم: ${new Date(v.joined).toLocaleDateString('ar-SA')}</p>
+      </div>
+      <button class="del-btn ripple-element" onclick="delUser('${k}')">حظر / مسح</button>
+    </div>`;
+  });
+  ul.innerHTML=h;
+}
+
+async function delUser(k){
+  if(confirm('هل أنت متأكد من مسح هذا المستخدم؟')){
+    await fbDel(`users/${k}`);
+    toast('🗑️ تم مسح المستخدم');
+    loadUsers();
+  }
+}
+
+async function loadDiscounts(){
+  const dl=document.getElementById('discList'); dl.innerHTML='<div style="text-align:center;padding:20px"><img src="https://api.iconify.design/lucide:loader-2.svg?color=white" class="icon-lang" style="animation: spinIcon 1s linear infinite;"></div>';
+  const data=await fbGet('discounts')||{};
+  const keys=Object.keys(data);
+  if(!keys.length){dl.innerHTML='<p style="text-align:center;color:var(--mut)">لا توجد أكواد خصم حالية.</p>';return;}
+  let h='';
+  keys.forEach(k=>{
+    const v=data[k];
+    h+=`<div class="dc">
+      <span>🏷️ ${v.code} — خصم ${v.pct}%</span>
+      <button class="del-btn ripple-element" onclick="delDiscount('${k}')"><img src="https://api.iconify.design/lucide:trash-2.svg?color=ef4444" style="width:16px;"> حذف</button>
+    </div>`;
+  });
+  dl.innerHTML=h;
 }
 
 async function addDiscount(){
   const code=document.getElementById('discCode').value.trim().toUpperCase();
   const pct=parseInt(document.getElementById('discPct').value);
-  if(!code||!pct||pct<1||pct>90){toast('⚠️ أدخل اسم الكود والنسبة بشكل صحيح',true);return;}
-  await fbPush('discounts',{code,pct,created:new Date().toISOString()});
+  if(!code||isNaN(pct)||pct<1||pct>99){toast('⚠️ أدخل كود صحيح ونسبة بين 1 و 99','e');return;}
+  
+  await fbPush('discounts',{code,pct});
   document.getElementById('discCode').value='';
   document.getElementById('discPct').value='';
-  toast(`✅ تم إضافة كود الخصم: ${code} (${pct}%)`);
+  toast(`✅ تم إضافة كود ${code} بخصم ${pct}%`);
   loadDiscounts();
 }
 
-async function loadDiscounts(){
-  const discounts=await fbGet('discounts')||{};
-  const entries=Object.entries(discounts);
-  const list=document.getElementById('discList');
-  document.getElementById('pD').textContent=entries.length;
-  if(!entries.length){list.innerHTML='<p style="color:var(--mut);text-align:center;padding:16px">لا توجد كودات خصم</p>';return;}
-  list.innerHTML=entries.map(([k,d])=>`
-    <div class="dc">
-      <span>🏷️ <strong style="color:var(--grn)">${d.code}</strong> — خصم <strong style="color:var(--acc3)">${d.pct}%</strong></span>
-      <button class="del-btn" onclick="delDiscount('${k}')">🗑️ حذف</button>
-    </div>`).join('');
-}
-
-async function delDiscount(key){
-  await fbDel(`discounts/${key}`);
+async function delDiscount(k){
+  await fbDel(`discounts/${k}`);
   toast('🗑️ تم حذف الكود');
   loadDiscounts();
 }
 
 // ============================
-// Order System (Mandatory Payment 🔥)
+// TOAST NOTIFICATIONS (Hyper-Realism)
 // ============================
-function openOrder(bot,price,custom=false){
-  isCustom=custom;
-  discountPct=0;discountCode='';
-  document.getElementById('bn').value=bot;
-  document.getElementById('cb').value=price.includes('حسب')?'':price;
-  document.getElementById('discInp').value='';
-  document.getElementById('discTag').style.display='none';
-  ['cn','cc','cd'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  
-  document.querySelectorAll('.pay').forEach(b=>{
-    b.classList.remove('on');
-    b.classList.remove('pay-error'); // تصفير الأخطاء
-  });
-  payV='';
-  document.getElementById('dA').style.display=custom?'block':'none';
-  if(sess?.name)document.getElementById('cn').value=sess.name;
-  openM('ovO');
-}
-
-function sP(btn,m){
-  document.querySelectorAll('.pay').forEach(b=>{
-    b.classList.remove('on');
-    b.classList.remove('pay-error');
-  });
-  btn.classList.add('on');
-  payV=m;
-}
-
-async function submitOrder(){
-  const bot=document.getElementById('bn').value;
-  const name=document.getElementById('cn').value.trim();
-  const con=document.getElementById('cc').value.trim();
-  const desc=isCustom?document.getElementById('cd').value.trim():'—';
-  const bud=document.getElementById('cb').value.trim();
-  
-  if(!name||!con){toast('⚠️ يرجى إدخال اسمك وطريقة التواصل',true);return;}
-  if(isCustom&&!document.getElementById('cd').value.trim()){toast('⚠️ اشرح ما تريده بالتفصيل',true);return;}
-
-  // 🔥 الإجبار على طريقة الدفع (لن يمر الطلب بدونها)
-  if(!payV){
-    toast('❌ يرجى اختيار طريقة الدفع أولاً!',true);
-    document.querySelectorAll('.pay').forEach(b => b.classList.add('pay-error'));
-    setTimeout(() => {
-      document.querySelectorAll('.pay').forEach(b => b.classList.remove('pay-error'));
-    }, 500); // مدة الاهتزاز
-    return;
-  }
-
-  // تسجيل الطلب بالداتا بيس
-  await fbPush('orders',{
-    bot,name,contact:con,desc,budget:bud,
-    pay:payV, discount:discountCode||'—', discountPct:discountPct||0,
-    date:new Date().toLocaleString('ar-EG'),
-    user:sess?.email||'guest', device:navigator.userAgent
-  });
-  
-  // حرق الكود للمستخدم الحالي بعد إرسال الطلب
-  if(discountCode && sess){
-    const safeEmail = sess.email.replace(/\./g, '_');
-    await fbSet(`used_discounts/${safeEmail}/${discountCode}`, true);
-  }
-
-  await fbIncr('stats/orderCount');
-  refreshStats();
-
-  const discLine=discountCode?`\n🏷️ *كود الخصم:* ${discountCode} (${discountPct}% خصم)`:'';
-  const msg=`🤖 *طلب جديد - Projects Bots*\n\n📦 *البوت:* ${bot}\n👤 *الاسم:* ${name}\n📞 *التواصل:* ${con}\n💰 *الميزانية:* ${bud||'—'}\n💳 *الدفع:* ${payV}${discLine}${isCustom&&desc&&desc!=='—'?'\n\n📝 *الوصف:*\n'+desc:''}\n\n_من موقع Projects Bots_`;
-  window.open('https://wa.me/201145974113?text='+encodeURIComponent(msg),'_blank');
-  
-  closeM('ovO');
-  toast('✅ تم تحويلك للواتساب لإتمام الطلب!');
-  discountCode=''; discountPct=0;
-}
-
-// ============================
-// Owner Panel (Holographic Reveal)
-// ============================
-async function showPanel(){
-  if(!sess?.isOwner)return;
-  const panel=document.getElementById('ownerPanel');
-  panel.style.display='block';
-  
-  // أنيميشن الانبثاق
-  setTimeout(() => { panel.classList.add('reveal-el', 'reveal-visible'); }, 50);
-  
-  const oc=await fbGet('stats/orderCount')||0;
-  const usersObj=await fbGet('users')||{};
-  const ordersObj=await fbGet('orders')||{};
-  const discountsObj=await fbGet('discounts')||{};
-  const users=Object.values(usersObj);
-  const orders=Object.values(ordersObj);
-  
-  document.getElementById('pO').textContent=Number(oc).toLocaleString();
-  document.getElementById('pU').textContent=users.length;
-  document.getElementById('pD').textContent=Object.keys(discountsObj).length;
-
-  document.getElementById('pOL').innerHTML=orders.length
-    ?orders.slice().reverse().map(o=>`<div class="pc reveal-el reveal-visible"><h4>📦 ${o.bot} — ${o.date}</h4><p>👤 <strong>${o.name}</strong> | 📞 <strong>${o.contact}</strong><br>💰 <strong>${o.budget||'—'}</strong> | 💳 <strong>${o.pay||'—'}</strong>${o.discount&&o.discount!=='—'?` | 🏷️ <strong>${o.discount} (${o.discountPct}%)</strong>`:''}<br>📱 <span style="font-size:10px">${(o.device||'').substring(0,90)}</span>${o.desc&&o.desc!=='—'?'<br>📝 '+o.desc:''}</p></div>`).join('')
-    :'<p style="color:var(--mut);text-align:center;padding:16px">لا توجد طلبات</p>';
-
-  document.getElementById('pUL').innerHTML=users.length
-    ?users.map(u=>{
-      const isOw=u.email===OW_EMAIL;
-      const dt=u.joined?new Date(u.joined).toLocaleString('ar-EG',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-      return `<div class="uc reveal-el reveal-visible"><div class="ua">${isOw?'👑':'👤'}</div><div class="ui"><h4>${u.name} <span class="utg ${isOw?'ow':'us'}">${isOw?'👑 Owner':'عضو'}</span></h4><p>📧 ${u.email}<br>🔒 <span style="font-family:monospace;font-size:10px">${(u.hash||'').substring(0,40)}…</span><br>📱 <span style="font-size:10px">${(u.device||'').substring(0,80)}</span><br>📅 ${dt}</p></div></div>`;
-    }).join('')
-    :'<p style="color:var(--mut);text-align:center;padding:16px">لا يوجد مستخدمون</p>';
-
-  loadDiscounts();
-  panel.scrollIntoView({behavior:'smooth'});
-}
-
-function panelTab(tab,btn){
-  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
-  document.getElementById('pOL').style.display=tab==='o'?'block':'none';
-  document.getElementById('pUL').style.display=tab==='u'?'block':'none';
-  document.getElementById('pDL').style.display=tab==='d'?'block':'none';
-  if(tab==='d')loadDiscounts();
-}
-
-// ============================
-// Tabs, Modals & UI Helpers
-// ============================
-function switchTab(n){
-  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('on'));
-  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
-  const el=document.getElementById('tab-'+n),btn=document.getElementById('btn-'+n);
-  if(el)el.classList.add('on');if(btn)btn.classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function openM(id){document.getElementById(id).classList.add('open');}
-function closeM(id){document.getElementById(id).classList.remove('open');}
-['ovO','ovA'].forEach(id=>{document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeM(id);});});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')['ovO','ovA'].forEach(closeM);});
-const lpEl = document.getElementById('lp');
-if(lpEl) lpEl.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-
-// ============================
-// Toast Notification
-// ============================
-function toast(msg,isErr){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast'+(isErr?' e':'');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3200);
+function toast(m,t='s'){
+  const b=document.getElementById('toast');
+  b.innerHTML = `<div style="display:flex;align-items:center;gap:10px;"><img src="https://api.iconify.design/lucide:${t==='e'?'alert-circle':'check-circle-2'}.svg?color=white" style="width:20px;"> ${m}</div>`;
+  if(t==='e')b.classList.add('e');else b.classList.remove('e');
+  b.classList.add('show');
+  setTimeout(()=>b.classList.remove('show'),3500);
 }
