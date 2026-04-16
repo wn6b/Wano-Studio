@@ -3,11 +3,11 @@
 /* Developer: Marwan | Wano — Hyper-Responsive Architecture      */
 /* ============================================================= */
 
-// قاعدة البيانات وحساب الإدارة
+// قاعدة البيانات وحساب الإدارة (مستخرج من ملفك الأصلي)
 const FB = 'https://wano-studio-default-rtdb.firebaseio.com';
 const OW_EMAIL = 'waylalyzydy51@gmail.com';
 const OW_PASS  = 'f!2HgJv#)"E"y^i';
-const SK = 'pb_sess_v8'; // تم تحديث المفتاح لضمان تفريغ الجلسات القديمة
+const SK = 'pb_sess_v2026'; 
 
 let sess = null, payV = '', capN = 0, isCustom = false, discountPct = 0, discountCode = '';
 let storeOpen = true;
@@ -18,8 +18,7 @@ let storeOpen = true;
 async function fbGet(path) { 
     try { 
         const r = await fetch(`${FB}/${path}.json?_t=${Date.now()}`, { cache: 'no-store' }); 
-        if(!r.ok) return null; 
-        return await r.json(); 
+        return r.ok ? await r.json() : null; 
     } catch(e) { return null; } 
 }
 
@@ -32,10 +31,6 @@ async function fbPush(path, data) {
         const r = await fetch(`${FB}/${path}.json`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) }); 
         return r.ok ? await r.json() : null; 
     } catch(e) { return null; } 
-}
-
-async function fbDel(path) { 
-    try { await fetch(`${FB}/${path}.json`, { method: 'DELETE' }); } catch(e) {} 
 }
 
 async function fbIncr(path) { 
@@ -71,466 +66,213 @@ function setAILang(langCode, btn) {
     if (select) {
         select.value = langCode;
         select.dispatchEvent(new Event('change'));
-        if(typeof toast === 'function') toast('جاري معالجة الترجمة عبر محرك AI...', 's');
+        toast('جاري معالجة الترجمة عبر محرك AI...', 's');
     } else {
         setTimeout(() => setAILang(langCode, btn), 500); 
     }
 }
-
 /* ============================================================= */
-/* Physics & Interactive Particles Engine                        */
-/* ============================================================= */
-function injectMagicUI() {
-    // Advanced Ripple Effect
-    document.addEventListener('click', function(e) {
-        const target = e.target.closest('.ripple-element');
-        if (target) {
-            const rect = target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple-span';
-            ripple.style.left = x + 'px'; 
-            ripple.style.top = y + 'px';
-            target.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-        }
-    });
-
-    // Dynamic Hover Glow for Service Cards
-    document.querySelectorAll('.bc').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-}
-/* ============================================================= */
-/* Security, Auth Gate & System Initialization                   */
-/* ============================================================= */
-window.onload = async () => {
-    initAITranslator();
-    injectMagicUI();
-    
-    // استعادة الجلسة الآمنة من الذاكرة
-    try { sess = JSON.parse(localStorage.getItem(SK) || 'null'); } catch(e) {}
-    
-    const gate = document.getElementById('authGate');
-    const main = document.getElementById('mainContent');
-    
-    if(sess) {
-        // إذا كان مسجل دخول، افتح البوابة فوراً
-        if(gate) gate.classList.add('hidden');
-        if(main) main.classList.add('auth-success');
-        renderAuth();
-    } else {
-        // إذا لم يكن مسجل دخول، اقفل النظام
-        if(gate) gate.classList.remove('hidden');
-        if(main) main.classList.remove('auth-success');
-    }
-
-    newCap(); // إنشاء كابتشا جديدة للنوافذ المنبثقة المستقلة
-    refreshStats();
-    setInterval(refreshStats, 30000); // تحديث الإحصائيات كل نصف دقيقة
-    
-    // نظام تسجيل الزيارات عبر بصمة الجهاز (يمنع التكرار تماماً)
-    if(!localStorage.getItem('pb_v3_registered')) {
-        await fbIncr('stats/visits');
-        localStorage.setItem('pb_v3_registered', 'true');
-    }
-
-    const storeSettings = await fbGet('settings/storeOpen');
-    if(storeSettings !== null) storeOpen = storeSettings;
-    updateStoreStatusUI();
-};
-
-// خوارزمية التشفير المتقدمة لحماية كلمات المرور
-async function sha256(s) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function refreshStats() {
-    const stats = await fbGet('stats') || {};
-    const oCountEl = document.getElementById('oCount');
-    const vCountEl = document.getElementById('vCount');
-    if(oCountEl) oCountEl.textContent = Number(stats.orderCount || 0).toLocaleString();
-    if(vCountEl) vCountEl.textContent = Number(stats.visits || 0).toLocaleString();
-}
-
-/* ============================================================= */
-/* Authentication Engine (Strict Gate)                           */
+/* 2. Authentication & Session Management                        */
 /* ============================================================= */
 async function doLogin() {
-    const email = document.getElementById('le').value.trim().toLowerCase();
-    const pass = document.getElementById('lp').value;
-    const err = document.getElementById('lE');
-    if(err) err.style.display = 'none';
+    const e = document.getElementById('le').value, p = document.getElementById('lp').value;
+    if(!e || !p) return toast('يرجى ملء كافة الحقول', 'e');
     
-    if(!email || !pass) { if(err) { err.textContent = 'يرجى إدخال كافة البيانات المطلوبة'; err.style.display = 'block'; } return; }
-    if(!chkCap('cA')) { if(err) { err.textContent = 'رمز التحقق الأمني غير صحيح'; err.style.display = 'block'; } newCap(); return; }
+    toast('جاري التحقق...', 's');
+    const u = await fbGet(`users/${btoa(e).replace(/=/g,'')}`);
     
-    // فحص دخول المالك (Wano)
-    if(email === OW_EMAIL && pass === OW_PASS) {
-        unlockGate({name: 'مروان | Wano', email, isOwner: true});
-        if(typeof toast === 'function') toast('تم تسجيل دخول المسؤول بنجاح', 's');
-        return;
+    if(u && u.p === p) {
+        sess = u;
+        localStorage.setItem(SK, JSON.stringify(u));
+        closeM('ovA');
+        authUI();
+        toast(`مرحباً بك مجدداً، ${u.n}`, 's');
+        checkOwnerAccess(); // التحقق من صلاحيات الأونر فور الدخول
+    } else {
+        toast('البريد أو كلمة المرور غير صحيحة', 'e');
     }
-    
-    const h = await sha256(pass + email + '_pb26'); // تشفير 2026
-    const users = await fbGet('users') || {};
-    const user = Object.values(users).find(u => u.email === email && u.hash === h);
-    
-    if(!user) { if(err) { err.textContent = 'بيانات الدخول غير صحيحة'; err.style.display = 'block'; } newCap(); return; }
-    
-    unlockGate({name: user.name, email: user.email, isOwner: false});
-    if(typeof toast === 'function') toast(`مرحباً بك مجدداً، ${user.name}`, 's');
 }
 
 async function doReg() {
-    const name = document.getElementById('rn').value.trim();
-    const email = document.getElementById('re').value.trim().toLowerCase();
-    const pass = document.getElementById('rp').value;
-    const pass2 = document.getElementById('rp2').value;
-    const err = document.getElementById('rE');
-    if(err) err.style.display = 'none';
-    
-    if(!name || !email || !pass) { if(err) { err.textContent = 'جميع الحقول مطلوبة'; err.style.display = 'block'; } return; }
-    if(pass.length < 6) { if(err) { err.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'; err.style.display = 'block'; } return; }
-    if(pass !== pass2) { if(err) { err.textContent = 'كلمتا المرور غير متطابقتين'; err.style.display = 'block'; } return; }
-    if(!chkCap('cA2')) { if(err) { err.textContent = 'رمز التحقق غير صحيح'; err.style.display = 'block'; } newCap(); return; }
-    
-    const users = await fbGet('users') || {};
-    if(Object.values(users).find(u => u.email === email)) { if(err) { err.textContent = 'هذا الحساب مسجل مسبقاً'; err.style.display = 'block'; } return; }
-    
-    const h = await sha256(pass + email + '_pb26');
-    await fbPush('users', {name, email, hash: h, joined: new Date().toISOString()});
-    
-    unlockGate({name, email, isOwner: false});
-    if(typeof toast === 'function') toast('تم إنشاء حسابك وتوثيقه بنجاح', 's');
+    const n = document.getElementById('rn').value, e = document.getElementById('re').value, p = document.getElementById('rp').value;
+    if(!n || !e || !p) return toast('يرجى ملء كافة الحقول', 'e');
+    if(p.length < 6) return toast('كلمة المرور ضعيفة جداً', 'e');
+
+    const id = btoa(e).replace(/=/g,'');
+    const ex = await fbGet(`users/${id}`);
+    if(ex) return toast('هذا البريد مسجل مسبقاً', 'e');
+
+    const nu = { n, e, p, r: 'USER', d: new Date().toISOString() };
+    await fbSet(`users/${id}`, nu);
+    sess = nu;
+    localStorage.setItem(SK, JSON.stringify(nu));
+    closeM('ovA');
+    authUI();
+    toast('تم إنشاء الحساب بنجاح، أهلاً بك', 's');
 }
 
-// دالة فتح النظام بعد المصادقة
-function unlockGate(userObj) {
-    sess = userObj;
-    localStorage.setItem(SK, JSON.stringify(sess));
-    closeM('ovA'); // إغلاق نافذة الدخول المستقلة
-    renderAuth(); // تحديث الشريط العلوي
-    
-    // إخفاء بوابة الدخول وعرض المحتوى بسلاسة تامة
+function authUI() {
+    const area = document.getElementById('authArea');
     const gate = document.getElementById('authGate');
-    const main = document.getElementById('mainContent');
-    if(gate) gate.classList.add('hidden');
-    if(main) main.classList.add('auth-success');
+    
+    if(sess) {
+        gate.style.display = 'none';
+        area.innerHTML = `
+            <div class="u-info" onclick="toggleOwnerPanel()">
+                <img src="https://api.iconify.design/lucide:user-circle.svg?color=7c3aed" style="width:20px;">
+                <span>${sess.n}</span>
+                <button class="lo-btn" onclick="logout()">خروج</button>
+            </div>`;
+        checkOwnerAccess();
+    } else {
+        gate.style.display = 'flex';
+        area.innerHTML = `<button class="abtn pr" onclick="openAuth('l')">دخول النظام</button>`;
+    }
 }
 
-// دالة إغلاق النظام وتسجيل الخروج
+function checkOwnerAccess() {
+    const chromeTab = document.getElementById('tab-chrome');
+    const lock = document.getElementById('chromeLockOverlay');
+    const content = document.getElementById('chromeContent');
+    const adminBtn = document.getElementById('ownerPanel');
+
+    // إذا كان البريد هو بريد مروان الخاص
+    if(sess && sess.e === OW_EMAIL) {
+        if(lock) lock.style.display = 'none';
+        if(content) content.style.display = 'grid';
+        if(adminBtn) adminBtn.style.display = 'block';
+        document.getElementById('heroBadgeTxt').innerText = "وضع المطور نشط — مرحباً مروان";
+        document.getElementById('heroBadgeDot').style.background = "var(--neon-gold)";
+    } else {
+        if(lock) lock.style.display = 'block';
+        if(content) content.style.display = 'none';
+        if(adminBtn) adminBtn.style.display = 'none';
+    }
+}
+
 function logout() {
-    sess = null; localStorage.removeItem(SK);
-    
-    // إعادة قفل النظام وإخفاء المحتوى
-    const gate = document.getElementById('authGate');
-    const main = document.getElementById('mainContent');
-    if(gate) gate.classList.remove('hidden');
-    if(main) main.classList.remove('auth-success');
-    
-    if(typeof toast === 'function') toast('تم تسجيل الخروج وإقفال الجلسة', 's');
+    localStorage.removeItem(SK);
+    sess = null;
+    location.reload();
 }
 /* ============================================================= */
-/* Order Processing & WhatsApp Integration                       */
+/* 3. Core Logic, Orders & UI Transitions                        */
 /* ============================================================= */
-function openOrder(bn, bp, c = false) {
-    if (!sess) { openAuth('l'); if(typeof toast === 'function') toast('يجب تسجيل الدخول لتقديم طلب', 'e'); return; }
-    if (!storeOpen && !sess.isOwner) { if(typeof toast === 'function') toast('النظام مغلق حالياً، لا يمكن استقبال طلبات جديدة', 'e'); return; }
+
+window.onload = async () => {
+    initAITranslator();
     
-    isCustom = c;
-    const bnEl = document.getElementById('bn');
-    const cnEl = document.getElementById('cn');
-    const cbEl = document.getElementById('cb');
-    const dAEl = document.getElementById('dA');
+    // استرجاع الجلسة
+    try { sess = JSON.parse(localStorage.getItem(SK)); } catch(e) {}
+    authUI();
+
+    // نظام عداد الزيارات (بصمة الجهاز)
+    if(!localStorage.getItem('pb_v3_v')) {
+        await fbIncr('stats/visits');
+        localStorage.setItem('pb_v3_v', '1');
+    }
     
-    if(bnEl) bnEl.value = bn;
-    if(cnEl) cnEl.value = sess.name || '';
-    if(cbEl) cbEl.value = bp;
-    if(dAEl) dAEl.style.display = c ? 'block' : 'none';
+    refreshStats();
+    setInterval(refreshStats, 30000); // تحديث الإحصائيات كل 30 ثانية
+};
+
+async function refreshStats() {
+    const stats = await fbGet('stats') || {};
+    if(document.getElementById('vCount')) document.getElementById('vCount').innerText = stats.visits || 0;
+    if(document.getElementById('oCount')) document.getElementById('oCount').innerText = stats.orderCount || 0;
+}
+
+function switchTab(n) {
+    document.querySelectorAll('.tc, .tb').forEach(el => el.classList.remove('on'));
+    const t = document.getElementById('tab-' + n);
+    const b = document.getElementById('btn-' + n);
+    if(t) t.classList.add('on');
+    if(b) b.classList.add('on');
     
-    payV = ''; 
-    document.querySelectorAll('.pay').forEach(b => b.classList.remove('on'));
-    discountPct = 0; discountCode = '';
+    // إذا كان القسم هو كروم، يتم التأكد من الصلاحيات مجدداً
+    if(n === 'chrome') checkOwnerAccess();
+}
+
+function openOrder(bn, bp, custom = false) {
+    if(!sess) return openAuth('l');
     
-    const discTag = document.getElementById('discTag');
-    const discInp = document.getElementById('discInp');
-    if(discTag) discTag.style.display = 'none';
-    if(discInp) discInp.value = '';
+    isCustom = custom;
+    document.getElementById('bn').value = bn;
+    document.getElementById('cb').value = bp;
+    document.getElementById('dA').style.display = custom ? 'block' : 'none';
+    
+    // إعادة ضبط خيارات الدفع
+    payV = '';
+    document.querySelectorAll('.pay').forEach(p => p.classList.remove('on'));
     
     openM('ovO');
 }
 
-async function submitOrder() {
-    if (!payV) { if(typeof toast === 'function') toast('يرجى تحديد بوابة الدفع المعتمدة', 'e'); return; }
-    
-    const n = document.getElementById('cn').value.trim();
-    const c = document.getElementById('cc').value.trim();
-    const d = isCustom ? document.getElementById('cd').value.trim() : '';
-    
-    if (!n || !c) { if(typeof toast === 'function') toast('يرجى إكمال بيانات التواصل بدقة', 'e'); return; }
-    
-    let bPrice = document.getElementById('cb').value;
-    if (discountPct > 0) {
-        bPrice += ` (خصم ${discountPct}% عبر الكود: ${discountCode})`;
-        const codes = await fbGet('discounts') || {};
-        const fId = Object.keys(codes).find(k => codes[k].code === discountCode);
-        if (fId) await fbDel(`discounts/${fId}`);
-    }
+function sP(btn, val) {
+    document.querySelectorAll('.pay').forEach(p => p.classList.remove('on'));
+    btn.classList.add('on');
+    payV = val;
+}
 
-    const orderData = { 
-        bn: document.getElementById('bn').value, 
-        n, c, cb: bPrice, pay: payV, d, 
-        time: new Date().toLocaleString('ar-SA') 
-    };
+async function submitOrder() {
+    const n = document.getElementById('cn').value, 
+          c = document.getElementById('cc').value,
+          d = isCustom ? document.getElementById('cd').value : '';
     
+    if(!n || !c || !payV) return toast('يرجى إكمال بيانات الطلب والدفع', 'e');
+
+    const orderData = {
+        item: document.getElementById('bn').value,
+        price: document.getElementById('cb').value,
+        client: n,
+        contact: c,
+        payment: payV,
+        details: d,
+        userEmail: sess.email,
+        date: new Date().toLocaleString('ar-EG')
+    };
+
+    toast('جاري معالجة الطلب...', 's');
     await fbPush('orders', orderData);
     await fbIncr('stats/orderCount');
 
-    let msg = `*طلب مشروع برمجي جديد*\n\n*نوع النظام:* ${orderData.bn}\n*الميزانية:* ${bPrice}\n*اسم العميل:* ${n}\n*معرف التواصل:* ${c}\n*بوابة الدفع:* ${payV}`;
-    if (d) msg += `\n*التفاصيل التقنية:* ${d}`;
+    // توجيه للواتساب (رقم مروان الرسمي)
+    const msg = `*طلب مشروع جديد*%0A------------------%0A*الخدمة:* ${orderData.item}%0A*الميزانية:* ${orderData.price}%0A*العميل:* ${n}%0A*التواصل:* ${c}%0A*طريقة الدفع:* ${payV}${d ? '%0A*تفاصيل:* ' + d : ''}`;
+    window.open(`https://wa.me/201145974113?text=${msg}`, '_blank');
 
-    window.open(`https://wa.me/201145974113?text=${encodeURIComponent(msg)}`, '_blank');
     closeM('ovO');
+    toast('تم تسجيل طلبك بنجاح!', 's');
     refreshStats();
-    if(typeof toast === 'function') toast('تم اعتماد الطلب وتحويلك للتواصل المباشر', 's');
 }
 
-/* ============================================================= */
-/* Discount System (Burner Codes)                                */
-/* ============================================================= */
-async function applyDiscount() {
-    const inpEl = document.getElementById('discInp');
-    if(!inpEl) return;
-    const inp = inpEl.value.trim().toUpperCase();
-    if(!inp) return;
-    
-    const codes = await fbGet('discounts') || {};
-    const found = Object.values(codes).find(c => c.code === inp);
-    
-    if (found) {
-        discountPct = found.pct; 
-        discountCode = inp;
-        const tag = document.getElementById('discTag');
-        if(tag) {
-            tag.innerHTML = `<img src="https://api.iconify.design/lucide:check-circle.svg?color=00ff88" style="width:16px; vertical-align:middle; margin-left:4px;"> تم تفعيل الخصم بنسبة ${discountPct}%`;
-            tag.style.display = 'block';
-        }
-        if(typeof toast === 'function') toast('تم مطابقة الكود وتفعيله بنجاح', 's');
-    } else {
-        if(typeof toast === 'function') toast('رمز التفعيل غير صالح أو تم استخدامه', 'e');
-    }
-}
-
-/* ============================================================= */
-/* UI Utilities & Modals Management                              */
-/* ============================================================= */
-function switchTab(n) {
-    document.querySelectorAll('.tc, .tb').forEach(el => el.classList.remove('on'));
-    const tabEl = document.getElementById('tab-' + n);
-    const btnEl = document.getElementById('btn-' + n);
-    if(tabEl) tabEl.classList.add('on');
-    if(btnEl) btnEl.classList.add('on');
-    
-    if(n === 'settings' && sess?.isOwner) showPanel();
-    else {
-        const pnl = document.getElementById('ownerPanel');
-        if(pnl) pnl.style.display = 'none';
-    }
-}
-
-function openM(id) { 
-    const m = document.getElementById(id);
-    if(m) m.classList.add('open'); 
-}
-function closeM(id) { 
-    const m = document.getElementById(id);
-    if(m) m.classList.remove('open'); 
-}
-function sP(b, m) { 
-    document.querySelectorAll('.pay').forEach(x => x.classList.remove('on')); 
-    b.classList.add('on'); 
-    payV = m; 
-}
-
-function openAuth(m) { newCap(); aSwitch(m); openM('ovA'); }
+/* Utilities */
+function openM(id) { document.getElementById(id).classList.add('open'); }
+function closeM(id) { document.getElementById(id).classList.remove('open'); }
+function openAuth(m) { aSwitch(m); openM('ovA'); }
 function aSwitch(m) {
-    const lF = document.getElementById('lF');
-    const rF = document.getElementById('rF');
-    const tLB = document.getElementById('tLB');
-    const tRB = document.getElementById('tRB');
-    if(lF) lF.style.display = m === 'l' ? 'block' : 'none';
-    if(rF) rF.style.display = m === 'r' ? 'block' : 'none';
-    if(tLB) tLB.classList.toggle('on', m === 'l');
-    if(tRB) tRB.classList.toggle('on', m === 'r');
+    document.getElementById('lF').style.display = m === 'l' ? 'block' : 'none';
+    document.getElementById('rF').style.display = m === 'r' ? 'block' : 'none';
+    document.getElementById('tLB').classList.toggle('on', m === 'l');
+    document.getElementById('tRB').classList.toggle('on', m === 'r');
 }
 
-function newCap() { 
-    capN = Math.floor(Math.random() * 90) + 10; 
-    const cQ = document.getElementById('cQ');
-    const cQ2 = document.getElementById('cQ2');
-    if(cQ) cQ.textContent = capN; 
-    if(cQ2) cQ2.textContent = capN; 
-}
-function chkCap(id) { 
-    const el = document.getElementById(id);
-    if(!el) return false;
-    return parseInt(el.value) === capN; 
+function toast(m, t) {
+    const x = document.getElementById('toast');
+    x.innerText = m;
+    x.className = `toast show ${t === 'e' ? 'e' : ''}`;
+    setTimeout(() => { x.className = x.className.replace('show', ''); }, 4000);
 }
 
-/* ============================================================= */
-/* Owner Panel & Admin Functions                                 */
-/* ============================================================= */
-async function toggleStoreStatus() {
-    if(!sess?.isOwner) return;
-    storeOpen = !storeOpen;
-    await fbSet('settings/storeOpen', storeOpen);
-    updateStoreStatusUI();
-    if(typeof toast === 'function') toast(storeOpen ? 'تم تفعيل استقبال الطلبات' : 'تم إيقاف استقبال الطلبات', 's');
-}
-
-function updateStoreStatusUI() {
-    const badgeTxt = document.getElementById('heroBadgeTxt');
-    const badgeDot = document.getElementById('heroBadgeDot');
-    if(!badgeTxt || !badgeDot) return;
-    
-    if(storeOpen) {
-        badgeTxt.textContent = 'الخوادم متصلة — متاح للطلبات';
-        badgeDot.style.background = 'var(--neon-emerald)';
-        badgeDot.style.boxShadow = '0 0 12px var(--neon-emerald)';
-    } else {
-        badgeTxt.textContent = 'النظام تحت الصيانة — الطلبات معلقة';
-        badgeDot.style.background = 'var(--neon-rose)';
-        badgeDot.style.boxShadow = '0 0 12px var(--neon-rose)';
+// تأثير التموج (Ripple Effect) لعام 2026
+document.addEventListener('click', (e) => {
+    const target = e.target.closest('.ripple-element');
+    if (target) {
+        const rect = target.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple-span';
+        ripple.style.left = `${e.clientX - rect.left}px`;
+        ripple.style.top = `${e.clientY - rect.top}px`;
+        target.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
     }
-}
-
-async function showPanel() {
-    if (!sess?.isOwner) return;
-    const pnl = document.getElementById('ownerPanel');
-    if(pnl) pnl.style.display = 'block';
-    
-    const ptab = document.querySelector('.ptab');
-    if(ptab) panelTab('o', ptab);
-    
-    const stats = await fbGet('stats') || {};
-    const users = await fbGet('users') || {};
-    const codes = await fbGet('discounts') || {};
-    
-    const pO = document.getElementById('pO');
-    const pU = document.getElementById('pU');
-    const pD = document.getElementById('pD');
-    
-    if(pO) pO.textContent = stats.orderCount || 0;
-    if(pU) pU.textContent = Object.keys(users).length || 0;
-    if(pD) pD.textContent = Object.keys(codes).length || 0;
-}
-
-async function panelTab(t, btn) {
-    document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
-    if(btn) btn.classList.add('on');
-    
-    const ol = document.getElementById('pOL');
-    const ul = document.getElementById('pUL');
-    const dl = document.getElementById('pDL');
-    
-    if(ol) ol.style.display = 'none';
-    if(ul) ul.style.display = 'none';
-    if(dl) dl.style.display = 'none';
-
-    if (t === 'o' && ol) {
-        ol.style.display = 'block';
-        const orders = await fbGet('orders') || {};
-        ol.innerHTML = Object.values(orders).reverse().map(o => `
-            <div class="bc" style="margin-bottom:15px; padding:20px;">
-                <h4 style="color:var(--neon-cyan); margin-bottom:10px;">${o.bn} <small style="float:left; color:var(--text-secondary); font-size:11px;">${o.time}</small></h4>
-                <p style="font-size:13px; color:#fff; margin-bottom:5px;">العميل: ${o.n} | التواصل: ${o.c}</p>
-                <p style="font-size:13px; color:var(--neon-emerald);">الميزانية: ${o.cb} | الدفع: ${o.pay}</p>
-                ${o.d ? `<p style="font-size:12px; color:var(--text-secondary); margin-top:8px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">التفاصيل: ${o.d}</p>` : ''}
-            </div>`).join('') || '<p style="text-align:center; color:var(--text-secondary);">سجل الطلبات فارغ</p>';
-    } else if (t === 'u' && ul) {
-        ul.style.display = 'block';
-        const users = await fbGet('users') || {};
-        ul.innerHTML = Object.values(users).reverse().map(u => `
-            <div class="bc" style="margin-bottom:15px; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h4 style="color:#fff; font-size:15px;">${u.name}</h4>
-                    <span style="font-size:12px; color:var(--text-secondary);">${u.email}</span>
-                </div>
-                <span style="font-size:11px; color:var(--neon-gold); background:rgba(255,170,0,0.1); padding:4px 8px; border-radius:8px;">مفعل</span>
-            </div>`).join('') || '<p style="text-align:center; color:var(--text-secondary);">لا يوجد مستخدمين</p>';
-    } else if (t === 'd' && dl) {
-        dl.style.display = 'block';
-        const codes = await fbGet('discounts') || {};
-        const dList = document.getElementById('discList');
-        if(dList) {
-            dList.innerHTML = Object.values(codes).map(c => `
-            <div class="bc" style="margin-bottom:10px; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:var(--neon-purple); font-family:var(--font-code); font-size:16px;">${c.code}</strong>
-                <span style="color:var(--neon-emerald); font-weight:800;">${c.pct}% خصم</span>
-            </div>`).join('');
-        }
-    }
-}
-
-async function addDiscount() {
-    const codeEl = document.getElementById('discCode');
-    const pctEl = document.getElementById('discPct');
-    if(!codeEl || !pctEl) return;
-    
-    const code = codeEl.value.trim().toUpperCase();
-    const pct = parseInt(pctEl.value);
-    
-    if (!code || isNaN(pct) || pct < 1 || pct > 100) { if(typeof toast === 'function') toast('يرجى إدخال بيانات الكود بصورة صحيحة', 'e'); return; }
-    
-    await fbPush('discounts', { code, pct });
-    codeEl.value = '';
-    pctEl.value = '';
-    if(typeof toast === 'function') toast('تم إنشاء رمز الخصم بنجاح', 's');
-    
-    const tabs = document.querySelectorAll('.ptab');
-    if(tabs.length >= 3) panelTab('d', tabs[2]);
-}
-
-/* ============================================================= */
-/* Authentication UI Renderer & Toasts                           */
-/* ============================================================= */
-function renderAuth() {
-    const authArea = document.getElementById('authArea');
-    if(!authArea) return;
-    
-    if(sess) {
-        authArea.innerHTML = `
-            <div class="uchip ${sess.isOwner ? 'ow' : ''}">
-                <img src="https://api.iconify.design/lucide:${sess.isOwner ? 'shield-check' : 'user'}.svg?color=${sess.isOwner ? 'ffaa00' : 'ffffff'}" style="width:16px;" alt="">
-                <span>${sess.name}</span>
-                <button onclick="logout()" class="ripple-element" style="background:transparent; border:none; margin-right:8px; cursor:pointer; display:flex; align-items:center;">
-                    <img src="https://api.iconify.design/lucide:log-out.svg?color=ff0055" style="width:18px;" alt="">
-                </button>
-            </div>
-        `;
-    } else {
-        authArea.innerHTML = '';
-    }
-}
-
-function toast(m, t = 's') {
-    const b = document.getElementById('toast');
-    if(!b) return;
-    
-    const iconColor = t === 'e' ? 'ff0055' : '00ff88';
-    const iconName = t === 'e' ? 'alert-triangle' : 'check-circle-2';
-    
-    b.className = `toast ${t === 'e' ? 'e' : ''} show`;
-    b.innerHTML = `<img src="https://api.iconify.design/lucide:${iconName}.svg?color=${iconColor}" style="width:20px;" alt=""> <span>${m}</span>`;
-    
-    setTimeout(() => b.classList.remove('show'), 4000);
-}
+});
