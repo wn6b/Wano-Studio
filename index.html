@@ -1,118 +1,365 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects Bots | مروان Wano</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta name="referrer" content="no-referrer">
+<title>Projects Bots | مروان Wano</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-    <div class="wrap">
-        <header class="hero">
-            <div class="hero-logo-container">
-                <img src="https://api.iconify.design/lucide:bot.svg?color=%2300f0ff" alt="Logo" class="logo-pb">
-            </div>
-            <div class="badge">
-                <span class="dot" id="heroBadgeDot"></span>
-                <span id="heroBadgeTxt">نظام مروان Wano نشط</span>
-            </div>
-            <h1 class="grad">Projects Bots</h1>
-            <p style="color:var(--text-secondary); margin-top:10px;">المستقبل يبدأ من هنا — إصدار 2026</p>
-        </header>
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<div class="orb-2"></div>
 
-        <div class="owc">
-            <img src="https://api.iconify.design/lucide:user-circle-2.svg?color=%23ffaa00" class="ava" alt="Marwan">
-            <div class="ow-info">
-                <h2 style="font-size:22px; font-weight:900;">مروان | Wano</h2>
-                <p style="color:var(--neon-cyan); font-size:14px; direction:ltr;">@wn6b</p>
-                <div class="obdg">
-                    <span class="bdg r-owner">Owner</span>
-                    <span class="bdg r-dev">Developer</span>
-                    <span class="bdg r-verified">Verified</span>
-                    <span class="bdg r-vip">VIP</span>
-                    <span class="bdg r-legend" style="color:#00ff88; border-color:rgba(0,255,136,0.3);">Legend</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="tabs-container">
-            <div class="tabs">
-                <button class="tb on ripple-element" id="btn-discord" onclick="switchTab('discord')">
-                    <span class="iconify" data-icon="logos:discord-icon"></span> ديسكورد
-                </button>
-                <button class="tb ripple-element" id="btn-telegram" onclick="switchTab('telegram')">
-                    <span class="iconify" data-icon="logos:telegram"></span> تيليجرام
-                </button>
-                <button class="tb ripple-element" id="btn-whatsapp" onclick="switchTab('whatsapp')">
-                    <span class="iconify" data-icon="logos:whatsapp-icon"></span> واتساب
-                </button>
-                <button class="tb ripple-element" id="btn-chrome" onclick="switchTab('chrome')">
-                    <span class="iconify" data-icon="logos:chrome"></span> كروم
-                </button>
-                <button class="tb ripple-element" id="btn-rules" onclick="switchTab('rules')">
-                    <span class="iconify" data-icon="lucide:shield-alert"></span> القوانين
-                </button>
-                <button class="tb ripple-element" id="btn-about" onclick="switchTab('about')">
-                    <span class="iconify" data-icon="lucide:info"></span> عنّا
-                </button>
-            </div>
-        </div>
-
-        <main id="mainContent">
-            <div id="tab-discord" class="tc on sec">
-                <div class="sh">
-                    <span class="iconify" data-icon="logos:discord-icon" data-width="30"></span>
-                    <h2>خدمات ديسكورد</h2>
-                </div>
-                <div class="grid">
-                    </div>
-            </div>
-
-            <div id="tab-chrome" class="tc sec">
-                <div class="maint-overlay">
-                    <span class="iconify" data-icon="lucide:construction" data-width="60" style="color:var(--neon-rose); margin-bottom:20px;"></span>
-                    <h2 style="margin-bottom:10px;">قسم كروم قيد الصيانة</h2>
-                    <p style="color:var(--text-secondary);">يتم حالياً تحديث الأدوات لتتوافق مع معايير 2026. الوصول متاح للمطور فقط.</p>
-                </div>
-            </div>
-
-            <div id="tab-rules" class="tc sec">
-                <div class="sh"><span class="iconify" data-icon="lucide:gavel" data-width="30"></span><h2>قوانين التعامل</h2></div>
-                <div class="bc" style="margin-bottom:15px;">
-                    <h4 style="color:var(--neon-gold);">1. حماية الحقوق</h4>
-                    <p>يمنع منعاً باتاً محاولة فك تشفير الملفات أو إعادة بيعها دون إذن مسبق من المطور مروان.</p>
-                </div>
-                <div class="bc">
-                    <h4 style="color:var(--neon-gold);">2. سياسة الاسترداد</h4>
-                    <p>بمجرد البدء في تنفيذ المشروع، لا يمكن استرجاع المبلغ نظراً لطبيعة المنتجات الرقمية.</p>
-                </div>
-            </div>
-
-            <div id="tab-about" class="tc sec">
-                <div class="sh"><span class="iconify" data-icon="lucide:user-check" data-width="30"></span><h2>عن المطور مروان</h2></div>
-                <div class="bc">
-                    <p>مطور برمجيات وأنظمة ذكية متخصص في لغة JavaScript و Node.js. أعمل على تقديم حلول تقنية مبتكرة تحت اسم Wano Studio لعام 2026.</p>
-                    <div style="margin-top:20px; display:flex; gap:15px;">
-                        <span class="iconify" data-icon="logos:binance" data-width="30"></span>
-                        <span class="iconify" data-icon="logos:paypal" data-width="30"></span>
-                        <span class="iconify" data-icon="logos:mastercard" data-width="30"></span>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <footer style="text-align:center; padding:40px; margin-top:50px; border-top:1px solid var(--border-subtle);">
-            <p style="color:var(--text-secondary); font-size:13px; font-weight:900;">
-                جميع الحقوق محفوظة للمطور مروان | Wano &copy; 2026 <br>
-                <span style="color:var(--neon-cyan);">@wn6b</span>
-            </p>
-        </footer>
+<div id="authGate">
+  <div class="gate-box">
+    <img src="https://i.ibb.co/jvHwzS0k/file-00000000a2dc720a98e9b2778239150a.png" class="g-logo" style="border-radius: 50% !important; object-fit: cover;" alt="Projects Bots">
+    <h2>تسجيل الدخول مطلوب</h2>
+    <p>يجب عليك تسجيل الدخول أو إنشاء حساب للوصول إلى النظام والمشاريع الخاصة بـ Projects Bots.</p>
+    <div class="abtns" style="justify-content:center; gap:16px;">
+      <button class="abtn ripple-element" onclick="openAuth('l')" style="padding:12px 24px; font-size:15px;">
+        <img src="https://api.iconify.design/lucide:log-in.svg?color=white" style="width:18px; margin-left:8px;" alt=""> تسجيل دخول
+      </button>
+      <button class="abtn pr ripple-element" onclick="openAuth('r')" style="padding:12px 24px; font-size:15px;">
+        <img src="https://api.iconify.design/lucide:user-plus.svg?color=white" style="width:18px; margin-left:8px;" alt=""> إنشاء حساب
+      </button>
     </div>
+  </div>
+</div>
 
-    <div class="toast" id="toast"></div>
-    <script src="script.js"></script>
+<div id="mainContent">
+
+<div id="topBar">
+  <div class="bar-l">
+    <button class="lang-btn ripple-element" onclick="setAILang('en', this)">
+      <img src="https://api.iconify.design/lucide:languages.svg?color=white" class="icon-lang" alt="">
+      <span>AI Translate</span>
+    </button>
+    <button class="lang-btn on ripple-element" onclick="setAILang('ar', this)">
+      <img src="https://api.iconify.design/twemoji:flag-saudi-arabia.svg" style="width:18px; border-radius:4px;" alt=""> AR
+    </button>
+  </div>
+  
+  <div class="bar-r">
+    <div class="sb v"><img src="https://api.iconify.design/lucide:eye.svg?color=6ee7b7" class="icon-stat-visits" alt=""> <span id="vCount">0</span></div>
+    <div class="sb o"><img src="https://api.iconify.design/lucide:package.svg?color=c4b5fd" class="icon-stat-orders" alt=""> <span id="oCount">0</span></div>
+    <div id="authArea"></div>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="hero">
+  <div class="hero-logo-container">
+    <img src="https://i.ibb.co/jvHwzS0k/file-00000000a2dc720a98e9b2778239150a.png" class="logo-pb" style="border-radius: 50% !important; object-fit: cover;" alt="Projects Bots">
+  </div>
+  <br>
+  <div class="badge ripple-element" onclick="toggleStoreStatus()" style="cursor:pointer;">
+    <span class="dot" id="heroBadgeDot"></span>
+    <span id="heroBadgeTxt">متاح للطلبات الآن</span>
+  </div>
+  <h1><span class="grad">بوتات احترافية</span><br><span>لكل منصة</span></h1>
+  <p>تطوير بوتات مخصصة لديسكورد، تيليجرام، واتساب، وChrome — إنشاء الملفات والمشاريع فقط بصناعة يدوية 100%.</p>
+</div>
+
+<div class="owc">
+  <img src="https://i.ibb.co/0yb70XKb/a4dbf6222365d132483200fbfa616e08.jpg" alt="مروان Wano" class="ava" style="object-fit:cover; border-radius: 50%;">
+  <div>
+    <h3>مروان | Wano</h3>
+    <div class="obdg">
+      <span class="bdg" style="color:var(--ow); border-color:rgba(245,158,11,0.4)">👑 Owner</span>
+      <span class="bdg" style="color:#a78bfa; border-color:rgba(167,139,250,0.4)">💻 Developer</span>
+      <span class="bdg" style="color:var(--grn); border-color:rgba(16,185,129,0.4)">✓ Verified</span>
+      <span class="bdg" style="color:var(--red); border-color:rgba(239,68,68,0.4)">🚀 Founder</span>
+      <span class="bdg" style="color:var(--acc2); border-color:rgba(6,182,212,0.4)">🤖 Bot Expert</span>
+    </div>
+    <p style="color:var(--mut);font-size:13px; margin-top:10px;">مطور بوتات متخصص — نبتكر الحلول البرمجية من المستقبل.</p>
+    <div class="socs">
+      <a href="https://discord.com/users/wn6b" target="_blank" class="soc ripple-element"><img src="https://api.iconify.design/logos:discord-icon.svg" alt=""> @wn6b</a>
+      <a href="https://youtube.com/@wn5b" target="_blank" class="soc ripple-element"><img src="https://api.iconify.design/logos:youtube-icon.svg" alt=""> @wn5b</a>
+      <a href="https://tiktok.com/@w_n6b" target="_blank" class="soc ripple-element"><img src="https://api.iconify.design/logos:tiktok-icon.svg" alt=""> @w_n6b</a>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-container">
+  <div class="tabs">
+    <button class="tb on ripple-element" id="btn-discord" onclick="switchTab('discord')">
+      <img src="https://api.iconify.design/logos:discord-icon.svg" class="icon-app-discord" alt=""> ديسكورد
+    </button>
+    <button class="tb ripple-element" id="btn-telegram" onclick="switchTab('telegram')">
+      <img src="https://api.iconify.design/logos:telegram.svg" class="icon-app-telegram" alt=""> تيليجرام
+    </button>
+    <button class="tb ripple-element" id="btn-whatsapp" onclick="switchTab('whatsapp')">
+      <img src="https://api.iconify.design/logos:whatsapp-icon.svg" class="icon-app-whatsapp" alt=""> واتساب
+    </button>
+    <button class="tb ripple-element" id="btn-chrome" onclick="switchTab('chrome')">
+      <img src="https://api.iconify.design/logos:chrome.svg" style="width:24px" alt=""> Chrome
+    </button>
+    <button class="tb ripple-element" id="btn-rules" onclick="switchTab('rules')">
+      <img src="https://api.iconify.design/lucide:shield-alert.svg?color=f59e0b" class="icon-app-rules" alt=""> القوانين
+    </button>
+    <button class="tb ripple-element" id="btn-settings" onclick="switchTab('settings')">
+      <img src="https://api.iconify.design/lucide:settings.svg?color=06b6d4" class="icon-app-settings" alt=""> الإعدادات
+    </button>
+    <button class="tb ripple-element" id="btn-about" onclick="switchTab('about')">
+      <img src="https://api.iconify.design/lucide:info.svg?color=8b5cf6" class="icon-app-about" alt=""> عنّا
+    </button>
+  </div>
+</div>
+<div id="tab-discord" class="tc on sec">
+  <div class="sh">
+    <div class="si" style="background:rgba(88,101,242,.15)">
+      <img src="https://api.iconify.design/logos:discord-icon.svg" style="width:32px" alt="">
+    </div>
+    <div><h2>بوتات ديسكورد</h2><p style="color:var(--mut);">جميع البوتات المسموح بها على Discord بدعم كامل</p></div>
+  </div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shield.svg?color=white" alt=""></div><span class="pt">$15+</span></div><h3>Moderation Bot</h3><div class="ads"><span class="ad">باند/كيك/ميوت</span><span class="ad">تحذيرات</span><span class="ad">لوق كامل</span><span class="ad">Slash Commands</span><span class="ad">Anti-Spam</span></div><button class="ob ripple-element" onclick="openOrder('Moderation Bot','$15+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:gift.svg?color=white" alt=""></div><span class="pt">$12+</span></div><h3>Giveaway Bot</h3><div class="ads"><span class="ad">جدولة تلقائية</span><span class="ad">شروط دخول</span><span class="ad">إعادة السحب</span><span class="ad">أدوار مخصصة</span></div><button class="ob ripple-element" onclick="openOrder('Giveaway Bot','$12+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:users.svg?color=white" alt=""></div><span class="pt">$18+</span></div><h3>Roles Bot</h3><div class="ads"><span class="ad">Self Roles</span><span class="ad">Reaction Roles</span><span class="ad">Auto Roles</span><span class="ad">Level Roles</span><span class="ad">Button Roles</span></div><button class="ob ripple-element" onclick="openOrder('Roles Bot','$18+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:coins.svg?color=white" alt=""></div><span class="pt">$20+</span></div><h3>Economy Bot</h3><div class="ads"><span class="ad">عملة مخصصة</span><span class="ad">متجر</span><span class="ad">بنك</span><span class="ad">مباريات</span><span class="ad">سرقة</span></div><button class="ob ripple-element" onclick="openOrder('Economy Bot','$20+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:gamepad-2.svg?color=white" alt=""></div><span class="pt">$15+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad">تريفيا</span><span class="ad">TicTacToe</span><span class="ad">Wordle</span><span class="ad">بلاك جاك</span><span class="ad">RPS</span></div><button class="ob ripple-element" onclick="openOrder('Games Bot','$15+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:trending-up.svg?color=white" alt=""></div><span class="pt">$14+</span></div><h3>Leveling Bot</h3><div class="ads"><span class="ad">نظام XP</span><span class="ad">ليدربورد</span><span class="ad">رتب تلقائية</span><span class="ad">بطاقة Rank</span></div><button class="ob ripple-element" onclick="openOrder('Leveling Bot','$14+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:ticket.svg?color=white" alt=""></div><span class="pt">$16+</span></div><h3>Ticket Bot</h3><div class="ads"><span class="ad">فتح/إغلاق</span><span class="ad">ترانسكريبت</span><span class="ad">أرشفة</span><span class="ad">فئات مخصصة</span></div><button class="ob ripple-element" onclick="openOrder('Ticket Bot','$16+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bell.svg?color=white" alt=""></div><span class="pt">$12+</span></div><h3>Welcome Bot</h3><div class="ads"><span class="ad">رسالة ترحيب</span><span class="ad">صور مخصصة</span><span class="ad">DM تلقائي</span><span class="ad">رتبة تلقائية</span></div><button class="ob ripple-element" onclick="openOrder('Welcome Bot','$12+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bot.svg?color=white" alt=""></div><span class="pt">$25+</span></div><h3>AI Chat Bot</h3><div class="ads"><span class="ad">ChatGPT مدمج</span><span class="ad">شخصية مخصصة</span><span class="ad">ذاكرة محادثة</span><span class="ad">قنوات محددة</span></div><button class="ob ripple-element" onclick="openOrder('AI Chat Bot','$25+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shopping-bag.svg?color=white" alt=""></div><span class="pt">$22+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad">عرض منتجات</span><span class="ad">كوبونات</span><span class="ad">إشعارات</span><span class="ad">تأكيد تلقائي</span></div><button class="ob ripple-element" onclick="openOrder('Store Bot Discord','$22+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:lock.svg?color=white" alt=""></div><span class="pt">$16+</span></div><h3>Verify Bot</h3><div class="ads"><span class="ad">Captcha</span><span class="ad">أسئلة مخصصة</span><span class="ad">رتبة تلقائية</span><span class="ad">زر تحقق</span></div><button class="ob ripple-element" onclick="openOrder('Verify Bot','$16+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:link.svg?color=white" alt=""></div><span class="pt">$13+</span></div><h3>Invite Tracker</h3><div class="ads"><span class="ad">من دعا من</span><span class="ad">إحصائيات</span><span class="ad">مكافآت</span><span class="ad">ليدربورد</span></div><button class="ob ripple-element" onclick="openOrder('Invite Tracker','$13+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:activity.svg?color=white" alt=""></div><span class="pt">$18+</span></div><h3>Status Bot</h3><div class="ads"><span class="ad">مراقبة Uptime</span><span class="ad">تنبيهات</span><span class="ad">إحصائيات</span><span class="ad">تلقائي</span></div><button class="ob ripple-element" onclick="openOrder('Status Bot','$18+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:file-text.svg?color=white" alt=""></div><span class="pt">$11+</span></div><h3>Logger Bot</h3><div class="ads"><span class="ad">رسائل محذوفة</span><span class="ad">تعديلات</span><span class="ad">دخول/خروج</span><span class="ad">تقارير</span></div><button class="ob ripple-element" onclick="openOrder('Logger Bot','$11+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:calendar-clock.svg?color=white" alt=""></div><span class="pt">$13+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad">جدولة</span><span class="ad">تكرار</span><span class="ad">DM</span><span class="ad">قناة محددة</span></div><button class="ob ripple-element" onclick="openOrder('Reminder Bot','$13+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:image.svg?color=white" alt=""></div><span class="pt">$14+</span></div><h3>Image Gen Bot</h3><div class="ads"><span class="ad">بطاقات Rank</span><span class="ad">شهادات</span><span class="ad">أفاتار</span><span class="ad">AI Image</span></div><button class="ob ripple-element" onclick="openOrder('Image Gen Bot','$14+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:layout-dashboard.svg?color=white" alt=""></div><span class="pt">$17+</span></div><h3>Dashboard Bot</h3><div class="ads"><span class="ad">لوحة ويب</span><span class="ad">إحصائيات السيرفر</span><span class="ad">تحكم كامل</span><span class="ad">تسجيل دخول</span></div><button class="ob ripple-element" onclick="openOrder('Dashboard Bot','$17+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shield-alert.svg?color=white" alt=""></div><span class="pt">$19+</span></div><h3>AutoMod Bot</h3><div class="ads"><span class="ad">فلترة تلقائية</span><span class="ad">Anti-Raid</span><span class="ad">Anti-Nuke</span><span class="ad">حماية متقدمة</span></div><button class="ob ripple-element" onclick="openOrder('AutoMod Bot','$19+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc dis"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:music.svg?color=white" alt=""></div><span class="ut">غير متوفر حالياً</span></div><h3>Music Bot</h3><div class="ads"><span class="ad">YouTube</span><span class="ad">Queue</span><span class="ad">تحكم كامل</span></div><button class="ob" disabled><img src="https://api.iconify.design/lucide:lock.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مغلق حالياً</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)"><img src="https://api.iconify.design/lucide:sparkles.svg?color=fcd34d" alt=""></div><span class="pt" style="color:#fcd34d">$25-$35</span></div><h3>بوت Discord مخصص</h3><div class="ads"><span class="ad">أي فكرة تريدها</span><span class="ad">سعر مخصص</span></div><button class="ob ripple-element" onclick="openOrder('بوت Discord مخصص','$25-$35',true)"><img src="https://api.iconify.design/lucide:wand-2.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب بوتك المخصص</button></div>
+  </div>
+</div>
+
+<div id="tab-telegram" class="tc sec">
+  <div class="sh">
+    <div class="si" style="background:rgba(0,136,204,.15)">
+      <img src="https://api.iconify.design/logos:telegram.svg" style="width:32px" alt="">
+    </div>
+    <div><h2>بوتات تيليجرام</h2><p style="color:var(--mut);">بوتات Telegram متقدمة عبر BotFather API</p></div>
+  </div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" alt=""></div><span class="pt">$18+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad">عرض منتجات</span><span class="ad">سلة تسوق</span><span class="ad">كوبونات</span><span class="ad">لوحة أدمن</span></div><button class="ob ripple-element" onclick="openOrder('Store Bot Telegram','$18+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:megaphone.svg?color=white" alt=""></div><span class="pt">$14+</span></div><h3>Admin Bot</h3><div class="ads"><span class="ad">حظر/طرد</span><span class="ad">تحذيرات</span><span class="ad">رسائل مجدولة</span><span class="ad">فلتر كلمات</span></div><button class="ob ripple-element" onclick="openOrder('Admin Bot Telegram','$14+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bot.svg?color=white" alt=""></div><span class="pt">$22+</span></div><h3>AI Assistant Bot</h3><div class="ads"><span class="ad">ChatGPT</span><span class="ad">ترجمة</span><span class="ad">تلخيص</span><span class="ad">ذاكرة</span></div><button class="ob ripple-element" onclick="openOrder('AI Assistant Telegram','$22+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:credit-card.svg?color=white" alt=""></div><span class="pt">$25+</span></div><h3>Payment Bot</h3><div class="ads"><span class="ad">دفع مدمج</span><span class="ad">فواتير</span><span class="ad">استرداد</span><span class="ad">تأكيد تلقائي</span></div><button class="ob ripple-element" onclick="openOrder('Payment Bot Telegram','$25+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:help-circle.svg?color=white" alt=""></div><span class="pt">$16+</span></div><h3>Quiz Bot</h3><div class="ads"><span class="ad">أسئلة متعددة</span><span class="ad">نتائج فورية</span><span class="ad">إحصائيات</span><span class="ad">تصدير</span></div><button class="ob ripple-element" onclick="openOrder('Quiz Bot Telegram','$16+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:lock.svg?color=white" alt=""></div><span class="pt">$15+</span></div><h3>Channel Guard</h3><div class="ads"><span class="ad">Anti-Spam</span><span class="ad">موافقة يدوية</span><span class="ad">فلتر كلمات</span><span class="ad">Captcha</span></div><button class="ob ripple-element" onclick="openOrder('Channel Guard Telegram','$15+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bar-chart-2.svg?color=white" alt=""></div><span class="pt">$19+</span></div><h3>Stats Bot</h3><div class="ads"><span class="ad">إحصائيات</span><span class="ad">نشاط الأعضاء</span><span class="ad">رسوم بيانية</span><span class="ad">تقارير</span></div><button class="ob ripple-element" onclick="openOrder('Stats Bot Telegram','$19+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:users.svg?color=white" alt=""></div><span class="pt">$13+</span></div><h3>Referral Bot</h3><div class="ads"><span class="ad">رابط إحالة</span><span class="ad">مكافآت</span><span class="ad">ليدربورد</span><span class="ad">تتبع</span></div><button class="ob ripple-element" onclick="openOrder('Referral Bot Telegram','$13+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:clock.svg?color=white" alt=""></div><span class="pt">$12+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad">تذكيرات</span><span class="ad">جدولة</span><span class="ad">تكرار</span><span class="ad">DM</span></div><button class="ob ripple-element" onclick="openOrder('Reminder Bot Telegram','$12+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:gamepad-2.svg?color=white" alt=""></div><span class="pt">$15+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad">تريفيا</span><span class="ad">TicTacToe</span><span class="ad">RPS</span><span class="ad">ليدربورد</span></div><button class="ob ripple-element" onclick="openOrder('Games Bot Telegram','$15+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:rss.svg?color=white" alt=""></div><span class="pt">$17+</span></div><h3>News / RSS Bot</h3><div class="ads"><span class="ad">RSS تلقائي</span><span class="ad">مصادر متعددة</span><span class="ad">جدولة نشر</span><span class="ad">فلترة</span></div><button class="ob ripple-element" onclick="openOrder('News Bot Telegram','$17+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:download.svg?color=white" alt=""></div><span class="pt">$14+</span></div><h3>Media Downloader</h3><div class="ads"><span class="ad">يوتيوب</span><span class="ad">انستجرام</span><span class="ad">تيك توك</span><span class="ad">تويتر/X</span></div><button class="ob ripple-element" onclick="openOrder('Media Downloader Telegram','$14+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:globe.svg?color=white" alt=""></div><span class="pt">$20+</span></div><h3>Multi-Language Bot</h3><div class="ads"><span class="ad">لغات متعددة</span><span class="ad">ترجمة تلقائية</span><span class="ad">لوحة تحكم</span><span class="ad">إعدادات</span></div><button class="ob ripple-element" onclick="openOrder('Multi-Language Bot Telegram','$20+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bitcoin.svg?color=white" alt=""></div><span class="pt">$18+</span></div><h3>Crypto Tracker</h3><div class="ads"><span class="ad">أسعار العملات</span><span class="ad">تنبيهات سعر</span><span class="ad">رسوم بيانية</span><span class="ad">تحديث تلقائي</span></div><button class="ob ripple-element" onclick="openOrder('Crypto Tracker Telegram','$18+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)"><img src="https://api.iconify.design/lucide:sparkles.svg?color=fcd34d" alt=""></div><span class="pt" style="color:#fcd34d">$25-$35</span></div><h3>بوت Telegram مخصص</h3><div class="ads"><span class="ad">أي فكرة تريدها</span><span class="ad">سعر مخصص</span></div><button class="ob ripple-element" onclick="openOrder('بوت Telegram مخصص','$25-$35',true)"><img src="https://api.iconify.design/lucide:wand-2.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب بوتك المخصص</button></div>
+  </div>
+</div>
+
+<div id="tab-whatsapp" class="tc sec">
+  <div class="sh">
+    <div class="si" style="background:rgba(37,211,102,.15)">
+      <img src="https://api.iconify.design/logos:whatsapp-icon.svg" style="width:32px" alt="">
+    </div>
+    <div><h2>بوتات واتساب</h2><p style="color:var(--mut);">⚠️ Self Bots قانونية لا تنتهك شروط واتساب</p></div>
+  </div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:message-square.svg?color=white" alt=""></div><span class="pt">$20+</span></div><h3>Auto Reply Bot</h3><div class="ads"><span class="ad">كلمات مفتاحية</span><span class="ad">ردود مخصصة</span><span class="ad">أوقات معينة</span><span class="ad">قائمة سوداء</span></div><button class="ob ripple-element" onclick="openOrder('Auto Reply Bot WhatsApp','$20+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:users.svg?color=white" alt=""></div><span class="pt">$18+</span></div><h3>Group Manager</h3><div class="ads"><span class="ad">طرد/حظر</span><span class="ad">ترحيب</span><span class="ad">Anti-Link</span><span class="ad">لوق</span></div><button class="ob ripple-element" onclick="openOrder('Group Manager WhatsApp','$18+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:shopping-bag.svg?color=white" alt=""></div><span class="pt">$22+</span></div><h3>Store Bot</h3><div class="ads"><span class="ad">قائمة منتجات</span><span class="ad">طلبات</span><span class="ad">تتبع</span><span class="ad">تأكيد تلقائي</span></div><button class="ob ripple-element" onclick="openOrder('Store Bot WhatsApp','$22+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bot.svg?color=white" alt=""></div><span class="pt">$19+</span></div><h3>AI Chat Bot</h3><div class="ads"><span class="ad">ChatGPT</span><span class="ad">رد ذكي</span><span class="ad">ذاكرة</span><span class="ad">شخصية مخصصة</span></div><button class="ob ripple-element" onclick="openOrder('AI Chat Bot WhatsApp','$19+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bar-chart.svg?color=white" alt=""></div><span class="pt">$16+</span></div><h3>Poll Bot</h3><div class="ads"><span class="ad">تصويت</span><span class="ad">إحصائيات</span><span class="ad">وقت محدد</span><span class="ad">تقرير نهائي</span></div><button class="ob ripple-element" onclick="openOrder('Poll Bot WhatsApp','$16+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:gamepad-2.svg?color=white" alt=""></div><span class="pt">$14+</span></div><h3>Games Bot</h3><div class="ads"><span class="ad">تريفيا</span><span class="ad">تخمين</span><span class="ad">نقاط</span><span class="ad">ليدربورد</span></div><button class="ob ripple-element" onclick="openOrder('Games Bot WhatsApp','$14+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:bell.svg?color=white" alt=""></div><span class="pt">$12+</span></div><h3>Reminder Bot</h3><div class="ads"><span class="ad">تذكيرات يومية</span><span class="ad">جدولة</span><span class="ad">تكرار</span><span class="ad">قائمة</span></div><button class="ob ripple-element" onclick="openOrder('Reminder Bot WhatsApp','$12+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    
+    <div class="bc dis">
+      <div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:download-cloud.svg?color=white" alt=""></div><span class="ut">غير متوفر حالياً</span></div>
+      <h3>Media Downloader</h3>
+      <div class="ads"><span class="ad">يوتيوب</span><span class="ad">انستجرام</span><span class="ad">تيك توك</span><span class="ad">سريع</span></div>
+      <button class="ob" disabled><img src="https://api.iconify.design/lucide:lock.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مغلق حالياً</button></div>
+
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:send.svg?color=white" alt=""></div><span class="pt">$13+</span></div><h3>Broadcast Bot</h3><div class="ads"><span class="ad">إرسال جماعي</span><span class="ad">قوائم مخصصة</span><span class="ad">جدولة</span><span class="ad">تتبع</span></div><button class="ob ripple-element" onclick="openOrder('Broadcast Bot WhatsApp','$13+')"><img src="https://api.iconify.design/lucide:shopping-cart.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب الآن</button></div>
+    <div class="bc sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)"><img src="https://api.iconify.design/lucide:sparkles.svg?color=fcd34d" alt=""></div><span class="pt" style="color:#fcd34d">$25-$35</span></div><h3>سيلف بوت واتساب مخصص</h3><div class="ads"><span class="ad">أي فكرة تريدها</span><span class="ad">سعر مخصص</span></div><button class="ob ripple-element" onclick="openOrder('سيلف بوت WhatsApp مخصص','$25-$35',true)"><img src="https://api.iconify.design/lucide:wand-2.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> اطلب سيلفك المخصص</button></div>
+  </div>
+</div>
+
+<div id="tab-chrome" class="tc sec">
+  <div class="sh">
+    <div class="si" style="background:rgba(245,158,11,.15)">
+      <img src="https://api.iconify.design/logos:chrome.svg" style="width:32px" alt="">
+    </div>
+    <div><h2>موقع تعريف Chrome Extension</h2><p style="color:var(--red);font-weight:700;">⚠️ جميع الخدمات غير متوفرة حالياً</p></div>
+  </div>
+  <div class="grid">
+    <div class="bc dis"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:layout-template.svg?color=white" alt=""></div><span class="ut">غير متوفر حالياً</span></div><h3>Landing Page</h3><div class="ads"><span class="ad">تصميم احترافي</span><span class="ad">زر تثبيت</span></div><button class="ob" disabled><img src="https://api.iconify.design/lucide:lock.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مغلق حالياً</button></div>
+    <div class="bc dis"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:panels-top-left.svg?color=white" alt=""></div><span class="ut">غير متوفر حالياً</span></div><h3>موقع كامل</h3><div class="ads"><span class="ad">صفحات متعددة</span><span class="ad">SEO</span></div><button class="ob" disabled><img src="https://api.iconify.design/lucide:lock.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مغلق حالياً</button></div>
+    <div class="bc dis sp"><div class="bh"><div class="bi" style="background:rgba(245,158,11,.15)"><img src="https://api.iconify.design/lucide:sparkles.svg?color=fcd34d" alt=""></div><span class="ut">غير متوفر حالياً</span></div><h3>موقع Chrome مخصص</h3><div class="ads"><span class="ad">تصميم خاص</span></div><button class="ob" disabled><img src="https://api.iconify.design/lucide:lock.svg?color=white" style="width:16px; margin-left:6px; vertical-align:middle;" alt=""> مغلق حالياً</button></div>
+  </div>
+</div>
+<div id="tab-rules" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(245,158,11,.15)"><img src="https://api.iconify.design/lucide:shield-alert.svg?color=f59e0b" style="width:28px" alt=""></div><div><h2>القوانين والشروط</h2><p style="color:var(--mut);">يرجى قراءة القوانين بتمعن قبل طلب أي خدمة</p></div></div>
+  <div class="rules-list">
+    <div class="rule-item">
+      <div class="rule-icon"><img src="https://api.iconify.design/lucide:server-off.svg?color=ef4444" alt=""></div>
+      <div class="rule-content"><h4>1. لا يشمل الاستضافة</h4><p>نحن نقوم بتطوير وإنشاء ملفات ومشاريع البوتات البرمجية فقط. استضافة البوت أو الموقع تقع على عاتق المشتري بالكامل.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon"><img src="https://api.iconify.design/lucide:file-warning.svg?color=ef4444" alt=""></div>
+      <div class="rule-content"><h4>2. لا للاسترجاع النقدي</h4><p>بعد البدء في البرمجة وتسليم الملفات الأولية أو النهائية، لا يوجد أي استرجاع للمبلغ المدفوع (No Refunds) بأي شكل من الأشكال.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon"><img src="https://api.iconify.design/lucide:history.svg?color=ef4444" alt=""></div>
+      <div class="rule-content"><h4>3. مدة التعديلات والدعم</h4><p>الدعم الفني وإصلاح الأخطاء مجاني لمدة 7 أيام فقط بعد تسليم المشروع. أي إضافات برمجية جديدة بعد التسليم تتطلب اتفاقاً وسعراً جديداً.</p></div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon"><img src="https://api.iconify.design/lucide:shield-ban.svg?color=ef4444" alt=""></div>
+      <div class="rule-content"><h4>4. سياسة الاستخدام</h4><p>يمنع منعاً باتاً طلب بوتات تخترق خصوصية المستخدمين أو تنتهك شروط المنصات (Discord/Telegram/WhatsApp) بطرق غير قانونية.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-settings" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(6,182,212,.15)"><img src="https://api.iconify.design/lucide:settings.svg?color=06b6d4" style="width:28px" alt=""></div><div><h2>الإعدادات</h2><p style="color:var(--mut);">تخصيص الواجهة والنظام</p></div></div>
+  <div class="settings-grid">
+    <div class="set-card">
+      <div class="set-info"><h4>إشعارات النظام</h4><p>تفعيل أو إيقاف التنبيهات المنبثقة</p></div>
+      <div class="set-action"><img src="https://api.iconify.design/lucide:bell-ring.svg?color=06b6d4" alt="" onclick="if(typeof toast==='function')toast('تم تفعيل الإشعارات بنجاح!')"></div>
+    </div>
+    <div class="set-card">
+      <div class="set-info"><h4>مسح الذاكرة المؤقتة</h4><p>إعادة تهيئة سرعة النظام</p></div>
+      <div class="set-action"><img src="https://api.iconify.design/lucide:database-zap.svg?color=06b6d4" alt="" onclick="if(typeof toast==='function')toast('تم تفريغ الكاش بنجاح!')"></div>
+    </div>
+    <div class="set-card">
+      <div class="set-info"><h4>التأثيرات البصرية</h4><p>تبديل جودة الواجهة</p></div>
+      <div class="set-action"><img src="https://api.iconify.design/lucide:cpu.svg?color=06b6d4" alt="" onclick="if(typeof toast==='function')toast('أنت تستخدم أعلى إعدادات بصرية!')"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-about" class="tc sec">
+  <div class="sh"><div class="si" style="background:rgba(124,58,237,.2)"><img src="https://api.iconify.design/lucide:info.svg?color=8b5cf6" style="width:28px" alt=""></div><div><h2>عن المشروع</h2><p style="color:var(--mut);">كل ما تحتاج معرفته عن خدماتنا</p></div></div>
+  <div class="grid">
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:user.svg?color=white" alt=""></div></div><h3>من نحن</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">مروان | Wano — مطور بوتات متخصص في Discord وTelegram وWhatsApp.</p></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:alert-triangle.svg?color=white" alt=""></div></div><h3>ملاحظة هامة</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">الخدمة تشمل إنشاء ملفات البوتات والبرمجة فقط، ولا تشمل الاستضافة.</p></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:wallet.svg?color=white" alt=""></div></div><h3>طرق الدفع</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">فودافون كاش، PayPal، Binance، USDT، تحويل بنكي.</p></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:clock.svg?color=white" alt=""></div></div><h3>وقت التسليم</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">المشاريع البسيطة: 1-3 أيام. المتوسطة: 3-7 أيام.</p></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:life-buoy.svg?color=white" alt=""></div></div><h3>الدعم الفني</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">دعم فني مجاني لمدة 7 أيام بعد تسليم المشروع.</p></div>
+    <div class="bc"><div class="bh"><div class="bi"><img src="https://api.iconify.design/lucide:phone-call.svg?color=white" alt=""></div></div><h3>تواصل معنا</h3><p style="color:var(--mut);font-size:14px;line-height:1.8">Discord: <strong style="color:var(--acc2)">@wn6b</strong><br>TikTok: <strong style="color:var(--acc2)">@w_n6b</strong><br>YouTube: <strong style="color:var(--red)">@wn5b</strong></p></div>
+  </div>
+</div>
+
+<div id="ownerPanel" style="display:none" class="op">
+  <h3>👑 لوحة تحكم المالك — مروان | Wano</h3>
+  <div class="pss">
+    <div class="psi"><div class="n" id="pO">…</div><div class="l">إجمالي الطلبات</div></div>
+    <div class="psi"><div class="n" id="pU">…</div><div class="l">المستخدمين</div></div>
+    <div class="psi"><div class="n" id="pD">…</div><div class="l">أكواد الخصم</div></div>
+  </div>
+  <div class="ptabs">
+    <button class="ptab on ripple-element" onclick="panelTab('o',this)">📦 الطلبات</button>
+    <button class="ptab ripple-element" onclick="panelTab('u',this)">👥 الحسابات</button>
+    <button class="ptab ripple-element" onclick="panelTab('d',this)">🏷️ أكواد الخصم</button>
+  </div>
+  <div id="pOL"></div>
+  <div id="pUL" style="display:none"></div>
+  <div id="pDL" style="display:none">
+    <div class="bc" style="margin-bottom:20px">
+      <h4 style="margin-bottom:15px;color:var(--ow)">➕ إضافة كود خصم جديد</h4>
+      <div class="add-disc-row">
+        <input id="discCode" placeholder="اسم الكود مثال: WANO10" style="text-transform:uppercase">
+        <input id="discPct" type="number" min="1" max="90" placeholder="النسبة % مثال: 10">
+        <button class="ripple-element" onclick="addDiscount()">إضافة الكود <img src="https://api.iconify.design/lucide:plus.svg?color=white" style="width:16px; margin-right:6px;" alt=""></button>
+      </div>
+    </div>
+    <div id="discList"></div>
+  </div>
+</div>
+</div> </div> <div class="wrap"><footer>
+  <p>🤖 <strong>Projects Bots</strong> — جميع الحقوق محفوظة لـ <strong>مروان | Wano</strong> © 2026</p>
+  <p style="margin-top:8px;font-size:11px;opacity:0.7">⚠️ إنشاء ملفات ومشاريع البوتات فقط — لا يشمل التشغيل أو الاستضافة</p>
+</footer></div>
+
+<div class="ov" id="ovO">
+  <div class="modal">
+    <button class="mcl" onclick="closeM('ovO')"><img src="https://api.iconify.design/lucide:x.svg?color=white" style="width:20px;" alt=""></button>
+    <div style="margin-bottom:16px;text-align:center"><img src="https://api.iconify.design/lucide:package.svg?color=fcd34d" style="width:48px; filter:drop-shadow(0 0 10px #fcd34d);" alt=""></div>
+    <h3 style="text-align:center; font-weight:900; font-size:24px; margin-bottom:6px;">طلب مشروع</h3>
+    <p class="sub" style="text-align:center; color:var(--mut); margin-bottom:24px;">سيصلك رد من المطور مباشرة عبر واتساب</p>
+    <div class="fg"><label>اسم البوت / المشروع</label><input id="bn" readonly tabindex="-1"></div>
+    <div class="fg"><label>اسمك الكريم</label><input id="cn" placeholder="مثال: أحمد" autocomplete="name"></div>
+    <div class="fg"><label>رقم الواتساب أو حساب الديسكورد</label><input id="cc" placeholder="+966XXXXXXXXX أو @username"></div>
+    <div id="dA" class="fg" style="display:none"><label>وصف ما تريده بالتفصيل</label><textarea id="cd" rows="4" placeholder="اشرح البوت والأوامر والميزات بدقة..."></textarea></div>
+    <div class="fg"><label>الميزانية التقريبية</label><input id="cb" placeholder="$25+" readonly tabindex="-1"></div>
+    
+    <div class="fg"><label style="color:var(--ow)">طريقة الدفع (إجباري للاستمرار) *</label>
+      <div class="pays">
+        <button class="pay ripple-element" onclick="sP(this,'Vodafone Cash')"><img src="https://api.iconify.design/lucide:smartphone.svg?color=white" alt=""> فودافون كاش</button>
+        <button class="pay ripple-element" onclick="sP(this,'PayPal')"><img src="https://api.iconify.design/lucide:credit-card.svg?color=white" alt=""> PayPal</button>
+        <button class="pay ripple-element" onclick="sP(this,'Binance')"><img src="https://api.iconify.design/lucide:circle-dollar-sign.svg?color=white" alt=""> Binance</button>
+        <button class="pay ripple-element" onclick="sP(this,'USDT')"><img src="https://api.iconify.design/lucide:dollar-sign.svg?color=white" alt=""> USDT</button>
+        <button class="pay ripple-element" onclick="sP(this,'Bank')"><img src="https://api.iconify.design/lucide:landmark.svg?color=white" alt=""> تحويل بنكي</button>
+        <button class="pay ripple-element" onclick="sP(this,'Other')"><img src="https://api.iconify.design/lucide:more-horizontal.svg?color=white" alt=""> طريقة أخرى</button>
+      </div>
+    </div>
+    
+    <div class="fg" style="margin-top:20px">
+      <label>كود الخصم (إن وجد)</label>
+      <div class="disc-row">
+        <input id="discInp" placeholder="أدخل كود الخصم هنا" style="text-transform:uppercase">
+        <button class="disc-btn ripple-element" onclick="applyDiscount()">تطبيق الكود</button>
+      </div>
+      <div class="disc-tag" id="discTag"></div>
+    </div>
+    <button class="send ripple-element" onclick="submitOrder()">📤 إرسال الطلب عبر واتساب</button>
+  </div>
+</div>
+
+<div class="ov" id="ovA">
+  <div class="modal" style="max-width:420px">
+    <button class="mcl" onclick="closeM('ovA')"><img src="https://api.iconify.design/lucide:x.svg?color=white" style="width:20px;" alt=""></button>
+    <div style="margin-bottom:16px;text-align:center"><img src="https://api.iconify.design/lucide:lock-keyhole.svg?color=f59e0b" style="width:48px; filter:drop-shadow(0 0 10px #f59e0b);" alt=""></div>
+    <div class="atabs">
+      <button class="atab on ripple-element" id="tLB" onclick="aSwitch('l')">تسجيل دخول</button>
+      <button class="atab ripple-element" id="tRB" onclick="aSwitch('r')">إنشاء حساب</button>
+    </div>
+    <div id="lF">
+      <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="le" placeholder="example@gmail.com" autocomplete="email"></div>
+      <div class="fg"><label>كلمة المرور</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="em" id="lE"></div>
+      <div class="cb"><span class="cq" id="cQ" style="font-size:18px;"></span><div class="cr"><input class="cin" style="width:60px; padding:10px; font-size:16px; text-align:center;" type="number" id="cA" placeholder="؟"><button class="crf ripple-element" style="padding:10px; border-radius:10px; background:rgba(255,255,255,0.05);" onclick="newCap()"><img src="https://api.iconify.design/lucide:refresh-cw.svg?color=white" style="width:18px;" alt=""></button></div></div>
+      <button class="send ac ripple-element" onclick="doLogin()">🔑 دخول للنظام</button>
+    </div>
+    <div id="rF" style="display:none">
+      <div class="fg"><label>اسمك الكامل</label><input id="rn" placeholder="مثال: أحمد" autocomplete="name"></div>
+      <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="re" placeholder="example@gmail.com" autocomplete="email"></div>
+      <div class="fg"><label>كلمة المرور (6 أحرف على الأقل)</label><input type="password" id="rp" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="fg"><label>تأكيد كلمة المرور</label><input type="password" id="rp2" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="em" id="rE"></div>
+      <div class="cb"><span class="cq" id="cQ2" style="font-size:18px;"></span><div class="cr"><input class="cin" style="width:60px; padding:10px; font-size:16px; text-align:center;" type="number" id="cA2" placeholder="؟"><button class="crf ripple-element" style="padding:10px; border-radius:10px; background:rgba(255,255,255,0.05);" onclick="newCap()"><img src="https://api.iconify.design/lucide:refresh-cw.svg?color=white" style="width:18px;" alt=""></button></div></div>
+      <button class="send ac ripple-element" onclick="doReg()">✅ إنشاء حساب جديد</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+<script>
+  document.addEventListener('keydown', function(e) {
+    if(e.keyCode == 123) { e.preventDefault(); return false; }
+    if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0))) { e.preventDefault(); return false; }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { e.preventDefault(); return false; }
+  });
+</script>
 </body>
 </html>
