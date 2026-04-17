@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Bots | مروان Wano</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="wrap">
+        <header class="hero">
+            <div class="hero-logo-container">
+                <img src="https://api.iconify.design/lucide:bot.svg?color=%2300f0ff" alt="Logo" class="logo-pb">
+            </div>
+            <div class="badge">
+                <span class="dot" id="heroBadgeDot"></span>
+                <span id="heroBadgeTxt">نظام مروان Wano نشط</span>
+            </div>
+            <h1 class="grad">Projects Bots</h1>
+            <p style="color:var(--text-secondary); margin-top:10px;">المستقبل يبدأ من هنا — إصدار 2026</p>
+        </header>
+
+        <div class="owc">
+            <img src="https://api.iconify.design/lucide:user-circle-2.svg?color=%23ffaa00" class="ava" alt="Marwan">
+            <div class="ow-info">
+                <h2 style="font-size:22px; font-weight:900;">مروان | Wano</h2>
+                <p style="color:var(--neon-cyan); font-size:14px; direction:ltr;">@wn6b</p>
+                <div class="obdg">
+                    <span class="bdg r-owner">Owner</span>
+                    <span class="bdg r-dev">Developer</span>
+                    <span class="bdg r-verified">Verified</span>
+                    <span class="bdg r-vip">VIP</span>
+                    <span class="bdg r-legend" style="color:#00ff88; border-color:rgba(0,255,136,0.3);">Legend</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tb on ripple-element" id="btn-discord" onclick="switchTab('discord')">
+                    <span class="iconify" data-icon="logos:discord-icon"></span> ديسكورد
+                </button>
+                <button class="tb ripple-element" id="btn-telegram" onclick="switchTab('telegram')">
+                    <span class="iconify" data-icon="logos:telegram"></span> تيليجرام
+                </button>
+                <button class="tb ripple-element" id="btn-whatsapp" onclick="switchTab('whatsapp')">
+                    <span class="iconify" data-icon="logos:whatsapp-icon"></span> واتساب
+                </button>
+                <button class="tb ripple-element" id="btn-chrome" onclick="switchTab('chrome')">
+                    <span class="iconify" data-icon="logos:chrome"></span> كروم
+                </button>
+                <button class="tb ripple-element" id="btn-rules" onclick="switchTab('rules')">
+                    <span class="iconify" data-icon="lucide:shield-alert"></span> القوانين
+                </button>
+                <button class="tb ripple-element" id="btn-about" onclick="switchTab('about')">
+                    <span class="iconify" data-icon="lucide:info"></span> عنّا
+                </button>
+            </div>
+        </div>
+
+        <main id="mainContent">
+            <div id="tab-discord" class="tc on sec">
+                <div class="sh">
+                    <span class="iconify" data-icon="logos:discord-icon" data-width="30"></span>
+                    <h2>خدمات ديسكورد</h2>
+                </div>
+                <div class="grid">
+                    </div>
+            </div>
+
+            <div id="tab-chrome" class="tc sec">
+                <div class="maint-overlay">
+                    <span class="iconify" data-icon="lucide:construction" data-width="60" style="color:var(--neon-rose); margin-bottom:20px;"></span>
+                    <h2 style="margin-bottom:10px;">قسم كروم قيد الصيانة</h2>
+                    <p style="color:var(--text-secondary);">يتم حالياً تحديث الأدوات لتتوافق مع معايير 2026. الوصول متاح للمطور فقط.</p>
+                </div>
+            </div>
+
+            <div id="tab-rules" class="tc sec">
+                <div class="sh"><span class="iconify" data-icon="lucide:gavel" data-width="30"></span><h2>قوانين التعامل</h2></div>
+                <div class="bc" style="margin-bottom:15px;">
+                    <h4 style="color:var(--neon-gold);">1. حماية الحقوق</h4>
+                    <p>يمنع منعاً باتاً محاولة فك تشفير الملفات أو إعادة بيعها دون إذن مسبق من المطور مروان.</p>
+                </div>
+                <div class="bc">
+                    <h4 style="color:var(--neon-gold);">2. سياسة الاسترداد</h4>
+                    <p>بمجرد البدء في تنفيذ المشروع، لا يمكن استرجاع المبلغ نظراً لطبيعة المنتجات الرقمية.</p>
+                </div>
+            </div>
+
+            <div id="tab-about" class="tc sec">
+                <div class="sh"><span class="iconify" data-icon="lucide:user-check" data-width="30"></span><h2>عن المطور مروان</h2></div>
+                <div class="bc">
+                    <p>مطور برمجيات وأنظمة ذكية متخصص في لغة JavaScript و Node.js. أعمل على تقديم حلول تقنية مبتكرة تحت اسم Wano Studio لعام 2026.</p>
+                    <div style="margin-top:20px; display:flex; gap:15px;">
+                        <span class="iconify" data-icon="logos:binance" data-width="30"></span>
+                        <span class="iconify" data-icon="logos:paypal" data-width="30"></span>
+                        <span class="iconify" data-icon="logos:mastercard" data-width="30"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer style="text-align:center; padding:40px; margin-top:50px; border-top:1px solid var(--border-subtle);">
+            <p style="color:var(--text-secondary); font-size:13px; font-weight:900;">
+                جميع الحقوق محفوظة للمطور مروان | Wano &copy; 2026 <br>
+                <span style="color:var(--neon-cyan);">@wn6b</span>
+            </p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
