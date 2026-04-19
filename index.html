@@ -3,52 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnimeVerse 5D | عالم الأنمي</title>
+    <title>أكاديمية البرمجة العالمية 2026 - الإصدار السيادي</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div id="google_translate_element" class="translator-widget"></div>
+<body class="realistic-neon-theme">
 
-    <header class="glass-header">
-        <h1>🌌 AnimeVerse 5D</h1>
-        <p>كل أنميات العالم بين إيديك، نظيفة وبدون لقطات!</p>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="ابحث عن أنمي (مثال: Naruto, Attack on Titan)...">
-            <button onclick="searchAnime()">ابحث</button>
-        </div>
-    </header>
-
-    <main>
-        <h2 class="section-title">🔥 اقتراحات للمشاهدة</h2>
-        <div id="animeGrid" class="anime-grid">
+    <section id="auth-overlay" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="neon-title">بوابة المستقبل البرمجي</h1>
+                <p class="subtitle">سجل دخولك للوصول إلى تقنيات 2026</p>
             </div>
-    </main>
-
-    <div class="ai-bot-container">
-        <div class="ai-bot-header" onclick="toggleBot()">🤖 المساعد الذكي (AI)</div>
-        <div class="ai-bot-body" id="aiBody">
-            <div class="chat-box" id="chatBox">
-                <p class="ai-msg">هلا بيك عيوني! أنا المساعد الذكي، كلي شتحب تشوف (أكشن، كوميديا، مغامرات) وراح أطلعلك أنمي يلوقلك!</p>
+            
+            <div class="auth-actions">
+                <button id="btn-login" class="btn-primary-neon">Log in | تسجيل الدخول</button>
+                <button id="btn-signup" class="btn-secondary-neon">Create an account | إنشاء حساب جديد</button>
             </div>
-            <input type="text" id="aiInput" placeholder="اكتب هنا...">
-            <button onclick="askAI()">إرسال</button>
+
+            <form id="login-form" class="auth-form hidden">
+                <input type="email" placeholder="البريد الإلكتروني" required>
+                <input type="password" placeholder="كلمة المرور" required>
+                <button type="submit" class="btn-execute">دخول النظام</button>
+                <p class="back-link">العودة للخلف</p>
+            </form>
+
+            <form id="signup-form" class="auth-form hidden">
+                <input type="text" placeholder="الاسم الكامل" required>
+                <input type="email" placeholder="البريد الإلكتروني" required>
+                <input type="password" placeholder="كلمة مرور قوية" required>
+                <button type="submit" class="btn-execute">تفعيل الحساب</button>
+                <p class="back-link">العودة للخلف</p>
+            </form>
         </div>
+    </section>
+
+    <div id="main-dashboard" class="dashboard-hidden">
+        
+        <header class="top-nav">
+            <div class="translation-unit">
+                <button onclick="changeLang('ar')" class="lang-node">🇸🇦 عربي</button>
+                <button onclick="changeLang('en')" class="lang-node">🇬🇧 English</button>
+            </div>
+            <div id="google_translate_element"></div>
+        </header>
+
+        <main class="content-wrapper">
+            <header class="main-header">
+                <h2 class="dynamic-text">مسارات الاحتراف البرمجي</h2>
+                <div class="status-bar">نظام التعلم النشط: متصل</div>
+            </header>
+
+            <section class="language-grid">
+                
+                <div class="lang-card" data-difficulty="advanced">
+                    <div class="card-inner">
+                        <div class="icon-box">JS</div>
+                        <h3>JavaScript</h3>
+                        <p>إتقان المحركات والـ V8 والتعامل مع الذاكرة في الويب المتقدم.</p>
+                        <ul class="curriculum-list">
+                            <li>مفاهيم الـ Asynchronous</li>
+                            <li>إدارة الـ DOM الواقعية</li>
+                            <li>بناء الأطر المخصصة</li>
+                        </ul>
+                        <button class="btn-start">ابدأ التعلم</button>
+                    </div>
+                </div>
+
+                <div class="lang-card" data-difficulty="pro">
+                    <div class="card-inner">
+                        <div class="icon-box">C++</div>
+                        <h3>C++</h3>
+                        <p>برمجة الأنظمة والأداء العالي للألعاب والذكاء الصناعي.</p>
+                        <ul class="curriculum-list">
+                            <li>إدارة المؤشرات (Pointers)</li>
+                            <li>هياكل البيانات المعقدة</li>
+                            <li>برمجة الهاردوير</li>
+                        </ul>
+                        <button class="btn-start">ابدأ التعلم</button>
+                    </div>
+                </div>
+
+                <div class="lang-card" data-difficulty="high">
+                    <div class="card-inner">
+                        <div class="icon-box">C#</div>
+                        <h3>C# / .NET</h3>
+                        <p>تطوير تطبيقات سطح المكتب والألعاب باستخدام Unity.</p>
+                        <button class="btn-start">ابدأ التعلم</button>
+                    </div>
+                </div>
+
+                <div class="lang-card" data-difficulty="standard">
+                    <div class="card-inner">
+                        <div class="icon-box">Java</div>
+                        <h3>Java</h3>
+                        <p>الأنظمة المؤسساتية وتطبيقات الأندرويد الضخمة.</p>
+                        <button class="btn-start">ابدأ التعلم</button>
+                    </div>
+                </div>
+
+                <div class="lang-card locked-card">
+                    <div class="card-inner">
+                        <div class="lock-overlay">
+                            <span class="soon-text">SOON</span>
+                        </div>
+                        <div class="icon-box">PY</div>
+                        <h3>Python</h3>
+                        <p>سيتم إتاحة هذا المسار في التحديث القادم.</p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <div class="popup-trigger-bottom" id="popup-bottom">
+            <div class="popup-content">
+                <span>تنبيه النظام: دروس جديدة متوفرة في قسم الـ JavaScript</span>
+            </div>
+        </div>
+
+        <div class="popup-trigger-top" id="popup-top">
+            <div class="popup-content">
+                <span>تم تحديث معدل تقدمك الدراسي بنجاح</span>
+            </div>
+        </div>
+
+        <footer class="system-footer">
+            <p>© 2026 أكاديمية البرمجة المتقدمة - جميع الحقوق محفوظة للنظام</p>
+        </footer>
     </div>
 
-    <div id="animeModal" class="modal">
-        <div class="modal-content glass-panel">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'ar,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="script.js"></script>
 </body>
 </html>
