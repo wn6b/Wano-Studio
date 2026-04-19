@@ -3,138 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE NEON ACADEMY | المنصة البرمجية السيادية</title>
+    <title>CORE AI ACADEMY | المنظومة التعليمية الكبرى</title>
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
-<body class="system-root">
+<body class="core-system">
 
-    <div id="loader" class="core-loader">
-        <svg class="hex-logo-anim" viewBox="0 0 100 100">
-            <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="#00f3ff" stroke-width="2"/>
-        </svg>
-    </div>
-
-    <section id="auth-overlay" class="auth-gate">
-        <div class="auth-frame">
-            <div class="main-logo-container">
-                <svg class="vector-logo" viewBox="0 0 100 100">
-                    <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" class="logo-outer"/>
-                    <path d="M35 50 L45 60 L65 40" class="logo-inner" fill="none" stroke="#00f3ff" stroke-width="5"/>
-                </svg>
-                <h1 class="brand-name">CORE<span>NEON</span></h1>
+    <section id="auth-gate" class="gate-overlay">
+        <div class="auth-panel" data-tilt>
+            <div class="hex-logo">
+                <svg viewBox="0 0 100 100"><polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="#00f3ff" stroke-width="2"/></svg>
+            </div>
+            <h1 id="txt-auth-title" class="neon-text">CORE INTELLIGENCE</h1>
+            
+            <div id="auth-selection" class="btn-group-v">
+                <button id="btn-show-login" class="v-btn v-btn-primary">LOG IN | تسجيل الدخول</button>
+                <button id="btn-show-signup" class="v-btn v-btn-outline">CREATE ACCOUNT | حساب جديد</button>
             </div>
 
-            <div id="auth-initial" class="action-grid">
-                <button id="btn-login-view" class="core-btn btn-glow">دخول النظام | LOG IN</button>
-                <button id="btn-signup-view" class="core-btn btn-dim">تأسيس حساب | SIGN UP</button>
-            </div>
-
-            <form id="login-form" class="auth-form hidden">
-                <input type="email" id="login-email" placeholder="الرقم البرمجي (الإيميل)" required>
-                <input type="password" id="login-pass" placeholder="كود العبور" required>
-                <button type="submit" class="execute-btn">تفعيل الاتصال</button>
-                <span class="back-link-vector">العودة</span>
-            </form>
-
-            <form id="signup-form" class="auth-form hidden">
-                <input type="text" id="signup-name" placeholder="الاسم التعريفي" required>
-                <input type="email" id="signup-email" placeholder="البريد الرسمي" required>
-                <input type="password" id="signup-pass" placeholder="كود عبور معقد" required>
-                <button type="submit" class="execute-btn">إنشاء البروتوكول</button>
-                <span class="back-link-vector">العودة</span>
+            <form id="form-login" class="v-form hidden">
+                <input type="email" id="in-email" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="in-pass" placeholder="كود المرور" required>
+                <button type="submit" class="v-btn v-btn-primary">ACTIVATE | تفعيل</button>
+                <span class="v-link" onclick="resetAuth()">رجوع</span>
             </form>
         </div>
     </section>
 
-    <div id="main-dashboard" class="dashboard-root dashboard-hidden">
-        
-        <header class="system-nav">
-            <div class="nav-brand">
-                <svg class="nav-logo" viewBox="0 0 100 100">
-                    <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="none" stroke="#00f3ff" stroke-width="4"/>
-                </svg>
-                <span>CORE NEON</span>
+    <main id="main-app" class="app-root hidden">
+        <header class="v-header">
+            <div class="v-brand">
+                <svg class="v-icon" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 18l-8-4V8l8-4 8 4v8l-8 4z" fill="#00f3ff"/></svg>
+                <span id="nav-logo-text">CORE AI</span>
             </div>
-
-            <div class="nav-controls">
-                <div class="lang-switch-vector">
-                    <button onclick="changeLang('ar')" class="vector-lang-btn">
-                        <svg viewBox="0 0 24 24" class="icon-v"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/></svg>
-                        AR
-                    </button>
-                    <button onclick="changeLang('en')" class="vector-lang-btn">
-                        <svg viewBox="0 0 24 24" class="icon-v"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" fill="currentColor"/></svg>
-                        EN
-                    </button>
+            
+            <div class="v-nav-actions">
+                <div class="lang-selector">
+                    <button onclick="setSystemLanguage('ar')" class="lang-btn" id="btn-ar">AR</button>
+                    <button onclick="setSystemLanguage('en')" class="lang-btn" id="btn-en">EN</button>
                 </div>
-                <button id="btn-logout" class="logout-vector">إغلاق الجلسة</button>
+                <button id="btn-exit" class="v-btn-exit">EXIT</button>
             </div>
         </header>
 
-        <main class="core-layout">
-            <section class="status-panel">
-                <div class="status-header">
-                    <span>معدل المزامنة التعليمية</span>
-                    <span id="progress-percent">0%</span>
+        <div class="v-workspace">
+            <aside class="v-sidebar">
+                <h3 id="txt-tracks-label">المسارات البرمجية</h3>
+                <nav id="track-list"></nav>
+            </aside>
+
+            <section class="v-content">
+                <div class="v-lesson-panel">
+                    <div class="v-lesson-header">
+                        <h2 id="current-lesson-title">مرحباً بك في نظام CORE</h2>
+                        <span class="v-badge" id="txt-status">جاهز</span>
+                    </div>
+                    <div id="lesson-viewer" class="v-lesson-body">
+                        اختر مساراً برمجياً من القائمة الجانبية للبدء.
+                    </div>
+                    <div class="v-controls">
+                        <button id="lesson-prev" class="v-btn-nav">السابق</button>
+                        <button id="lesson-next" class="v-btn-nav">التالي</button>
+                    </div>
                 </div>
-                <div class="vector-progress-track">
-                    <div id="main-progress-fill" class="vector-progress-fill"></div>
+
+                <div class="v-ai-terminal">
+                    <div class="ai-header">AI CORE TUTOR | المعلم الذكي</div>
+                    <div id="ai-chat-logs" class="ai-logs"></div>
+                    <div class="ai-input-area">
+                        <input type="text" id="ai-input" placeholder="اسأل الذكاء الاصطناعي عن الكود...">
+                        <button id="ai-send">إرسال</button>
+                    </div>
                 </div>
             </section>
-
-            <div class="workspace-grid">
-                <aside class="tracks-sidebar">
-                    <nav class="vector-nav-list">
-                        <div class="track-node active" onclick="loadTrack('js')">
-                            <svg class="node-icon" viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm14.5 15c.8 0 1.5-.7 1.5-1.5S18.3 15 17.5 15s-1.5.7-1.5 1.5.7 1.5 1.5 1.5zm-5 0c.8 0 1.5-.7 1.5-1.5S13.3 15 12.5 15s-1.5.7-1.5 1.5.7 1.5 1.5 1.5z" fill="currentColor"/></svg>
-                            JavaScript
-                        </div>
-                        <div class="track-node" onclick="loadTrack('cpp')">
-                            <svg class="node-icon" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 18l-8-4V8l8-4 8 4v8l-8 4z" fill="currentColor"/></svg>
-                            C++ Systems
-                        </div>
-                        <div class="track-node locked-node">
-                            <svg class="node-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="currentColor"/></svg>
-                            Python (SOON)
-                        </div>
-                    </nav>
-                </aside>
-
-                <section class="viewer-station">
-                    <div id="lesson-content" class="vector-card">
-                        <header class="card-header">
-                            <h2 id="lesson-title">نظام التعليم CORE NEON</h2>
-                            <span id="lesson-difficulty" class="v-badge">استعداد</span>
-                        </header>
-                        <article id="lesson-body" class="v-text-content">
-                            بانتظار اختيار البروتوكول التعليمي من القائمة الجانبية لبدء البث المباشر للدروس.
-                        </article>
-                        <footer class="v-footer-controls">
-                            <button id="btn-prev" class="v-btn-nav" disabled>بروتوكول سابق</button>
-                            <button id="btn-next" class="v-btn-nav" disabled>بروتوكول تالي</button>
-                        </footer>
-                    </div>
-                </section>
-            </div>
-        </main>
-
-        <div id="popup-bottom" class="v-popup-bottom">
-            <svg viewBox="0 0 24 24" class="v-alert-icon"><path d="M12 2L1 21h22L12 2zm0 17c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm1-4h-2v-4h2v4z" fill="#00f3ff"/></svg>
-            <span>تمت مزامنة البيانات مع السحابة بنجاح.</span>
         </div>
+    </main>
 
-        <div id="popup-top" class="v-popup-top">
-            <span>CORE NEON : الاتصال آمن والمنظومة مستقرة.</span>
-        </div>
-    </div>
-
-    <div id="google_translate_element" style="display:none;"></div>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
