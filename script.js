@@ -1,135 +1,108 @@
-// جلب الأنميات المقترحة أول ما يفتح الموقع
-document.addEventListener("DOMContentLoaded", () => {
-    fetchAnime('top/anime?sfw=true&limit=24'); 
+// إعداد نظام الترجمة العالمي من جوجل
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'ar',
+        includedLanguages: 'ar,en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+}
+
+function changeLang(lang) {
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change'));
+    }
+}
+
+// إدارة واجهة الدخول وإنشاء الحساب
+const authOverlay = document.getElementById('auth-overlay');
+const loginBtn = document.getElementById('btn-login');
+const signupBtn = document.getElementById('btn-signup');
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
+const dashboard = document.getElementById('main-dashboard');
+const backLinks = document.querySelectorAll('.back-link');
+
+loginBtn.addEventListener('click', () => {
+    loginBtn.parentElement.classList.add('hidden');
+    loginForm.classList.remove('hidden');
 });
 
-// دالة البحث
-function searchAnime() {
-    const query = document.getElementById('searchInput').value;
-    if (query.length > 2) {
-        // sfw=true تضمن عدم وجود أي محتوى إباحي نهائياً
-        fetchAnime(`anime?q=${query}&sfw=true&order_by=popularity&sort=desc`);
-    } else {
-        alert("اكتب اسم أنمي أطول من حرفين عيوني!");
-    }
-}
+signupBtn.addEventListener('click', () => {
+    signupBtn.parentElement.classList.add('hidden');
+    signupForm.classList.remove('hidden');
+});
 
-// دالة جلب البيانات من API
-async function fetchAnime(endpoint) {
-    const grid = document.getElementById('animeGrid');
-    grid.innerHTML = '<h3 style="text-align:center; width:100%; color:#00f2fe;">جاري التحميل... ثواني من وقتك</h3>';
-    
-    try {
-        const response = await fetch(`https://api.jikan.moe/v4/${endpoint}`);
-        const data = await response.json();
-        
-        grid.innerHTML = '';
-        data.data.forEach(anime => {
-            const card = document.createElement('div');
-            card.className = 'anime-card';
-            card.onclick = () => showAnimeDetails(anime.mal_id);
-            
-            card.innerHTML = `
-                <img src="${anime.images.jpg.large_image_url}" alt="${anime.title}">
-                <div class="anime-info">
-                    <h3>${anime.title}</h3>
-                    <p>${anime.synopsis ? anime.synopsis : 'لا يوجد وصف متاح.'}</p>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
+backLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        loginForm.classList.add('hidden');
+        signupForm.classList.add('hidden');
+        loginBtn.parentElement.classList.remove('hidden');
+    });
+});
 
-        // تشغيل نظام الانبثاق الواقعي (Intersection Observer)
-        observeCards();
-    } catch (error) {
-        grid.innerHTML = '<h3 style="color:red; text-align:center;">صار خطأ بالشبكة، جرب مرة ثانية!</h3>';
-    }
-}
-
-// نظام الانبثاق 5D عند التمرير (فوق أو جوه)
-function observeCards() {
-    const cards = document.querySelectorAll('.anime-card');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-            } else {
-                entry.target.classList.remove('show'); // يختفي ويرجع ينبثق إذا صعدت فوق
-            }
-        });
-    }, { threshold: 0.1 });
-
-    cards.forEach(card => observer.observe(card));
-}
-
-// عرض التفاصيل الكاملة
-async function showAnimeDetails(id) {
-    const modal = document.getElementById('animeModal');
-    const modalBody = document.getElementById('modalBody');
-    modal.style.display = 'flex';
-    modalBody.innerHTML = '<h2>جاري جلب المعلومات...</h2>';
-
-    try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
-        const data = await response.json();
-        const anime = data.data;
-
-        const trailerHTML = anime.trailer.embed_url 
-            ? `<iframe width="100%" height="300" src="${anime.trailer.embed_url}" frameborder="0" allowfullscreen style="border-radius:15px; margin-top:20px;"></iframe>` 
-            : '';
-
-        modalBody.innerHTML = `
-            <img src="${anime.images.jpg.large_image_url}" class="modal-img" alt="${anime.title}">
-            <div class="modal-info">
-                <h2>${anime.title}</h2>
-                <p><strong>التقييم:</strong> <span class="badge">⭐ ${anime.score || 'N/A'}</span></p>
-                <p><strong>سنة العرض:</strong> ${anime.year || 'غير معروف'}</p>
-                <p><strong>الاستوديو:</strong> ${anime.studios.length > 0 ? anime.studios[0].name : 'غير معروف'}</p>
-                <p><strong>القصة:</strong> ${anime.synopsis}</p>
-                ${trailerHTML}
-            </div>
-        `;
-    } catch (error) {
-        modalBody.innerHTML = '<h2>عذراً، حدث خطأ في جلب التفاصيل.</h2>';
-    }
-}
-
-function closeModal() {
-    document.getElementById('animeModal').style.display = 'none';
-}
-
-// المساعد الذكي AI (محاكاة ذكية)
-function toggleBot() {
-    const body = document.getElementById('aiBody');
-    body.classList.toggle('active');
-}
-
-function askAI() {
-    const input = document.getElementById('aiInput');
-    const chatBox = document.getElementById('chatBox');
-    const userText = input.value.trim();
-    
-    if(!userText) return;
-
-    // إضافة رسالة المستخدم
-    chatBox.innerHTML += `<p class="user-msg">${userText}</p>`;
-    input.value = '';
-
-    // تحليل ذكي بسيط للكلمات المفتاحية
+// محاكاة الدخول للنظام (سيتم استبداله بقاعدة بيانات لاحقاً)
+const handleAuth = (e) => {
+    e.preventDefault();
+    authOverlay.style.opacity = '0';
     setTimeout(() => {
-        let aiReply = "والله ما فهمت عليك زين، بس جرب تكتب بالبحث فوك اسم الأنمي اللي ببالك.";
-        if(userText.includes('اكشن') || userText.includes('أكشن') || userText.includes('action')) {
-            aiReply = "تحب الأكشن والمطاردات؟ أنصحك تشوف Attack on Titan أو Jujutsu Kaisen، نار وشرار!";
-            fetchAnime('anime?q=action&sfw=true&order_by=score&sort=desc');
-        } else if (userText.includes('ضحك') || userText.includes('كوميديا')) {
-            aiReply = "تريد تضحك؟ Gintama هو الحل، يفطس ضحك وقصف جبهات للصبح! دورتلك عليه جوه 👇";
-            fetchAnime('anime?q=gintama&sfw=true');
-        } else if (userText.includes('رياضة') || userText.includes('طوبة')) {
-            aiReply = "عليك بـ Blue Lock أو Haikyuu، حماس يخليك تقوم تركض بالصالة!";
-            fetchAnime('anime?q=sports&sfw=true&order_by=score&sort=desc');
-        }
+        authOverlay.style.display = 'none';
+        dashboard.classList.remove('dashboard-hidden');
+        dashboard.style.opacity = '1';
+        dashboard.style.visibility = 'visible';
+    }, 800);
+};
 
-        chatBox.innerHTML += `<p class="ai-msg">${aiReply}</p>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1000);
-}
+loginForm.addEventListener('submit', handleAuth);
+signupForm.addEventListener('submit', handleAuth);
+
+// تأثير الـ 5D الواقعي للبطاقات (يتفاعل مع اللمس والماوس)
+const cards = document.querySelectorAll('.lang-card');
+
+const handleMove = (e, card) => {
+    if (card.classList.contains('locked-card')) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+};
+
+const handleLeave = (card) => {
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+};
+
+cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => handleMove(e, card));
+    card.addEventListener('touchmove', (e) => handleMove(e, card));
+    card.addEventListener('mouseleave', () => handleLeave(card));
+    card.addEventListener('touchend', () => handleLeave(card));
+});
+
+// نظام الانبثاق التلقائي (Scroll Pop-up)
+window.onscroll = function() {
+    const popupBottom = document.getElementById('popup-bottom');
+    const popupTop = document.getElementById('popup-top');
+
+    // الانبثاق من الأسفل عند الوصول لنهاية الصفحة
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+        popupBottom.classList.add('popup-bottom-active');
+    } else {
+        popupBottom.classList.remove('popup-bottom-active');
+    }
+
+    // الانبثاق من الأعلى عند العودة للبداية
+    if (window.scrollY < 100) {
+        popupTop.classList.add('popup-top-active');
+    } else {
+        popupTop.classList.remove('popup-top-active');
+    }
+};
