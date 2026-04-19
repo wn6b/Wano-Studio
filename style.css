@@ -1,269 +1,373 @@
+/* =========================================
+   إعدادات النظام والألوان الأساسية
+========================================= */
 :root {
-    --bg-color: #050510;
-    --primary: #00f2fe;
-    --secondary: #4facfe;
-    --text: #ffffff;
-    --glass: rgba(255, 255, 255, 0.05);
-    --border: rgba(255, 255, 255, 0.1);
+    --bg-deep: #020202;
+    --neon-blue: #00f3ff;
+    --neon-blue-glow: rgba(0, 243, 255, 0.6);
+    --neon-purple: #9d00ff;
+    --neon-purple-glow: rgba(157, 0, 255, 0.6);
+    --neon-red: #ff003c;
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none; /* لمنع تحديد النصوص للحفاظ على واقعية التطبيق */
 }
 
 body {
-    background-color: var(--bg-color);
-    background-image: radial-gradient(circle at top right, #1a1a3a, #050510);
-    color: var(--text);
+    background-color: var(--bg-deep);
+    color: var(--text-main);
     overflow-x: hidden;
+    perspective: 1500px; /* تفعيل العمق الفراغي 5D */
+    background-image: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000000 100%);
     min-height: 100vh;
 }
 
-/* Translator */
-.translator-widget {
+/* =========================================
+   واجهة تسجيل الدخول (الطبقة الأمنية)
+========================================= */
+.auth-container {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: var(--glass);
-    padding: 10px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
-}
-
-/* Header */
-.glass-header {
-    text-align: center;
-    padding: 100px 20px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
-}
-
-.glass-header h1 {
-    font-size: 4rem;
-    background: -webkit-linear-gradient(var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0, 242, 254, 0.5);
-    margin-bottom: 10px;
-}
-
-.search-container {
-    margin-top: 30px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s;
 }
 
-.search-container input {
-    padding: 15px 25px;
-    width: 50%;
-    border-radius: 30px;
-    border: 1px solid var(--primary);
-    background: var(--glass);
+.auth-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 50px;
+    border-radius: 20px;
+    width: 450px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    transform-style: preserve-3d;
+    animation: floatIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.neon-title {
+    font-size: 2.2rem;
+    color: #fff;
+    text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue-glow);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.auth-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btn-primary-neon, .btn-secondary-neon, .btn-execute {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary-neon {
+    background: transparent;
+    color: var(--neon-blue);
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+.btn-primary-neon:hover, .btn-primary-neon:active {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-blue);
+}
+
+.btn-secondary-neon {
+    background: transparent;
+    color: var(--neon-purple);
+    border: 2px solid var(--neon-purple);
+}
+
+.btn-secondary-neon:hover, .btn-secondary-neon:active {
+    background: var(--neon-purple);
+    color: #fff;
+    box-shadow: 0 0 30px var(--neon-purple), 0 0 60px var(--neon-purple);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     outline: none;
-    backdrop-filter: blur(5px);
     transition: 0.3s;
 }
 
-.search-container input:focus {
-    box-shadow: 0 0 20px var(--primary);
+input:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
 }
 
-.search-container button {
-    padding: 15px 30px;
-    border-radius: 30px;
-    border: none;
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    color: white;
-    font-size: 1.2rem;
+.back-link {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 15px;
     cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: underline;
+    transition: 0.3s;
 }
 
-.search-container button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--secondary);
+.back-link:hover {
+    color: var(--neon-blue);
 }
 
-/* Grid & Cards (5D Effect) */
-.anime-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 40px;
-    perspective: 1000px; /* للواقعية والـ 3D */
-}
-
-.anime-card {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transform: translateY(100px) scale(0.8) rotateX(-20deg);
+/* =========================================
+   الواجهة الرئيسية (لوحة التحكم واللغات)
+========================================= */
+.dashboard-hidden {
     opacity: 0;
-    transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    visibility: hidden;
+    transition: opacity 1s ease-in;
 }
 
-/* تأثير الانبثاق عند التمرير */
-.anime-card.show {
-    transform: translateY(0) scale(1) rotateX(0);
-    opacity: 1;
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.anime-card:hover {
-    transform: translateY(-10px) scale(1.05) rotateY(10deg);
-    box-shadow: 0 20px 40px var(--primary);
-    border-color: var(--primary);
+.lang-node {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-node:hover {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue-glow);
+}
+
+.content-wrapper {
+    padding: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.dynamic-text {
+    font-size: 3rem;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--neon-purple);
+    text-shadow: 0 0 20px var(--neon-purple-glow);
+}
+
+/* =========================================
+   البطاقات الواقعية 5D (المنظور والعمق)
+========================================= */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.lang-card {
+    background: var(--glass-bg);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s; /* سرعة استجابة الماوس/اللمس */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    cursor: pointer;
+}
+
+/* إضاءة النيون عند تفاعل المستخدم (Hover للموس، Active للمس) */
+.lang-card:hover, .lang-card:active {
+    border-color: rgba(0, 243, 255, 0.5);
+}
+
+.card-inner {
+    transform: translateZ(50px); /* دفع المحتوى للأمام لواقعية الـ 3D/5D */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    background: #111;
+    border: 2px solid var(--neon-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 0 20px var(--neon-blue-glow);
+    margin-bottom: 20px;
+    transform: translateZ(30px);
+}
+
+.btn-start {
+    margin-top: auto;
+    padding: 10px 30px;
+    background: var(--neon-blue);
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--neon-blue);
+    transform: translateZ(40px);
+}
+
+/* =========================================
+   بطاقة بايثون (المغلقة)
+========================================= */
+.locked-card {
+    border-color: rgba(255, 0, 60, 0.3);
+    pointer-events: none; /* إيقاف التفاعل */
+}
+
+.locked-card .icon-box {
+    border-color: var(--neon-red);
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+    color: var(--neon-red);
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateZ(60px);
     z-index: 10;
 }
 
-.anime-card img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    border-bottom: 2px solid var(--primary);
-}
-
-.anime-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.anime-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: var(--primary);
-}
-
-.anime-info p {
-    font-size: 0.9rem;
-    color: #ccc;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* AI Bot Widget */
-.ai-bot-container {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 350px;
-    background: var(--glass);
-    border: 1px solid var(--primary);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    z-index: 1000;
-    box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
-    overflow: hidden;
-}
-
-.ai-bot-header {
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    padding: 15px;
-    text-align: center;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.ai-bot-body {
-    display: none;
-    padding: 15px;
-}
-
-.ai-bot-body.active {
-    display: block;
-}
-
-.chat-box {
-    height: 200px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    padding-right: 10px;
-}
-
-.ai-msg { background: rgba(0, 242, 254, 0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px; width: fit-content; }
-.user-msg { background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 10px; margin-bottom: 10px; width: fit-content; margin-left: auto; text-align: left; }
-
-.ai-bot-body input {
-    width: 75%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: rgba(0,0,0,0.5);
+.soon-text {
+    background: var(--neon-red);
     color: white;
-}
-
-.ai-bot-body button {
-    width: 20%;
-    padding: 10px;
-    border-radius: 10px;
-    background: var(--primary);
-    border: none;
-    color: black;
+    padding: 10px 30px;
+    font-size: 1.5rem;
     font-weight: bold;
-    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 30px var(--neon-red);
+    letter-spacing: 5px;
+    transform: rotate(-15deg);
 }
 
-/* Modal */
-.modal {
-    display: none;
+/* =========================================
+   تأثيرات الانبثاق الواقعي (Pop-ups)
+========================================= */
+.popup-trigger-bottom, .popup-trigger-top {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--neon-blue);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
     backdrop-filter: blur(15px);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
+    z-index: 9000;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* حركة ارتدادية واقعية */
 }
 
-.glass-panel {
-    background: var(--glass);
-    border: 1px solid var(--primary);
-    border-radius: 30px;
-    padding: 40px;
-    width: 80%;
-    max-width: 900px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 0 50px rgba(0, 242, 254, 0.3);
+.popup-trigger-bottom {
+    bottom: -150px; /* مخفي بالأسفل */
+}
+
+.popup-trigger-top {
+    top: -150px; /* مخفي بالأعلى */
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 40px rgba(157, 0, 255, 0.3);
+}
+
+/* الكلاسات التي سيضيفها الجافاسكربت لإظهار الانبثاق */
+.popup-bottom-active { bottom: 30px; }
+.popup-top-active { top: 30px; }
+
+.popup-content span {
+    font-size: 1.2rem;
+    font-weight: bold;
     color: white;
-    display: flex;
-    gap: 30px;
 }
 
-.close-btn {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 2rem;
-    color: var(--primary);
-    cursor: pointer;
+/* =========================================
+   حركات الأنيميشن الأساسية
+========================================= */
+@keyframes floatIn {
+    0% { transform: translateY(50px) scale(0.9); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-.modal-img {
-    width: 300px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px var(--primary);
-}
-
-.modal-info h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
-.modal-info p { margin-bottom: 10px; line-height: 1.6; }
-.badge { background: var(--secondary); padding: 5px 10px; border-radius: 5px; font-weight: bold; margin-left: 10px; }
-
-@media (max-width: 768px) {
-    .glass-panel { flex-direction: column; align-items: center; text-align: center; }
-    .search-container input { width: 80%; }
-}
+/* إخفاء عناصر جوجل للترجمة الافتراضية للحفاظ على التصميم */
+.goog-te-banner-frame { display: none !important; }
+body { top: 0 !important; }
