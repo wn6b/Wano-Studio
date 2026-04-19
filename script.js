@@ -1,189 +1,82 @@
-// ==========================================
-// 1. بروتوكول الاتصال بقاعدة البيانات (Firebase)
-// ==========================================
-const firebaseConfig = {
-    apiKey: "AIzaSyBZc6wYIoRWErFDlspRMvd08ujx8vtgxPk",
-    authDomain: "wano-studio.firebaseapp.com",
-    projectId: "wano-studio",
-    storageBucket: "wano-studio.appspot.com",
-    messagingSenderId: "464709722674",
-    appId: "1:464709722674:web:5393cdd4c00c033014122b"
-};
-
-// تفعيل المحرك
+// تكوين Firebase (ضع بياناتك هنا)
+const firebaseConfig = { apiKey: "AI_KEY", projectId: "wano-studio" };
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
 
-// ==========================================
-// 2. إدارة الجلسات الأمنية (Session Persistence)
-// ==========================================
-auth.onAuthStateChanged((user) => {
-    const loader = document.getElementById('loader');
-    const authOverlay = document.getElementById('auth-overlay');
-    const dashboard = document.getElementById('main-dashboard');
-
-    if (user) {
-        // فتح النظام عند نجاح الاتصال
-        authOverlay.style.display = 'none';
-        dashboard.classList.remove('dashboard-hidden');
-        dashboard.style.opacity = '1';
-        dashboard.style.visibility = 'visible';
-        
-        triggerVectorPopup('top');
-    } else {
-        // إغلاق النظام وطلب المصادقة
-        authOverlay.style.display = 'flex';
-        dashboard.classList.add('dashboard-hidden');
-    }
-    
-    // إخفاء شاشة التحميل
-    loader.style.opacity = '0';
-    setTimeout(() => loader.style.display = 'none', 800);
-});
-
-// ==========================================
-// 3. معالجة بيانات الدخول والتسجيل
-// ==========================================
-const loginForm = document.getElementById('login-form');
-const signupForm = document.getElementById('signup-form');
-const authInitial = document.getElementById('auth-initial');
-
-document.getElementById('btn-login-view').onclick = () => {
-    authInitial.classList.add('hidden');
-    loginForm.classList.remove('hidden');
-};
-
-document.getElementById('btn-signup-view').onclick = () => {
-    authInitial.classList.add('hidden');
-    signupForm.classList.remove('hidden');
-};
-
-document.querySelectorAll('.back-link-vector').forEach(link => {
-    link.onclick = () => {
-        loginForm.classList.add('hidden');
-        signupForm.classList.add('hidden');
-        authInitial.classList.remove('hidden');
-    };
-});
-
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const pass = document.getElementById('login-pass').value;
-    auth.signInWithEmailAndPassword(email, pass).catch(err => alert("رفض الاتصال: " + err.message));
-});
-
-signupForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('signup-name').value;
-    const email = document.getElementById('signup-email').value;
-    const pass = document.getElementById('signup-pass').value;
-    auth.createUserWithEmailAndPassword(email, pass)
-        .then(cred => cred.user.updateProfile({ displayName: name }))
-        .catch(err => alert("فشل التأسيس: " + err.message));
-});
-
-document.getElementById('btn-logout').addEventListener('click', () => auth.signOut());
-
-// ==========================================
-// 4. المحرك التعليمي والمناهج
-// ==========================================
-const coreCurriculum = {
-    js: {
-        title: "نظام JavaScript المركزي",
-        difficulty: "مستوى متقدم",
-        lessons: [
-            { t: "هندسة الـ DOM المتقدمة", c: "تحليل هيكلية المتصفحات وبناء أنظمة تفاعلية بدون مكاتب خارجية." },
-            { t: "البروتوكولات غير المتزامنة", c: "بناء مسارات بيانات تعتمد على Async/Await لمعالجة API." }
-        ]
+// قاموس الترجمة البرمجي (للتغيير الكامل والواقعي)
+const i18n = {
+    ar: {
+        title: "CORE INTELLIGENCE",
+        login: "دخول النظام",
+        signup: "إنشاء حساب",
+        tracks: "المسارات البرمجية",
+        exit: "خروج",
+        ai_placeholder: "اسأل الذكاء الاصطناعي...",
+        welcome: "مرحباً بك في نظام التعليم الذكي"
     },
-    cpp: {
-        title: "أنظمة C++ المنخفضة",
-        difficulty: "مستوى خبير",
-        lessons: [
-            { t: "تخصيص الذاكرة المباشر", c: "إدارة الـ Pointers والتعامل المباشر مع عتاد النظام." }
-        ]
+    en: {
+        title: "CORE INTELLIGENCE",
+        login: "LOG IN",
+        signup: "SIGN UP",
+        tracks: "PROGRAMMING TRACKS",
+        exit: "LOGOUT",
+        ai_placeholder: "Ask AI about code...",
+        welcome: "Welcome to AI Learning System"
     }
 };
 
-let currentTrackId = 'js';
-let currentProtocolIndex = 0;
+let currentLang = 'ar';
 
-function loadTrack(trackId) {
-    if (coreCurriculum[trackId]) {
-        currentTrackId = trackId;
-        currentProtocolIndex = 0;
-        
-        document.querySelectorAll('.track-node').forEach(node => node.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-        
-        syncDashboardUI();
-    }
-}
-
-function syncDashboardUI() {
-    const trackData = coreCurriculum[currentTrackId];
-    const lessonData = trackData.lessons[currentProtocolIndex];
+// وظيفة تغيير اللغة الشاملة
+function setSystemLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     
-    document.getElementById('lesson-title').innerText = lessonData.t;
-    document.getElementById('lesson-body').innerText = lessonData.c;
-    document.getElementById('lesson-difficulty').innerText = trackData.difficulty;
+    // تحديث النصوص
+    document.getElementById('txt-auth-title').innerText = i18n[lang].title;
+    document.getElementById('nav-logo-text').innerText = i18n[lang].title;
+    document.getElementById('txt-tracks-label').innerText = i18n[lang].tracks;
+    document.getElementById('ai-input').placeholder = i18n[lang].ai_placeholder;
+    document.getElementById('btn-exit').innerText = i18n[lang].exit;
+}
+
+// محاكي الذكاء الاصطناعي (AI Tutor Engine)
+const aiInput = document.getElementById('ai-input');
+const aiLogs = document.getElementById('ai-chat-logs');
+
+document.getElementById('ai-send').onclick = () => {
+    const query = aiInput.value;
+    if(!query) return;
     
-    const syncRate = ((currentProtocolIndex + 1) / trackData.lessons.length) * 100;
-    document.getElementById('main-progress-fill').style.width = syncRate + "%";
-    document.getElementById('progress-percent').innerText = Math.round(syncRate) + "%";
+    appendMessage('USER', query);
+    aiInput.value = '';
+
+    // محاكاة استجابة الذكاء الاصطناعي
+    setTimeout(() => {
+        const response = `نظام CORE AI يقوم بتحليل سؤالك: [${query}]... البرمجة بلغة JavaScript تتطلب تركيزاً على الـ Async.`;
+        appendMessage('CORE-AI', response);
+    }, 1000);
+};
+
+function appendMessage(sender, msg) {
+    const div = document.createElement('div');
+    div.innerHTML = `> <strong>${sender}:</strong> ${msg}`;
+    aiLogs.appendChild(div);
+    aiLogs.scrollTop = aiLogs.scrollHeight;
 }
 
-// ==========================================
-// 5. محرك الفيزياء البصرية (5D Engine)
-// ==========================================
-document.addEventListener('mousemove', (e) => {
-    const targetElements = document.querySelectorAll('.vector-card, .tracks-sidebar, .auth-frame');
-    const axisX = (e.clientX / window.innerWidth - 0.5) * 15;
-    const axisY = (e.clientY / window.innerHeight - 0.5) * 15;
+// إدارة واجهة الدخول
+document.getElementById('btn-show-login').onclick = () => {
+    document.getElementById('auth-selection').classList.add('hidden');
+    document.getElementById('form-login').classList.remove('hidden');
+};
 
-    targetElements.forEach(el => {
-        el.style.transform = `rotateY(${axisX}deg) rotateX(${-axisY}deg)`;
-    });
-});
+document.getElementById('form-login').onsubmit = (e) => {
+    e.preventDefault();
+    // هنا يتم الربط مع Firebase Auth الحقيقي
+    document.getElementById('auth-gate').style.display = 'none';
+    document.getElementById('main-app').classList.remove('hidden');
+};
 
-// ==========================================
-// 6. مراقب الانبثاق الهيكلي (Vector Popups)
-// ==========================================
-window.addEventListener('scroll', () => {
-    const bottomTrigger = document.getElementById('popup-bottom');
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const documentHeight = document.documentElement.offsetHeight;
-
-    if (scrollPosition >= documentHeight - 10) {
-        bottomTrigger.classList.add('v-popup-bottom-active');
-    } else {
-        bottomTrigger.classList.remove('v-popup-bottom-active');
-    }
-});
-
-function triggerVectorPopup(position) {
-    const popup = document.getElementById(`popup-${position}`);
-    popup.classList.add(`v-popup-${position}-active`);
-    setTimeout(() => popup.classList.remove(`v-popup-${position}-active`), 3500);
-}
-
-// ==========================================
-// 7. محرك الترجمة الصامت
-// ==========================================
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'ar',
-        includedLanguages: 'ar,en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-}
-
-function changeLang(lang) {
-    const selectElement = document.querySelector('.goog-te-combo');
-    if (selectElement) {
-        selectElement.value = lang;
-        selectElement.dispatchEvent(new Event('change'));
-    }
-}
+// تهيئة النظام
+setSystemLanguage('ar');
