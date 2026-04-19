@@ -1,373 +1,277 @@
 /* =========================================
-   إعدادات النظام والألوان الأساسية
+   إعدادات النظام المتطورة - VARIABLES
 ========================================= */
 :root {
-    --bg-deep: #020202;
-    --neon-blue: #00f3ff;
-    --neon-blue-glow: rgba(0, 243, 255, 0.6);
-    --neon-purple: #9d00ff;
-    --neon-purple-glow: rgba(157, 0, 255, 0.6);
-    --neon-red: #ff003c;
-    --glass-bg: rgba(20, 20, 20, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --text-main: #ffffff;
-    --text-muted: #a0a0a0;
+    --primary-neon: #00f3ff;
+    --secondary-neon: #9d00ff;
+    --danger-neon: #ff003c;
+    --bg-black: #050505;
+    --glass-panel: rgba(15, 15, 15, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* =========================================
+   التهيئة الأساسية والواقعية
+========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    user-select: none; /* لمنع تحديد النصوص للحفاظ على واقعية التطبيق */
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: var(--bg-deep);
-    color: var(--text-main);
+    background-color: var(--bg-black);
+    color: white;
+    line-height: 1.6;
     overflow-x: hidden;
-    perspective: 1500px; /* تفعيل العمق الفراغي 5D */
-    background-image: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000000 100%);
     min-height: 100vh;
+    background: radial-gradient(circle at 50% 50%, #0f0f0f 0%, #000000 100%);
 }
 
-/* =========================================
-   واجهة تسجيل الدخول (الطبقة الأمنية)
-========================================= */
-.auth-container {
+/* واجهة التحميل الذكية */
+.loader-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    inset: 0;
+    background: var(--bg-black);
+    z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease-in-out, visibility 0.8s;
+    transition: opacity 0.5s ease;
 }
 
-.auth-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 50px;
-    border-radius: 20px;
-    width: 450px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.02);
-    transform-style: preserve-3d;
-    animation: floatIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.auth-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.neon-title {
-    font-size: 2.2rem;
-    color: #fff;
-    text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue-glow);
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-.subtitle {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-.auth-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.btn-primary-neon, .btn-secondary-neon, .btn-execute {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    text-transform: uppercase;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-primary-neon {
-    background: transparent;
-    color: var(--neon-blue);
-    border: 2px solid var(--neon-blue);
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
-}
-
-.btn-primary-neon:hover, .btn-primary-neon:active {
-    background: var(--neon-blue);
-    color: #000;
-    box-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-blue);
-}
-
-.btn-secondary-neon {
-    background: transparent;
-    color: var(--neon-purple);
-    border: 2px solid var(--neon-purple);
-}
-
-.btn-secondary-neon:hover, .btn-secondary-neon:active {
-    background: var(--neon-purple);
-    color: #fff;
-    box-shadow: 0 0 30px var(--neon-purple), 0 0 60px var(--neon-purple);
-}
-
-.auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.hidden {
-    display: none;
-}
-
-input {
-    width: 100%;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-}
-
-.back-link {
-    text-align: center;
-    color: var(--text-muted);
-    margin-top: 15px;
-    cursor: pointer;
-    text-decoration: underline;
-    transition: 0.3s;
-}
-
-.back-link:hover {
-    color: var(--neon-blue);
+.neon-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid transparent;
+    border-top-color: var(--primary-neon);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 15px var(--primary-neon);
 }
 
 /* =========================================
-   الواجهة الرئيسية (لوحة التحكم واللغات)
+   الاستجابة لجميع الأجهزة (Responsive Grid)
 ========================================= */
-.dashboard-hidden {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1s ease-in;
+
+/* تصميم الحاويات */
+.container, .learning-container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
+/* تقسيم المحتوى: Sidebar + Main Content */
+.content-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* لـ PC واللابتوب */
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* التحويل للأجهزة المتوسطة (آيباد/تابلت) */
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
+    }
+}
+
+/* التحويل للجوال (Mobile) */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr; /* عمود واحد فقط */
+    }
+    
+    .sidebar-tracks {
+        order: 2; /* وضع القائمة أسفل الدرس في الجوال */
+    }
+    
+    .top-nav {
+        padding: 15px;
+    }
+    
+    .neon-title {
+        font-size: 1.5rem;
+    }
+    
+    .auth-card {
+        width: 90% !important;
+        padding: 25px !important;
+    }
+}
+
+/* =========================================
+   تنسيق واجهة التعليم الواقعية
+========================================= */
+
+/* شريط التنقل العلوي */
 .top-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
+    padding: 20px 50px;
+    background: var(--glass-panel);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 500;
 }
 
-.lang-node {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 10px 20px;
-    margin-left: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.lang-node:hover {
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 15px var(--neon-blue-glow);
-}
-
-.content-wrapper {
-    padding: 50px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.main-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.dynamic-text {
-    font-size: 3rem;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--neon-purple);
-    text-shadow: 0 0 20px var(--neon-purple-glow);
-}
-
-/* =========================================
-   البطاقات الواقعية 5D (المنظور والعمق)
-========================================= */
-.language-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-}
-
-.lang-card {
-    background: var(--glass-bg);
-    border-radius: 20px;
-    padding: 30px;
+/* شريط التقدم (Progress Bar) */
+.progress-section {
+    background: var(--glass-panel);
     border: 1px solid var(--glass-border);
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.1s; /* سرعة استجابة الماوس/اللمس */
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    cursor: pointer;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
 }
 
-/* إضاءة النيون عند تفاعل المستخدم (Hover للموس، Active للمس) */
-.lang-card:hover, .lang-card:active {
-    border-color: rgba(0, 243, 255, 0.5);
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
 }
 
-.card-inner {
-    transform: translateZ(50px); /* دفع المحتوى للأمام لواقعية الـ 3D/5D */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-neon), var(--primary-neon));
+    box-shadow: 0 0 15px var(--primary-neon);
+    transition: width 1s ease-in-out;
 }
 
-.icon-box {
-    width: 80px;
-    height: 80px;
-    background: #111;
-    border: 2px solid var(--neon-blue);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    box-shadow: 0 0 20px var(--neon-blue-glow);
-    margin-bottom: 20px;
-    transform: translateZ(30px);
-}
-
-.btn-start {
-    margin-top: auto;
-    padding: 10px 30px;
-    background: var(--neon-blue);
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 15px var(--neon-blue);
-    transform: translateZ(40px);
-}
-
-/* =========================================
-   بطاقة بايثون (المغلقة)
-========================================= */
-.locked-card {
-    border-color: rgba(255, 0, 60, 0.3);
-    pointer-events: none; /* إيقاف التفاعل */
-}
-
-.locked-card .icon-box {
-    border-color: var(--neon-red);
-    box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
-    color: var(--neon-red);
-}
-
-.lock-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
+/* القائمة الجانبية (Sidebar) */
+.sidebar-tracks {
+    background: var(--glass-panel);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateZ(60px);
-    z-index: 10;
+    padding: 20px;
+    height: fit-content;
 }
 
-.soon-text {
-    background: var(--neon-red);
+.track-item {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 12px;
     color: white;
-    padding: 10px 30px;
-    font-size: 1.5rem;
+    text-align: right;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.track-item:hover:not(.locked) {
+    background: rgba(0, 243, 255, 0.1);
+    border-color: var(--primary-neon);
+    transform: translateX(-5px);
+}
+
+.track-item.active {
+    background: var(--primary-neon);
+    color: black;
     font-weight: bold;
-    border-radius: 5px;
-    box-shadow: 0 0 30px var(--neon-red);
-    letter-spacing: 5px;
-    transform: rotate(-15deg);
+    box-shadow: 0 0 20px var(--primary-neon);
+}
+
+.track-item.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--danger-neon);
+}
+
+/* عارض الدروس (Lesson Viewer) */
+.lesson-card {
+    background: var(--glass-panel);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    min-height: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.code-preview {
+    margin-top: 30px;
+    background: #000;
+    border-radius: 15px;
+    padding: 20px;
+    border-left: 4px solid var(--primary-neon);
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
 }
 
 /* =========================================
-   تأثيرات الانبثاق الواقعي (Pop-ups)
+   الواقعية في الأزرار والانبثاق
 ========================================= */
+.btn-execute, .btn-primary-neon {
+    background: transparent;
+    color: var(--primary-neon);
+    border: 2px solid var(--primary-neon);
+    text-shadow: 0 0 10px var(--primary-neon);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-execute:hover {
+    background: var(--primary-neon);
+    color: black;
+    box-shadow: 0 0 30px var(--primary-neon);
+}
+
+/* الانبثاق (Pop-ups) */
 .popup-trigger-bottom, .popup-trigger-top {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    background: rgba(10, 10, 10, 0.9);
-    border: 1px solid var(--neon-blue);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
-    backdrop-filter: blur(15px);
-    z-index: 9000;
-    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* حركة ارتدادية واقعية */
+    min-width: 320px;
+    padding: 15px 30px;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid var(--primary-neon);
+    border-radius: 50px;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.popup-trigger-bottom {
-    bottom: -150px; /* مخفي بالأسفل */
-}
+.popup-trigger-bottom { bottom: -100px; }
+.popup-trigger-top { top: -100px; border-color: var(--secondary-neon); }
 
-.popup-trigger-top {
-    top: -150px; /* مخفي بالأعلى */
-    border-color: var(--neon-purple);
-    box-shadow: 0 0 40px rgba(157, 0, 255, 0.3);
-}
-
-/* الكلاسات التي سيضيفها الجافاسكربت لإظهار الانبثاق */
 .popup-bottom-active { bottom: 30px; }
 .popup-top-active { top: 30px; }
 
-.popup-content span {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
+/* أنيميشن الدوران */
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
-/* =========================================
-   حركات الأنيميشن الأساسية
-========================================= */
-@keyframes floatIn {
-    0% { transform: translateY(50px) scale(0.9); opacity: 0; }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
+/* إخفاء السكرول بار للحفاظ على الواقعية */
+::-webkit-scrollbar {
+    width: 6px;
 }
-
-/* إخفاء عناصر جوجل للترجمة الافتراضية للحفاظ على التصميم */
-.goog-te-banner-frame { display: none !important; }
-body { top: 0 !important; }
+::-webkit-scrollbar-track {
+    background: var(--bg-black);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-neon);
+}
