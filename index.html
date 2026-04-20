@@ -3,68 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wano Studio | الواقعية المطلقة</title>
+    <title>Wano Studio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="device-detector">
 
-    <div class="bg-canvas">
-        <div class="blob"></div>
-        <div class="blob"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="main-bg">
+        <div class="mesh-gradient"></div>
     </div>
 
-    <header>
-        <div class="logo-container" id="main-logo">
-            <svg viewBox="0 0 100 100" class="wano-vector-logo">
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <path d="M20,30 L40,80 L50,50 L60,80 L80,30" fill="none" stroke="url(#grad1)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
-                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
-            </svg>
-            <h1>WANO STUDIO</h1>
+    <header id="dynamic-header">
+        <div class="logo-wrapper">
+            <div class="wano-logo-3d">W</div>
+            <h1 class="glitch-text" data-text="WANO STUDIO">WANO STUDIO</h1>
         </div>
     </header>
 
-    <main>
-        <section class="hero-section">
-            <div class="glass-card" id="interactive-card">
-                <h2>أهلاً بك في عالم الواقعية</h2>
-                <p>المكان الذي تتحول فيه الأكواد إلى فن بصري متفاعل.</p>
-                <div class="touch-indicator">حرك إصبعك لاستكشاف العمق</div>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="grid-item">
-                <i class="fa-solid fa-microchip"></i>
-                <h3>تقنيات 2026</h3>
-            </div>
-            <div class="grid-item">
-                <i class="fa-solid fa-clapperboard"></i>
-                <h3>إنتاج احترافي</h3>
-            </div>
-            <div class="grid-item">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>حماية متطورة</h3>
+    <main id="app-root">
+        <section class="github-showcase">
+            <h2 class="section-title">المشاريع المفضلة <i class="fa-brands fa-github"></i></h2>
+            <div id="starred-projects" class="projects-grid">
+                <div class="loading-spinner">جاري تحميل العظمة...</div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <div class="social-grid">
-            <a href="https://youtube.com/@wn5b" target="_blank" class="social-link"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://tiktok.com/@w_n6b" target="_blank" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://snapchat.com/add/w_n6b" target="_blank" class="social-link"><i class="fa-brands fa-snapchat"></i></a>
-            <a href="https://discord.com/users/wn6b" target="_blank" class="social-link"><i class="fa-brands fa-discord"></i></a>
-            <a href="https://wa.me/201145974113" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="https://github.com/wn6b" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
+    <footer class="smart-footer">
+        <div class="social-orb-container">
+            <a href="https://youtube.com/@wn5b" target="_blank" class="orb yt"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://tiktok.com/@w_n6b" target="_blank" class="orb tt"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://snapchat.com/add/w_n6b" target="_blank" class="orb sc"><i class="fa-brands fa-snapchat"></i></a>
+            <a href="https://discord.com/users/wn6b" target="_blank" class="orb ds"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://wa.me/201145974113" target="_blank" class="orb wa"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://github.com/wn6b" target="_blank" class="orb gh"><i class="fa-brands fa-github"></i></a>
         </div>
-        <p class="copyright">© 2026 Wano Studio. All Rights Reserved.</p>
+        <p class="footer-note">Wano Studio Elite System © 2026</p>
     </footer>
 
     <script src="script.js"></script>
