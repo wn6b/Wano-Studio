@@ -1,86 +1,258 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE AI ACADEMY | المنظومة التعليمية الكبرى</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <title>wn6b | Full Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* نظام الألوان المتطور */
+        :root {
+            --bg-color: #030303;
+            --accent-color: #00e5ff;
+            --secondary-accent: #7000ff;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(10, 10, 10, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(112, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* حاوية الخلفية المتحركة */
+        .background-blobs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        /* Navbar */
+        nav {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .sub-text {
+            color: #888;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* Social Grid (الاستنساخ الفعلي) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            transition: 0.5s;
+        }
+
+        .card:hover i {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px var(--accent-color));
+        }
+
+        /* ألوان مخصصة لكل تطبيق */
+        .github:hover { color: #fff; }
+        .discord:hover { color: #5865F2; }
+        .whatsapp:hover { color: #25D366; }
+        .tiktok:hover { color: #ff0050; }
+        .snapchat:hover { color: #FFFC00; }
+        .youtube:hover { color: #FF0000; }
+        .instagram:hover { color: #E1306C; }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 50px;
+        }
+
+        .copyright {
+            opacity: 0.5;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
-<body class="core-system">
+<body>
 
-    <section id="auth-gate" class="gate-overlay">
-        <div class="auth-panel" data-tilt>
-            <div class="hex-logo">
-                <svg viewBox="0 0 100 100"><polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="#00f3ff" stroke-width="2"/></svg>
-            </div>
-            <h1 id="txt-auth-title" class="neon-text">CORE INTELLIGENCE</h1>
-            
-            <div id="auth-selection" class="btn-group-v">
-                <button id="btn-show-login" class="v-btn v-btn-primary">LOG IN | تسجيل الدخول</button>
-                <button id="btn-show-signup" class="v-btn v-btn-outline">CREATE ACCOUNT | حساب جديد</button>
-            </div>
+    <nav>
+        <div class="logo">WN6B.DEV</div>
+        <div class="email">wanomrwan16@gmail.com</div>
+    </nav>
 
-            <form id="form-login" class="v-form hidden">
-                <input type="email" id="in-email" placeholder="البريد الإلكتروني" required>
-                <input type="password" id="in-pass" placeholder="كود المرور" required>
-                <button type="submit" class="v-btn v-btn-primary">ACTIVATE | تفعيل</button>
-                <span class="v-link" onclick="resetAuth()">رجوع</span>
-            </form>
-        </div>
+    <section class="hero">
+        <img src="https://ui-avatars.com/api/?name=wn6b&background=00e5ff&color=fff&size=128" alt="wn6b" class="profile-img">
+        <h1>wn6b</h1>
+        <p class="sub-text">Full Stack Developer & Digital Artist. صناعة العظمة تتطلب دقة متناهية. استكشف حساباتي الرسمية أدناه.</p>
     </section>
 
-    <main id="main-app" class="app-root hidden">
-        <header class="v-header">
-            <div class="v-brand">
-                <svg class="v-icon" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 18l-8-4V8l8-4 8 4v8l-8 4z" fill="#00f3ff"/></svg>
-                <span id="nav-logo-text">CORE AI</span>
-            </div>
-            
-            <div class="v-nav-actions">
-                <div class="lang-selector">
-                    <button onclick="setSystemLanguage('ar')" class="lang-btn" id="btn-ar">AR</button>
-                    <button onclick="setSystemLanguage('en')" class="lang-btn" id="btn-en">EN</button>
-                </div>
-                <button id="btn-exit" class="v-btn-exit">EXIT</button>
-            </div>
-        </header>
+    <main class="grid">
+        <a href="https://github.com/wn6b" target="_blank" class="card github">
+            <i class="fab fa-github"></i>
+            <h3>GitHub</h3>
+        </a>
 
-        <div class="v-workspace">
-            <aside class="v-sidebar">
-                <h3 id="txt-tracks-label">المسارات البرمجية</h3>
-                <nav id="track-list"></nav>
-            </aside>
+        <a href="https://discord.com/users/wn6b" target="_blank" class="card discord">
+            <i class="fab fa-discord"></i>
+            <h3>Discord</h3>
+        </a>
 
-            <section class="v-content">
-                <div class="v-lesson-panel">
-                    <div class="v-lesson-header">
-                        <h2 id="current-lesson-title">مرحباً بك في نظام CORE</h2>
-                        <span class="v-badge" id="txt-status">جاهز</span>
-                    </div>
-                    <div id="lesson-viewer" class="v-lesson-body">
-                        اختر مساراً برمجياً من القائمة الجانبية للبدء.
-                    </div>
-                    <div class="v-controls">
-                        <button id="lesson-prev" class="v-btn-nav">السابق</button>
-                        <button id="lesson-next" class="v-btn-nav">التالي</button>
-                    </div>
-                </div>
+        <a href="https://wa.me/201145974113?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85" target="_blank" class="card whatsapp">
+            <i class="fab fa-whatsapp"></i>
+            <h3>WhatsApp</h3>
+        </a>
 
-                <div class="v-ai-terminal">
-                    <div class="ai-header">AI CORE TUTOR | المعلم الذكي</div>
-                    <div id="ai-chat-logs" class="ai-logs"></div>
-                    <div class="ai-input-area">
-                        <input type="text" id="ai-input" placeholder="اسأل الذكاء الاصطناعي عن الكود...">
-                        <button id="ai-send">إرسال</button>
-                    </div>
-                </div>
-            </section>
-        </div>
+        <a href="https://www.tiktok.com/@w_n6b" target="_blank" class="card tiktok">
+            <i class="fab fa-tiktok"></i>
+            <h3>TikTok</h3>
+        </a>
+
+        <a href="https://www.snapchat.com/add/w_n6b" target="_blank" class="card snapchat">
+            <i class="fab fa-snapchat"></i>
+            <h3>Snapchat</h3>
+        </a>
+
+        <a href="https://youtube.com/@wn5b" target="_blank" class="card youtube">
+            <i class="fab fa-youtube"></i>
+            <h3>YouTube</h3>
+        </a>
+
+        <a href="https://instagram.com/talal._.75" target="_blank" class="card instagram">
+            <i class="fab fa-instagram"></i>
+            <h3>Instagram</h3>
+        </a>
     </main>
 
-    <script src="script.js"></script>
+    <footer>
+        <p class="copyright">ALL RIGHTS RESERVED © 2026 BY wn6b</p>
+    </footer>
+
+    <script>
+        // إضافة تأثير تحريك عند التمرير (Scroll Reveal)
+        const cards = document.querySelectorAll('.card');
+        window.addEventListener('scroll', () => {
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if(cardTop < window.innerHeight - 50) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // تأثير الماوس اللطيف (للمتصفح)
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+    </script>
 </body>
 </html>
