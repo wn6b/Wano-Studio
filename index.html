@@ -1233,4 +1233,245 @@
       <path d="M8 24 L16 24" stroke="#bf00ff" stroke-width="1.5" stroke-linecap="round"/>
       <circle cx="22" cy="22" r="3" stroke="#00f5ff" stroke-width="1.5" fill="none"/>
     </svg>
- 
+     <span class="footer-copy">WANO STUDIO &copy; 2026 // @wn6b</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/wn6b" target="_blank">GitHub</a>
+    <a href="https://discord.com/users/wn6b" target="_blank">Discord</a>
+    <a href="https://youtube.com/@wn5b" target="_blank">YouTube</a>
+  </div>
+</footer>
+
+<script>
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// ─── RIPPLE ON CLICK ───
+document.addEventListener('click', e => {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:60px;height:60px`;
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+});
+
+// ─── TOUCH RIPPLE ───
+document.addEventListener('touchstart', e => {
+  Array.from(e.touches).forEach(t => {
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.cssText = `left:${t.clientX}px;top:${t.clientY}px;width:80px;height:80px`;
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 700);
+  });
+}, { passive: true });
+
+// ─── LOADER ───
+const loaderBar = document.getElementById('loaderBar');
+const loaderNum = document.getElementById('loaderNum');
+const loaderTxt = document.getElementById('loaderTxt');
+const loader = document.getElementById('loader');
+
+const messages = [
+  'INITIALIZING WANO STUDIO',
+  'LOADING ASSETS',
+  'FETCHING GITHUB DATA',
+  'RENDERING NEON GRID',
+  'CALIBRATING DEVICE',
+  'LAUNCHING EXPERIENCE'
+];
+
+let pct = 0;
+const loaderInt = setInterval(() => {
+  pct = Math.min(100, pct + Math.random() * 4 + 1);
+  loaderBar.style.width = pct + '%';
+  loaderNum.textContent = Math.floor(pct) + '%';
+  loaderTxt.textContent = messages[Math.min(messages.length - 1, Math.floor(pct / 18))];
+  if (pct >= 100) {
+    clearInterval(loaderInt);
+    setTimeout(() => {
+      loader.classList.add('hide');
+      startCounters();
+    }, 400);
+  }
+}, 40);
+
+// ─── DEVICE DETECT ───
+function detectDevice() {
+  const w = window.innerWidth;
+  const ua = navigator.userAgent;
+  let type = 'desktop';
+  if (/TV|SmartTV|WebOS|Tizen|SMART-TV/.test(ua) || w >= 1920) type = 'tv';
+  else if (/iPad/.test(ua) || (w >= 768 && w < 1024 && /Macintosh/.test(ua) && navigator.maxTouchPoints > 0)) type = 'tablet';
+  else if (/Mobi|Android|iPhone/.test(ua) || w < 768) type = 'mobile';
+  else if (w >= 1024 && w < 1440) type = 'laptop';
+  else if (w >= 1440) type = 'desktop';
+  return type;
+}
+const dt = detectDevice();
+document.querySelectorAll('.device-card').forEach(c => {
+  if (c.dataset.type === dt) c.classList.add('active');
+});
+
+// ─── COUNTER ANIMATION ───
+function startCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    let cur = 0;
+    const step = Math.ceil(target / 30);
+    const t = setInterval(() => {
+      cur = Math.min(target, cur + step);
+      el.textContent = cur;
+      if (cur >= target) clearInterval(t);
+    }, 40);
+  });
+}
+
+// ─── DYNAMIC REPOS DATA FROM GITHUB ───
+const grid = document.getElementById('reposGrid');
+
+async function fetchStarredRepos() {
+  try {
+    const res = await fetch('https://api.github.com/users/wn6b/starred');
+    const repos = await res.json();
+    
+    grid.innerHTML = ''; // تفريغ الـ Grid قبل إضافة البيانات
+    
+    repos.forEach(r => {
+      const lang = r.language || 'Unknown';
+      let langColor = '#00f5ff';
+      
+      if(lang === 'JavaScript') langColor = '#f7df1e';
+      else if(lang === 'HTML') langColor = '#e34c26';
+      else if(lang === 'Python') langColor = '#3572A5';
+      else if(lang === 'TypeScript') langColor = '#3178c6';
+      
+      const card = document.createElement('a');
+      card.href = r.html_url;
+      card.target = '_blank';
+      card.className = 'repo-card';
+      
+      const genericIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${langColor}" stroke-width="1.5"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+      card.innerHTML = `
+        <div class="repo-card-top">
+          <div class="repo-icon">${genericIcon}</div>
+          <div class="repo-stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            ${r.stargazers_count}
+          </div>
+        </div>
+        <div class="repo-name">${r.name}</div>
+        <div class="repo-desc">${r.description ? r.description : 'لا يوجد وصف متاح لهذا المشروع.'}</div>
+        <div class="repo-footer">
+          <div class="repo-lang">
+            <div class="lang-dot" style="background:${langColor};box-shadow:0 0 6px ${langColor}"></div>
+            ${lang}
+          </div>
+          <div class="repo-link">
+            View
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 2h8.5A1.75 1.75 0 0 1 14 3.75v8.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5A1.75 1.75 0 0 1 3.75 2zm0 1.5a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5z"/><path d="M6.25 7.75a.75.75 0 0 1 .75-.75h2.19L7.72 5.53a.75.75 0 0 1 1.06-1.06l2.5 2.5a.75.75 0 0 1 0 1.06l-2.5 2.5a.75.75 0 0 1-1.06-1.06l1.47-1.47H7a.75.75 0 0 1-.75-.75z"/></svg>
+          </div>
+        </div>
+        <div class="repo-corner"></div>
+      `;
+      
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+      
+      grid.appendChild(card);
+    });
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = '<div style="color:var(--neon-pink); font-family:monospace; padding: 20px;">Failed to fetch projects. Check your internet connection.</div>';
+  }
+}
+
+fetchStarredRepos();
+
+// ─── PARTICLES ───
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let pts = [];
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+for (let i = 0; i < 60; i++) {
+  pts.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    o: Math.random() * 0.5 + 0.1
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  pts.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,245,255,${p.o})`;
+    ctx.fill();
+  });
+  // Lines
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(pts[i].x, pts[i].y);
+        ctx.lineTo(pts[j].x, pts[j].y);
+        ctx.strokeStyle = `rgba(0,245,255,${0.08 * (1 - d / 120)})`;
+        ctx.lineWidth = .5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.repo-card, .contact-card, .device-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
