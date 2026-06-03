@@ -1,695 +1,420 @@
 <!DOCTYPE html>
-<!-- © 2026 مروان | Wano — جميع الحقوق محفوظة | المطور: مروان (Wano) | Discord: @wn6b | GitHub: @wn5b | TikTok: @w_n6b -->
+<!-- © 2026 Wano Studio | المطور: مروان (Wano) | المالك الحصري: wanomrwan16@gmail.com -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wano Studio — وائل | Wano</title>
+<title>Wano Studio — لوحة التحكم الذكية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<!-- استيراد مكتبة الأيقونات الاحترافية لاستبدال الإيموجيات بالكامل بأيقونات أبيض وأسود -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<!-- استيراد الأيقونات الاحترافية - تتوافق وتنعكس تلقائياً مع الثيمات -->
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<!-- مكتبة جوجل الرسمية لتسجيل الدخول الفعلي بـ OAuth2 -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 <style>
 :root {
-  /* ثيم النيون الافتراضي (الداكن) */
-  --nc: #00f5ff;
-  --np: #bf00ff;
-  --nk: #ff006e;
-  --ng: #00ff88;
-  --ny: #ffe600;
   --bg: #000000;
   --card: #0a0a0c;
-  --border: rgba(0, 245, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.1);
   --tp: #ffffff;
-  --tm: rgba(255, 255, 255, 0.65);
-  --gs: 0 0 10px var(--nc), 0 0 20px rgba(0, 245, 255, 0.2);
-  --gm: 0 0 15px var(--nc), 0 0 35px rgba(0, 245, 255, 0.3);
-  --term-bg: #05070b;
+  --tm: rgba(255, 255, 255, 0.6);
+  --nc: #ffffff; /* أبيض ناصع في الوضع المظلم */
+  --accent: #00ff88; /* لون برمجيات متناسق */
+  --term-bg: #050608;
 }
 
-/* التبديل التلقائي عند اختيار الثيم الأبيض من الإعدادات */
 body.light-theme {
   --bg: #ffffff;
-  --card: #f4f6f9;
+  --card: #f5f7fa;
   --border: rgba(0, 0, 0, 0.1);
   --tp: #000000;
-  --tm: rgba(0, 0, 0, 0.65);
-  --gs: 0 0 8px rgba(0, 245, 255, 0.4);
-  --gm: 0 0 12px rgba(0, 245, 255, 0.5);
-  --term-bg: #f0f2f5;
+  --tm: rgba(0, 0, 0, 0.6);
+  --nc: #000000; /* يتحول لأسود ملكي في الوضع الفاتح */
+  --term-bg: #f9fafb;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html {
-  scroll-behavior: smooth;
-}
-body {
-  font-family: 'Cairo', sans-serif;
-  background: var(--bg);
-  color: var(--tp);
-  overflow-x: hidden;
-  min-height: 100vh;
-  transition: background 0.4s ease, color 0.4s ease;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--tp); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
 
-/* لوحة قماش الخلفية النيون الواقعية */
-#neon-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.5s;
-}
+/* الكانفاس */
+#neon-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
-/* لوحة الإعدادات المتقدمة SETTINGS PANEL */
-#settings-widget {
-  position: fixed;
-  top: 80px;
-  left: -300px;
-  width: 280px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: none;
-  z-index: 2000;
-  padding: 20px;
-  transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-#settings-widget.open {
-  left: 0;
-}
-.settings-toggle {
-  position: absolute;
-  right: -45px;
-  top: 0;
-  width: 45px;
-  height: 45px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--nc);
-  font-size: 20px;
-}
-.settings-header {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.settings-group {
-  margin-bottom: 15px;
-}
-.settings-label {
-  font-size: 12px;
-  color: var(--tm);
-  margin-bottom: 8px;
-  display: block;
-}
-.theme-switch-btn {
-  width: 100%;
-  padding: 10px;
-  background: rgba(0, 245, 255, 0.05);
-  border: 1px solid var(--nc);
-  color: var(--tp);
-  cursor: pointer;
-  font-family: 'Cairo', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.theme-switch-btn:hover {
-  background: var(--nc);
-  color: #000 !important;
-}
+/* التيرمنال المطور والبطيء */
+#loader { position: fixed; inset: 0; background: #020204; z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
+#loader.hide { opacity: 0; pointer-events: none; }
+.term-win { width: min(760px, 95vw); background: var(--term-bg); border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.term-hd { background: rgba(0,0,0,0.3); padding: 12px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.tdot { width: 12px; height: 12px; border-radius: 50%; }
+.tdot.r { background: #ff5f56; } .tdot.y { background: #ffbd2e; } .tdot.g { background: #27c93f; }
+.term-title { flex: 1; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--tm); }
+.term-body { padding: 20px; height: 320px; overflow-y: auto; font-family: 'Share Tech Mono', monospace; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 4px; color: var(--tp); }
+.t-cmd { color: var(--accent); }
+.t-pkg { color: #569cd6; }
+.t-success { color: #4ec9b0; }
 
-/* المؤثرات الخاصة بالتيرمنال المطور */
-#loader {
-  position: fixed;
-  inset: 0;
-  background: #020204;
-  z-index: 99990;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
-  font-family: 'Share Tech Mono', monospace;
-}
-#loader.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.ld-window {
-  width: min(720px, 94vw);
-  background: var(--term-bg);
-  border: 1px solid var(--nc);
-  box-shadow: var(--gs);
-  overflow: hidden;
-  position: relative;
-}
-.ld-titlebar {
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.ld-dots { display: flex; gap: 6px; }
-.ld-dot { width: 12px; height: 12px; border-radius: 50%; }
-.ld-dot.r { background: #ff5f57; }
-.ld-dot.y { background: #febc2e; }
-.ld-dot.g { background: #28c840; }
-.ld-win-title { flex: 1; text-align: center; font-size: 12px; color: var(--tm); }
-.ld-body { padding: 15px; }
-.ld-lines {
-  height: 280px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-right: 5px;
-}
-.ld-line {
-  font-size: 12px;
-  line-height: 1.5;
-  font-family: 'Share Tech Mono', monospace;
-  display: flex;
-  gap: 10px;
-}
-.ld-line.cmd { color: var(--nc); }
-.ld-line.success { color: var(--ng); }
-.ld-line.info { color: var(--tm); }
-.ld-line.proc { color: var(--ny); }
-.ld-footer {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-.ld-bar-wrap {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  height: 6px;
-  border-radius: 3px;
-  overflow: hidden;
-}
-.ld-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--nc), var(--np));
-  box-shadow: var(--gs);
-  transition: width 0.1s linear;
-}
-.ld-pct {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--nc);
-  min-width: 45px;
-  text-align: left;
-}
+/* شريط التنقل */
+#nav { position: fixed; top: 0; inset-inline: 0; height: 75px; background: rgba(var(--bg), 0.75); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 1000; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--tp); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 1px; }
 
-/* زري تسجيل الدخول وعناصر التوجيه */
-.discord-auth-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #5865F2;
-  color: #fff !important;
-  border: none;
-  padding: 10px 20px;
-  font-family: 'Cairo', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  text-decoration: none;
-}
-.discord-auth-btn:hover {
-  background: #4752C4;
-  transform: translateY(-2px);
-}
-.discord-profile-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(88, 101, 242, 0.1);
-  border: 1px solid #5865F2;
-  padding: 6px 14px;
-}
-.discord-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
+/* السطر أدناه (السطر 54) هو مكان الشعار المطلوب */
+.nav-logo img { width: 34px; height: 34px; object-fit: contain; }
 
-/* الهوية البصرية اللوجو المعدل للموقع */
-.nav-logo-img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.owner-btn { background: var(--tp); color: var(--bg); border: none; padding: 8px 18px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: none; transition: opacity 0.2s; }
+.owner-btn:hover { opacity: 0.9; }
 
-/* بقية التنسيقات العامة للموقع */
-#nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
-  padding: 0 40px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(var(--bg), 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-title { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--nc); letter-spacing: 2px; }
-.nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--tm); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover { color: var(--nc); }
+/* لوحة الإعدادات */
+#settings-panel { position: fixed; top: 85px; left: -300px; width: 280px; background: var(--card); border: 1px solid var(--border); border-left: none; padding: 20px; z-index: 1010; transition: left 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); }
+#settings-panel.open { left: 0; }
+.set-toggle { position: absolute; right: -46px; top: -1px; width: 46px; height: 46px; background: var(--card); border: 1px solid var(--border); border-left: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--tp); font-size: 18px; }
+.set-title { font-size: 14px; font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.theme-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--border); color: var(--tp); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.theme-btn:hover { background: rgba(255,255,255,0.05); }
 
-#hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 120px 40px 60px;
-  text-align: center;
-  z-index: 1;
-}
-.h-tag { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--nc); margin-bottom: 20px; }
-.h-name { font-family: 'Rajdhani', sans-serif; font-size: clamp(45px, 8vw, 100px); font-weight: 700; line-height: 0.9; margin-bottom: 15px; color: var(--tp); }
-.h-sub { font-size: 16px; color: var(--tm); margin-bottom: 40px; font-weight: 300; }
+/* واجهة العرض الرئيسية */
+#hero { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 60px; position: relative; z-index: 1; }
 
-.h-stats { display: flex; gap: 36px; margin-bottom: 40px; }
-.st { display: flex; flex-direction: column; align-items: center; }
-.st-n { font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: var(--nc); }
-.st-l { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--tm); text-transform: uppercase; display: flex; align-items: center; gap: 4px; }
-.st-div { width: 1px; background: var(--border); align-self: stretch; }
+/* سطر البروفايل الشخصي */
+.hero-avatar { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--border); overflow: hidden; margin-bottom: 20px; }
+.hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-.h-cta { display: flex; gap: 14px; align-items: center; }
-.btn-p { padding: 12px 30px; border: 1px solid var(--nc); color: var(--nc); background: transparent; font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
-.btn-p:hover { background: var(--nc); color: #000; box-shadow: var(--gm); }
-.btn-o { padding: 12px 30px; border: 1px solid var(--border); color: var(--tm); background: transparent; font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; }
-.btn-o:hover { border-color: var(--tp); color: var(--tp); }
+.hero-title { font-size: clamp(32px, 6vw, 64px); font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+.hero-desc { color: var(--tm); max-width: 600px; font-size: 15px; line-height: 1.6; font-weight: 300; }
 
-#ticker-wrap { overflow: hidden; padding: 14px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(0, 245, 255, 0.01); position: relative; z-index: 1; }
-.ticker { display: flex; white-space: nowrap; animation: tick 30s linear infinite; }
-.ticker-inner { display: flex; }
-@keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.tk-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 16px; margin: 0 6px; border: 1px solid var(--border); font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--tp); }
+/* قسم المشاريع المطور */
+#projects { padding: 60px 40px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+.sec-head { font-size: 24px; font-weight: 700; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
 
-section { padding: 90px 40px; max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
-.s-hdr { display: flex; align-items: center; gap: 18px; margin-bottom: 45px; }
-.s-num { font-family: 'Rajdhani', sans-serif; font-size: 55px; font-weight: 700; color: transparent; -webkit-text-stroke: 1px var(--border); line-height: 1; }
-.s-info { display: flex; flex-direction: column; }
-.s-tag { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--nc); letter-spacing: 2px; }
-.s-title { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: var(--tp); }
-.s-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+/* بطاقة المشروع الاحترافية */
+.p-card { background: var(--card); border: 1px solid var(--border); padding: 24px; position: relative; display: flex; flex-direction: column; gap: 12px; }
+.p-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.p-title { font-size: 18px; font-weight: 700; color: var(--tp); }
+.p-status { font-size: 11px; padding: 2px 8px; font-weight: 600; }
+.p-status.available { background: rgba(0,255,136,0.1); color: #00ff88; }
+.p-status.unavailable { background: rgba(255,95,86,0.1); color: #ff5f56; }
+.p-desc { font-size: 13px; color: var(--tm); line-height: 1.6; min-height: 48px; }
+.p-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
 
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.about-card { background: var(--card); border: 1px solid var(--border); padding: 30px; position: relative; }
-.av-wrap { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
-.avatar { width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--nc); overflow: hidden; }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
-.av-info { display: flex; flex-direction: column; }
-.av-handle { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--nc); }
-.av-name { font-size: 18px; font-weight: 700; color: var(--tp); }
-.about-bio { font-size: 14px; color: var(--tm); line-height: 1.7; margin-bottom: 20px; }
-.tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag { font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 4px 10px; border: 1px solid var(--border); color: var(--tp); background: rgba(0,0,0,0.05); display: flex; align-items: center; gap: 4px; }
+/* أزرار التحميل */
+.dl-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--bg); background: var(--tp); padding: 8px 16px; text-decoration: none; transition: opacity 0.2s; }
+.dl-btn:hover { opacity: 0.9; }
 
-.dev-lbl { margin-bottom: 12px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--tm); letter-spacing: 1px; }
-.dev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.dev-card { background: var(--card); border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 6px; position: relative; }
-.dev-card.active { border-color: var(--nc); box-shadow: var(--gs); }
-.dev-card.active::before { content: 'NOW'; position: absolute; top: 8px; left: 8px; font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--ng); border: 1px solid var(--ng); padding: 1px 4px; }
-.dev-name { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600; color: var(--tp); }
-.dev-desc { font-size: 11px; color: var(--tm); }
+/* القائمة المنبثقة للمالك (الثلاث شخوط) */
+.opt-menu { position: relative; }
+.opt-trigger { background: transparent; border: none; color: var(--tp); font-size: 20px; cursor: pointer; padding: 4px; display: none; }
+.opt-dropdown { position: absolute; left: 0; top: 100%; background: var(--card); border: 1px solid var(--border); width: 120px; display: none; flex-direction: column; z-index: 10; }
+.opt-dropdown.show { display: flex; }
+.opt-item { background: transparent; border: none; color: var(--tp); padding: 8px 12px; font-size: 12px; text-align: right; cursor: pointer; font-family: 'Cairo', sans-serif; }
+.opt-item:hover { background: rgba(255,255,255,0.05); }
 
-.repos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-.repo-card { background: var(--card); border: 1px solid var(--border); padding: 24px; text-decoration: none; color: inherit; display: block; position: relative; transition: border-color 0.2s, transform 0.2s; }
-.repo-card:hover { border-color: var(--nc); transform: translateY(-2px); }
-.rc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.rc-icon { font-size: 20px; color: var(--nc); }
-.rc-stars { display: flex; align-items: center; gap: 4px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--ny); }
-.rc-name { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--tp); margin-bottom: 6px; }
-.rc-desc { font-size: 12px; color: var(--tm); line-height: 1.6; margin-bottom: 16px; min-height: 38px; }
-.rc-footer { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-family: 'Share Tech Mono', monospace; color: var(--tm); }
-.rc-lang { display: flex; align-items: center; gap: 6px; }
-.lang-dot { width: 8px; height: 8px; border-radius: 50%; }
-.rc-site-badge { position: absolute; top: 10px; left: 10px; font-family: 'Share Tech Mono', monospace; font-size: 8px; border: 1px solid var(--ng); color: var(--ng); padding: 2px 5px; }
+/* النافذة المنبثقة للمشروع (Modal) */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+.modal.open { display: flex; }
+.modal-content { background: var(--card); border: 1px solid var(--border); width: min(500px, 90vw); padding: 30px; display: flex; flex-direction: column; gap: 16px; }
+.modal-title { font-size: 18px; font-weight: 700; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 12px; color: var(--tm); }
+.form-group input, .form-group textarea, .form-group select { background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 10px; color: var(--tp); font-family: 'Cairo', sans-serif; font-size: 13px; }
+.form-group input:focus, .form-group textarea:focus { border-color: var(--tp); outline: none; }
+.modal-btns { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.m-btn { padding: 10px 20px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+.m-btn.cancel { background: transparent; border: 1px solid var(--border); color: var(--tp); }
+.m-btn.publish { background: var(--tp); color: var(--bg); }
 
-.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-.contact-card { background: var(--card); border: 1px solid var(--border); padding: 20px; display: flex; align-items: center; gap: 16px; text-decoration: none; color: inherit; transition: border-color 0.2s; }
-.contact-card:hover { border-color: var(--nc); }
-.ci { width: 44px; height: 44px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--nc); }
-.c-plat { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--tm); }
-.c-hdl { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; color: var(--tp); }
-
-footer { border-top: 1px solid var(--border); padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; background: rgba(0,0,0,0.02); }
-.ft-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.ft-rights { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--tm); line-height: 1.5; }
-.ft-links { display: flex; gap: 20px; }
-.ft-links a { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--tm); text-decoration: none; }
-.ft-links a:hover { color: var(--nc); }
-
-@media(max-width:767px){
+@media(max-width: 768px) {
   #nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  section { padding: 60px 20px; }
-  .about-grid { grid-template-columns: 1fr; }
-  .dev-grid { grid-template-columns: 1fr 1fr; }
-  footer { flex-direction: column; text-align: center; }
+  #projects { padding: 40px 20px; }
 }
 </style>
 </head>
-<body class="dark-theme"> <canvas id="neon-canvas"></canvas>
+<body class="dark-theme">
 
+  <canvas id="neon-canvas"></canvas>
+
+  <!-- التيرمنال العبقري السلس -->
   <div id="loader">
-    <div class="ld-window">
-      <div class="ld-titlebar">
-        <div class="ld-dots">
-          <div class="ld-dot r"></div>
-          <div class="ld-dot y"></div>
-          <div class="ld-dot g"></div>
-        </div>
-        <div class="ld-win-title">Wano System Core v4.0.2 — Terminal</div>
+    <div class="term-win">
+      <div class="term-hd">
+        <div class="tdot r"></div><div class="tdot y"></div><div class="tdot g"></div>
+        <div class="term-title">wano@terminal:~ - Node System Initializer</div>
       </div>
-      <div class="ld-body">
-        <div class="ld-lines" id="terminal-lines">
-          </div>
-      </div>
-      <div class="ld-footer">
-        <div class="ld-bar-wrap">
-          <div class="ld-bar" id="load-bar"></div>
-        </div>
-        <div class="ld-pct" id="load-pct">0%</div>
-      </div>
+      <div class="term-body" id="term-logs"></div>
     </div>
   </div>
 
-  <div id="settings-widget">
-    <div class="settings-toggle" onclick="toggleSettings()">
-      <i class="ri-settings-4-line"></i>
-    </div>
-    <div class="settings-header">
-      <i class="ri-equalizer-line"></i> الإعدادات
-    </div>
-    
-    <div class="settings-group">
-      <span class="settings-label">مظهر الموقع (Black / White)</span>
-      <button class="theme-switch-btn" onclick="toggleTheme()" id="theme-btn">
-        <i class="ri-moon-clear-line"></i> التبديل للوضع الفاتح
-      </button>
-    </div>
-
-    <div class="settings-group">
-      <span class="settings-label">تسجيل الدخول</span>
-      <div id="auth-status-panel">
-        <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_URL&response_type=token&scope=identify" class="discord-auth-btn">
-          <i class="ri-discord-fill"></i> دخول عبر ديسكورد
-        </a>
-      </div>
-    </div>
-  </div>
-
+  <!-- شريط التنقل العلوي -->
   <nav id="nav">
     <a href="#" class="nav-logo">
-      <img src="37354.png" alt="Logo" class="nav-logo-img">
-      <span class="nav-title">WANO</span>
+      <!-- الشعار تم تحديث اسمه المباشر هنا بدقة -->
+      <img src="37354_2.png" alt="Wano Logo">
+      <span>WANO STUDIO</span>
     </a>
-    <div class="nav-links">
-      <a href="#hero">الرئيسية</a>
-      <a href="#about">حول</a>
-      <a href="#repos">المشاريع</a>
-      <a href="#contact">تواصل</a>
+    <div class="nav-right">
+      <button class="owner-btn" id="add-proj-btn" onclick="openModal()"><i class="ri-add-line"></i> إضافة مشروع</button>
+      <div id="g-signin-btn"></div>
+      <div id="user-profile-area"></div>
     </div>
-    <div id="nav-user-area"></div>
   </nav>
 
-  <section id="hero">
-    <div class="h-tag">// CREATIVE DEVELOPER & DESIGNER</div>
-    <h1 class="h-name">مرحباً، أنا <span style="color:var(--nc)">وائل</span></h1>
-    <p class="h-sub">خبير في بناء الأنظمة المتكاملة وتطوير واجهات المستخدم النيون والواقعية.</p>
-    
-    <div class="h-stats">
-      <div class="st">
-        <span class="st-n">12+</span>
-        <span class="st-l"><i class="ri-code-s-slash-line"></i> لغات برمجة</span>
-      </div>
-      <div class="st-div"></div>
-      <div class="st-theme st">
-        <span class="st-n">45+</span>
-        <span class="st-l"><i class="ri-stack-line"></i> مشروع كامل</span>
-      </div>
+  <!-- لوحة الإعدادات الجانبية -->
+  <div id="settings-panel">
+    <div class="set-toggle" onclick="document.getElementById('settings-panel').classList.toggle('open')">
+      <i class="ri-settings-line"></i>
     </div>
+    <div class="set-title">تخصيص النظام</div>
+    <button class="theme-btn" onclick="toggleSystemTheme()" id="t-trigger">
+      <i class="ri-sun-line"></i> الوضع الفاتح
+    </button>
+  </div>
 
-    <div class="h-cta">
-      <a href="#repos" class="btn-p">استكشف أعمالي</a>
-      <a href="#contact" class="btn-o">تواصل معي</a>
+  <!-- واجهة الهيرو -->
+  <section id="hero">
+    <div class="hero-avatar" id="avatar-container">
+      <!-- الصورة الشخصية الافتراضية، وسيتم سحب صورتك الحقيقية برمجياً عبر الـ ID -->
+      <img src="37354_2.png" alt="Wano" id="main-avatar">
+    </div>
+    <h1 class="hero-title">WANO STUDIO</h1>
+    <p class="hero-desc">منصة برمجية متكاملة لرفع وتنزيل الأكواد والمشاريع الحية بشكل مباشر وسلس.</p>
+  </section>
+
+  <!-- قسم عرض المشاريع -->
+  <section id="projects">
+    <div class="sec-head"><i class="ri-code-block"></i> المشاريع البرمجية الحالية</div>
+    <div class="proj-grid" id="projects-box">
+      <!-- يتم حقن الكروت وتحديثها برمجياً هنا بالكامل -->
     </div>
   </section>
 
-  <div id="ticker-wrap">
-    <div class="ticker">
-      <div class="ticker-inner">
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> HTML5/CSS3</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> JAVASCRIPT ES6+</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> REACT & NEXTJS</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> NODE.JS</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> PYTHON & C++</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> DISCORD BOT DEV</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> HTML5/CSS3</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> JAVASCRIPT ES6+</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> REACT & NEXTJS</div>
-        <div class="tk-tag"><i class="ri-verified-badge-line"></i> NODE.JS</div>
+  <!-- نافذة إضافة وتعديل المشاريع (Modal) -->
+  <div class="modal" id="project-modal">
+    <div class="modal-content">
+      <div class="modal-title" id="m-layout-title">إضافة مشروع جديد</div>
+      <input type="hidden" id="edit-idx">
+      
+      <div class="form-group">
+        <label>اسم المشروع</label>
+        <input type="text" id="p-name-in" placeholder="مثال: Azkār Bot">
+      </div>
+      
+      <div class="form-group">
+        <label>حالة المشروع</label>
+        <select id="p-status-in">
+          <option value="available">متوفر</option>
+          <option value="unavailable">غير متوفر</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>وصف للمشروع</label>
+        <textarea id="p-desc-in" rows="3" placeholder="اكتب وصفاً مختصراً ودقيقاً هنا..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>ملف المشروع البرمجي (يتم رفعه من جهازك)</label>
+        <input type="file" id="p-file-in">
+      </div>
+      
+      <div class="modal-btns">
+        <button class="m-btn cancel" onclick="closeModal()">إلغاء (Cancel)</button>
+        <button class="m-btn publish" onclick="saveProject()">نشر (Publish)</button>
       </div>
     </div>
   </div>
-
-  <section id="about">
-    <div class="s-hdr">
-      <div class="s-num">01</div>
-      <div class="s-info">
-        <span class="s-tag">IDENTIFICATION</span>
-        <h2 class="s-title">من أنا؟</h2>
-      </div>
-      <div class="s-line"></div>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-card">
-        <div class="av-wrap">
-          <div class="avatar"><img src="37354.png" alt="Wano"></div>
-          <div class="av-info">
-            <span class="av-handle">@wn6b</span>
-            <span class="av-name">مروان (Wano)</span>
-          </div>
-        </div>
-        <p class="about-bio">
-          مطور متكامل وشغوف بصناعة تجارب رقمية فريدة. أركز على تقديم تصاميم واقعية نيون تجمع بين الجمالية العالية والأداء القوي.
-        </p>
-        <div class="tags">
-          <span class="tag"><i class="ri-map-pin-2-line"></i> Giza, EG</span>
-          <span class="tag"><i class="ri-calendar-line"></i> 20+ Age</span>
-          <span class="tag"><i class="ri-github-line"></i> Github</span>
-        </div>
-      </div>
-
-      <div class="dev-card active">
-        <span class="dev-lbl">النظام الحالي</span>
-        <div class="dev-name">تطوير واجهة الـ Neon Realism</div>
-        <p class="dev-desc">أقوم حالياً بتحديث خوارزميات الخلفية المتحركة لتصبح أكثر واقعية وسلاسة للمستخدمين.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="repos">
-    <div class="s-hdr">
-      <div class="s-num">02</div>
-      <div class="s-info">
-        <span class="s-tag">PORTFOLIO</span>
-        <h2 class="s-title">المشاريع البرمجية</h2>
-      </div>
-      <div class="s-line"></div>
-    </div>
-    
-    <div class="repos-grid" id="repos-container">
-      </div>
-  </section>
-
-  <section id="contact">
-    <div class="s-hdr">
-      <div class="s-num">03</div>
-      <div class="s-info">
-        <span class="s-tag">CONNECT</span>
-        <h2 class="s-title">طرق التواصل</h2>
-      </div>
-      <div class="s-line"></div>
-    </div>
-
-    <div class="contact-grid">
-      <a href="https://discord.com/users/yourid" class="contact-card">
-        <div class="ci"><i class="ri-discord-line"></i></div>
-        <div class="c-info">
-          <div class="c-plat">DISCORD</div>
-          <div class="c-hdl">@wn6b</div>
-        </div>
-      </a>
-      <a href="https://github.com/wn5b" class="contact-card">
-        <div class="ci"><i class="ri-github-line"></i></div>
-        <div class="c-info">
-          <div class="c-plat">GITHUB</div>
-          <div class="c-hdl">wn5b</div>
-        </div>
-      </a>
-      <a href="https://tiktok.com/@w_n6b" class="contact-card">
-        <div class="ci"><i class="ri-tiktok-line"></i></div>
-        <div class="c-info">
-          <div class="c-plat">TIKTOK</div>
-          <div class="c-hdl">@w_n6b</div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <a href="#" class="ft-logo">
-      <img src="37354.png" alt="Logo" style="width:24px; height:24px;">
-      <span style="font-family:'Rajdhani'; font-weight:700; color:var(--nc); letter-spacing:1px;">WANO STUDIO</span>
-    </a>
-    <div class="ft-rights">
-      © 2026 مروان | Wano — جميع الحقوق محفوظة <br>
-      مطور بكل حب بواسطة وائل.
-    </div>
-    <div class="ft-links">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
-  </footer>
 <script>
-// 1. نظام التيرمنال الواقعي (Terminal Logic)
-const lines = [
-  "Initializing Wano Core v4.0.2...",
-  "Loading core modules...",
-  "Connecting to Discord API...",
-  "Syncing user data: @wn6b...",
-  "Configuring neon-engine parameters...",
-  "Finalizing system security protocols...",
-  "System ready."
+// 1. إعدادات المالك (البيانات التي طلبتها)
+const OWNER_EMAIL = "wanomrwan16@gmail.com";
+const DISCORD_USER_ID = "1484004341743620279";
+let currentUser = null;
+let projects = JSON.parse(localStorage.getItem('wano_projects')) || [];
+
+// 2. محرك التيرمنال الواقعي (الكتابة اليدوية والتحميل البطيء)
+const termLogs = document.getElementById('term-logs');
+const terminalScript = [
+  { text: "Initializing Wano OS Kernel...", type: "cmd" },
+  { text: "Loading core dependencies...", type: "cmd" },
+  { text: "npm install @wano/neon-engine @wano/security", type: "pkg" },
+  { text: "fetch: [####################] 100% (2.4s)", type: "info" },
+  { text: "Linking OAuth2 Google services...", type: "cmd" },
+  { text: "Checking permissions for wanomrwan16@gmail.com...", type: "info" },
+  { text: "System optimized. Launching interface...", type: "success" }
 ];
 
-let progress = 0;
-const bar = document.getElementById('load-bar');
-const pct = document.getElementById('load-pct');
-const termLines = document.getElementById('terminal-lines');
-
-function updateLoader() {
-  if (progress >= 100) {
-    document.getElementById('loader').classList.add('hide');
-    return;
+async function runTerminal() {
+  for (let line of terminalScript) {
+    const div = document.createElement('div');
+    div.className = line.type === 'cmd' ? 't-cmd' : (line.type === 'success' ? 't-success' : 't-pkg');
+    termLogs.appendChild(div);
+    
+    // محاكاة الكتابة اليدوية
+    for (let char of line.text) {
+      div.innerHTML += char;
+      await new Promise(r => setTimeout(r, Math.random() * 40 + 20));
+    }
+    await new Promise(r => setTimeout(r, 600)); // تأخير بين الأسطر ليكون واقعياً
+    termLogs.scrollTop = termLogs.scrollHeight;
   }
-  progress += Math.random() * 15;
-  if (progress > 100) progress = 100;
-  bar.style.width = progress + '%';
-  pct.innerText = Math.floor(progress) + '%';
+  setTimeout(() => document.getElementById('loader').classList.add('hide'), 1000);
+}
+
+// 3. نظام Google OAuth2 وتسجيل الدخول
+window.onload = function () {
+  runTerminal();
+  renderProjects();
+  updateDiscordAvatar(); // تحديث الصورة من ديسكورد فور التحميل
+
+  google.accounts.id.initialize({
+    client_id: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com", // ضع الـ ID الخاص بك هنا
+    callback: handleCredentialResponse
+  });
+  google.accounts.id.renderButton(
+    document.getElementById("g-signin-btn"),
+    { theme: "outline", size: "medium", shape: "pill" }
+  );
+};
+
+function handleCredentialResponse(response) {
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  currentUser = payload;
   
-  if (progress % 20 < 5) {
-    const line = document.createElement('div');
-    line.className = 'ld-line success';
-    line.innerHTML = `<span>></span> ${lines[Math.floor(Math.random() * lines.length)]}`;
-    termLines.appendChild(line);
-    termLines.scrollTop = termLines.scrollHeight;
-  }
-  setTimeout(updateLoader, 200);
-}
-updateLoader();
+  // إخفاء زر تسجيل الدخول وإظهار البروفايل
+  document.getElementById('g-signin-btn').style.display = 'none';
+  document.getElementById('user-profile-area').innerHTML = `
+    <div style="display:flex; align-items:center; gap:10px;">
+       <span style="font-size:12px; font-weight:600;">${payload.name}</span>
+       <img src="${payload.picture}" style="width:30px; height:30px; border-radius:50%; border:1px solid var(--border);">
+    </div>
+  `;
 
-// 2. التبديل بين الثيمات (Dark/Light)
-function toggleTheme() {
-  document.body.classList.toggle('light-theme');
-  const isLight = document.body.classList.contains('light-theme');
-  const btn = document.getElementById('theme-btn');
-  btn.innerHTML = isLight ? 
-    '<i class="ri-sun-line"></i> التبديل للوضع الداكن' : 
-    '<i class="ri-moon-clear-line"></i> التبديل للوضع الفاتح';
-}
-
-// 3. لوحة الإعدادات (Settings Panel)
-function toggleSettings() {
-  document.getElementById('settings-widget').classList.toggle('open');
-}
-
-// 4. خلفية النيون (Neon Canvas Engine)
-const canvas = document.getElementById('neon-canvas');
-const ctx = canvas.getContext('2d');
-let w, h, particles = [];
-
-function initCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', initCanvas);
-initCanvas();
-
-class Particle {
-  constructor() {
-    this.reset();
-  }
-  reset() {
-    this.x = Math.random() * w;
-    this.y = Math.random() * h;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.size = Math.random() * 2;
-  }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
-  }
-  draw() {
-    ctx.fillStyle = 'rgba(0, 245, 255, 0.2)';
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
+  // التحقق من صلاحيات المالك (أنت)
+  if (payload.email === OWNER_EMAIL) {
+    document.getElementById('add-proj-btn').style.display = 'block';
+    document.querySelectorAll('.opt-trigger').forEach(el => el.style.display = 'block');
   }
 }
 
-for(let i=0; i<100; i++) particles.push(new Particle());
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animate);
+// 4. تحديث صورة ديسكورد تلقائياً عبر API (بدون بوت)
+async function updateDiscordAvatar() {
+  try {
+    // نستخدم Lanyard API أو أي API مفتوح لجلب بيانات المستخدم عبر الـ ID
+    const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+    const data = await res.json();
+    if (data.success && data.data.discord_user.avatar) {
+      const avatarHash = data.data.discord_user.avatar;
+      const avatarUrl = `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.png?size=256`;
+      document.getElementById('main-avatar').src = avatarUrl;
+    }
+  } catch (e) {
+    console.log("فشل جلب صورة ديسكورد، سيتم استخدام الشعار الافتراضي.");
+  }
 }
-animate();
+
+// 5. وظائف إدارة المشاريع (إضافة، حفظ، حذف)
+const modal = document.getElementById('project-modal');
+function openModal(editIdx = null) {
+  modal.classList.add('open');
+  if (editIdx !== null) {
+    document.getElementById('m-layout-title').innerText = "تعديل المشروع";
+    document.getElementById('edit-idx').value = editIdx;
+    const p = projects[editIdx];
+    document.getElementById('p-name-in').value = p.name;
+    document.getElementById('p-status-in').value = p.status;
+    document.getElementById('p-desc-in').value = p.desc;
+  } else {
+    document.getElementById('m-layout-title').innerText = "إضافة مشروع جديد";
+    document.getElementById('edit-idx').value = "";
+    document.getElementById('p-name-in').value = "";
+    document.getElementById('p-desc-in').value = "";
+  }
+}
+
+function closeModal() { modal.classList.remove('open'); }
+
+function saveProject() {
+  const name = document.getElementById('p-name-in').value;
+  const status = document.getElementById('p-status-in').value;
+  const desc = document.getElementById('p-desc-in').value;
+  const fileInput = document.getElementById('p-file-in');
+  const editIdx = document.getElementById('edit-idx').value;
+
+  if (!name || !desc) return alert("يرجى ملء الحقول الأساسية!");
+
+  const newProj = {
+    name, status, desc,
+    fileName: fileInput.files[0] ? fileInput.files[0].name : (editIdx !== "" ? projects[editIdx].fileName : "No File"),
+    date: new Date().toLocaleDateString()
+  };
+
+  if (editIdx !== "") {
+    projects[editIdx] = newProj;
+  } else {
+    projects.push(newProj);
+  }
+
+  localStorage.setItem('wano_projects', JSON.stringify(projects));
+  renderProjects();
+  closeModal();
+}
+
+function deleteProject(idx) {
+  if (confirm("هل أنت متأكد من حذف هذا المشروع نهائياً؟")) {
+    projects.splice(idx, 1);
+    localStorage.setItem('wano_projects', JSON.stringify(projects));
+    renderProjects();
+  }
+}
+
+function renderProjects() {
+  const box = document.getElementById('projects-box');
+  box.innerHTML = "";
+  projects.forEach((p, i) => {
+    const isOwner = currentUser && currentUser.email === OWNER_EMAIL;
+    box.innerHTML += `
+      <div class="p-card">
+        <div class="p-top">
+          <div>
+            <div class="p-title">${p.name}</div>
+            <span class="p-status ${p.status}">${p.status === 'available' ? 'متوفر' : 'غير متوفر'}</span>
+          </div>
+          <div class="opt-menu">
+            <button class="opt-trigger" style="display:${isOwner ? 'block' : 'none'}" onclick="toggleDrop(${i})">
+              <i class="ri-more-2-fill"></i>
+            </button>
+            <div class="opt-dropdown" id="drop-${i}">
+              <button class="opt-item" onclick="openModal(${i})">تعديل الاسم</button>
+              <button class="opt-item" style="color:#ff5f56" onclick="deleteProject(${i})">حذف</button>
+            </div>
+          </div>
+        </div>
+        <p class="p-desc">${p.desc}</p>
+        <div class="p-actions">
+          <span style="font-size:10px; color:var(--tm); font-family:'Share Tech Mono'">${p.date}</span>
+          <a href="#" class="dl-btn" onclick="alert('يبدأ تحميل ملف: ${p.fileName}')">
+            <i class="ri-download-cloud-2-line"></i> تنزيل (Download)
+          </a>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function toggleDrop(i) {
+  document.getElementById(`drop-${i}`).classList.toggle('show');
+}
+
+// 6. نظام الثيمات (تغيير ألوان الأيقونات والنصوص تلقائياً)
+function toggleSystemTheme() {
+  const body = document.body;
+  const trigger = document.getElementById('t-trigger');
+  body.classList.toggle('light-theme');
+  
+  if (body.classList.contains('light-theme')) {
+    trigger.innerHTML = '<i class="ri-moon-line"></i> الوضع الداكن';
+  } else {
+    trigger.innerHTML = '<i class="ri-sun-line"></i> الوضع الفاتح';
+  }
+}
 </script>
 </body>
 </html>
